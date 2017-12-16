@@ -4,22 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class UsersController extends Controller
+class DestinationsController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $users = \App\User::all();
-        return view('admin.users.admin_users')->with('users', $users);
+    {   
+        $destinations = \App\Destination::all();
+        return view('admin.destinations.admin_destinations')->with('destinations', $destinations);
     }
 
     /**
@@ -38,16 +33,22 @@ class UsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(Request $request)
     {
+        
         $data = request()->validate([
-            'name' => 'required', 
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|same:password_confirm',
-            'type' => 'required', 
+            'name' => 'required',  
+            'description' => 'required',  
+            'link' => 'nullable|url',   
+            'image' => 'nullable|image|mimes:jpg,png,svg',
+            'long' => 'nullable|string',   
+            'lat' => 'nullable|string',
         ]);
-        $status = \App\User::create($data); 
-        return redirect('admin/users')->with('status', $status);
+        if ($request->hasFile('image')) {
+            $validatedData['image'] = $request->file('image')->store('public/destinations');
+        } 
+        $status = \App\Destination::create($data); 
+        return redirect('admin/destinations')->with('status', $status);
     }
 
     /**
@@ -92,6 +93,7 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $status = \App\Destination::destroy($id);
+        return redirect('admin/destinations')->with('is_deleted', $status);
     }
 }

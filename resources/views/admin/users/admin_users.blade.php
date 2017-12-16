@@ -8,13 +8,12 @@
                     <div class="col-md-8">
                         <section class="panel">
                             <header class="panel-heading">
-                               Users
+                               Users 
                             </header>
                             <div class="panel-body table-responsive">
 
-
-                                @if(isset($status))
-                                    @if($status)
+                                @if(session('status') !='')
+                                    @if( !is_null(session('status')) )
                                         <div class="alert alert-success">
                                             <button data-dismiss="alert" class="close close-sm" type="button">
                                                 <i class="fa fa-times"></i>
@@ -28,11 +27,11 @@
                                             </button>
                                             <strong>Error!</strong> An error occured while adding user.
                                         </div>
-                                    @endif
-                                @endif
+                                    @endif 
+                                    @endif 
 
 
-                                <table class="table table-hover">
+                                <table class="table table-hover table-bordered" id="users-table">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -117,4 +116,9 @@
                     </div>
 
                 </div>  
+@endsection
+@section('scripts')
+<script type="text/javascript">
+  $('#users-table').DataTable();
+</script>
 @endsection

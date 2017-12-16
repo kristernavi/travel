@@ -31,9 +31,20 @@
     <!-- Director App -->
     <script src="{{asset('admin/js/Director/app.js')}}" type="text/javascript"></script>
 
+    @if(Request::segment(2) == 'home')
     <!-- Director dashboard demo (This is only for demo purposes) -->
     <script src="{{asset('admin/js/Director/dashboard.js')}}" type="text/javascript"></script>
+    @endif
+    <script src="{{ asset('css/pdfmake.min.js') }}"></script> 
+    <script src="{{ asset('js/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('js/datatables.min.js') }}"></script>
 
+{{--     <script src="{{ asset('css/sweetalert2.all.js') }}"></script>
+ --}}
+
+    <script src="{{ asset('js/sweetalert.min.js') }}"></script>
+    <script src="{{ asset('js/axios.min.js') }}"></script>
+    @if(Request::segment(2) == 'home')
     <!-- Director for demo purposes -->
     <script type="text/javascript">
         $('input').on('ifChecked', function(event) {
@@ -95,3 +106,4 @@
         });
         // Chart.defaults.global.responsive = true;
     </script>
+    @endif

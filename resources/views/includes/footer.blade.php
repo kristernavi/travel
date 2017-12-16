@@ -6,7 +6,7 @@
 			<div class="footer-agileinfo"> 
 				<div class="col-md-5 col-sm-5 footer-wthree-grid"> 
 					<div class="agileits-w3layouts-tweets">  
-						<h5><a href="{{url('')}}">Travel and Tours</a></h5>  
+						<h5><a href="{{url('')}}">Bohol Travel and Stay</a></h5>  
 					</div>
 					<p>Aenean vitae metus sit amet purus sodales blandit. Nullam ut dolor eu urna viverra semper. Mauris est odio, laoreet laoreet sapien non, sollicitudin bibendum nulla.</p>
 				</div> 
@@ -22,9 +22,8 @@
 				</div> 	 
 				<div class="col-md-4 col-sm-4 footer-wthree-grid">
 					<h3>Contact Info</h3>
-					<ul>
-						<li>123 Broome St,2nd Block</li> 
-						<li>NY 10002, New York</li>
+					<ul> 
+						<li>Balilihan 6342, Bohol</li>
 						<li>Phone: +01 111 222 3333</li>
 						<li><a href="mailto:info@example.com"> mail@example.com</a></li>
 					</ul>
@@ -32,7 +31,7 @@
 				<div class="clearfix"> </div>		
 			</div>
 			<div class="copy-right"> 
-				<p>© 2017 Travel and Tours . All rights reserved</p>
+				<p>© 2017 Bohol Travel and Stay Tours . All rights reserved</p>
 			</div>
 		</div>
 	</div> 

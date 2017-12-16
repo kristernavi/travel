@@ -1,6 +1,6 @@
 <body>
 	<!-- banner -->
-	<div class="banner">  
+	<div class="banner" style="min-height: {{ Request::segment(1) == '' ? '790px':'105px'}};">  
 		<div class="header agileinfo-header"><!-- header -->
 			<nav class="navbar navbar-default">
 				<div class="container">
@@ -12,14 +12,14 @@
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						<h1><a href="{{ url('') }}"><span> Travel & Tours</span></a></h1>
+						<h1><a href="{{ url('') }}"><span> Bohol Travel &amp; Stay</span></a></h1>
 					</div> 
 					<!-- Collect the nav links, forms, and other content for toggling -->
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 						<ul class="nav navbar-nav navbar-left"> 
-							<li><a href="{{ url('') }}" class="w3ls-hover active">Home</a></li>
+							<li><a href="{{ url('') }}" class="w3ls-hover {{ Request::segment(1) == '' ? ' active':'' }}">Home</a></li>
 							<li><a href="#" class="btn w3ls-hover">About</a></li>   
-							<li><a href="#" class="btn w3ls-hover">Destinations</a></li> 
+							<li><a href="{{ url('destinations') }}" class="btn w3ls-hover {{ Request::segment(1) == 'destinations' ? ' active':'' }}">Destinations</a></li> 
 							<li><a href="#" class="btn w3ls-hover">Packages</a></li> 
 							<li><a href="#" class="btn w3ls-hover">Contact</a></li>
 						</ul>	    

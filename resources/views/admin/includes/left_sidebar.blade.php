@@ -25,8 +25,8 @@
                         <i class="fa fa-users"></i> <span>Users</span>
                     </a>
                 </li>
-                <li>
-                    <a href="javascript:;">
+                <li class=" {{Request::segment(2) == 'destinations' ? 'active':''}}">
+                    <a href="{{ url('admin/destinations') }}">
                         <i class="fa fa-map-marker"></i> <span>Destinations</span>
                     </a>
                 </li>

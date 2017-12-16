@@ -134,7 +134,7 @@
     </div>
     <!-- //slid -->
     <!-- newsletter -->
-    <div class="newsletter">
+{{--     <div class="newsletter">
         <div class="container">
             <h3 class="agileits-title">Newsletter</h3>
             <p>Mauris est odio laoreet laoreet sapien non, sollicitudin bibendum nulla amet purus sodales blandit.</p>
@@ -144,6 +144,6 @@
                 <div class="clearfix"> </div> 
             </form> 
         </div> 
-    </div>
+    </div> --}}
     <!-- //newsletter -->
 @endsection

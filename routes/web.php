@@ -18,12 +18,17 @@ Route::get('/', function () {
     return view('home');
 });
 
+Route::get('/destinations', function () {
+    return view('destinations');
+});
+
 /** END OF URL **/
 
 /** URL FOR ADMIN SIDE **/
 Route::middleware('auth')->prefix('admin')->group(function () {
 	Route::get('/home', 'HomeController@index');
 	Route::resource('/users', 'UsersController');
+	Route::resource('/destinations', 'DestinationsController');
 });
 
 /** END OF URL **/
