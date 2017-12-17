@@ -36,11 +36,11 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Name</th> 
-                                            <th>Description</th>
-                                            <th>Image</th> 
-                                            <th>Link</th> 
-                                            <th>Actions</th> 
+                                            <th class="col-md-2">Name</th> 
+                                            <th class="col-md-3">Description</th>
+                                            <th class="col-md-2">Image</th> 
+                                            <th class="col-md-3">Link</th> 
+                                            <th class="col-md-2">Actions</th> 
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -52,7 +52,7 @@
                                             <td>{{ $destination->image }}</td>
                                             <td>{{ $destination->link }}</td>
                                             <td>
-                                                <a href="javascript:;" class="btn btn-primary btn-xs edit-btn" data-id="{{ $destination->id }}"><i class="fa fa-edit"></i> Edit</a>
+                                                <a href="{{ url('admin/destinations/'.$destination->id).'/edit' }}" class="btn btn-primary btn-xs edit-btn" data-id="{{ $destination->id }}"><i class="fa fa-edit"></i> Edit</a>
                                                 <a href="javascript:;" class="btn btn-danger btn-xs del-btn" data-id="{{ $destination->id }}"><i class="fa fa-times"></i> Delete</a>
                                             </td>
                                         </tr>
@@ -93,7 +93,7 @@
                                       </div>  
                                       <div class="form-group">
                                         <label for="image">Image</label>
-                                        <input type="file" class="form-control-file" id="image" aria-describedby="fileHelp" name="image"> 
+                                        <input type="file" class="form-control-file" id="image" name="image"> 
                                       </div>
                                       <div class="form-group">
                                           <label for="link">Destination Website Link</label>
@@ -119,8 +119,7 @@
                 </div>  
 
  
-                  {!! Form::open(array('url' => url('admin/destinations'), 'enctype' => 'multipart/form-data', 'method' => 'DELETE', 'id' => 'delete-destination-form', 'files' => true)) !!}
-                        {{ csrf_field() }}
+                  {!! Form::open(array('url' => url('admin/destinations'), 'enctype' => 'multipart/form-data', 'method' => 'DELETE', 'id' => 'delete-destination-form', 'files' => true)) !!} 
                   </form>
 @endsection
 @section('scripts')
@@ -147,6 +146,16 @@
       @if(session('is_deleted'))
         swal({
             title: "Record has been deleted!",
+            icon: "success"
+          });
+      @endif
+  @endif
+
+
+  @if(session('updated_status') !='')
+      @if(session('updated_status'))
+        swal({
+            title: "Record has been updated successfully!",
             icon: "success"
           });
       @endif

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class DestinationsController extends Controller
+class CustomersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,8 +13,8 @@ class DestinationsController extends Controller
      */
     public function index()
     {   
-        $destinations = \App\Destination::all();
-        return view('admin.destinations.admin_destinations')->with('destinations', $destinations);
+        $customers = \App\User::where('type', 'customers')->get();
+        return view('admin.customers.admin_customers')->with('customers', $customers);
     }
 
     /**
@@ -36,18 +36,13 @@ class DestinationsController extends Controller
     public function store(Request $request)
     {
         $data = request()->validate([
-            'name' => 'required',  
-            'description' => 'required',  
-            'link' => 'nullable|url',   
-            'image' => 'nullable|image|mimes:jpg,png,svg',
-            'long' => 'nullable|string',   
-            'lat' => 'nullable|string',
+            'name' => 'required', 
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:6|same:password_confirm',
+            'type' => 'required', 
         ]);
-        if ($request->hasFile('image')) {
-            $validatedData['image'] = $request->file('image')->store('public/destinations');
-        } 
-        $status = \App\Destination::create($data); 
-        return redirect('admin/destinations')->with('status', $status);
+        $status = \App\User::create($data); 
+        return redirect('admin/customers')->with('status', $status);
     }
 
     /**

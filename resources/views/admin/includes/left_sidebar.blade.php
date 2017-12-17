@@ -35,8 +35,8 @@
                         <i class="fa fa-gift"></i> <span>Packages</span>
                     </a>
                 </li>
-                <li>
-                    <a href="javascript:;">
+                <li class=" {{Request::segment(2) == 'customers' ? 'active':''}}">
+                    <a href="{{ url('admin/customers') }}">
                         <i class="fa fa-users"></i> <span>Customers</span>
                     </a>
                 </li>

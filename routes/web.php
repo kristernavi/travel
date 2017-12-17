@@ -29,6 +29,8 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 	Route::get('/home', 'HomeController@index');
 	Route::resource('/users', 'UsersController');
 	Route::resource('/destinations', 'DestinationsController');
+	Route::resource('/customers', 'CustomersController');
+	
 });
 
 /** END OF URL **/
