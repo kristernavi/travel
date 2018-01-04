@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DataTables;
+use DB;
 
 class DestinationsController extends Controller
 {
@@ -13,8 +15,7 @@ class DestinationsController extends Controller
      */
     public function index()
     {   
-        $destinations = \App\Destination::all();
-        return view('admin.destinations.admin_destinations')->with('destinations', $destinations);
+        return view('admin.destinations.admin_destinations');
     }
 
     /**
@@ -24,7 +25,7 @@ class DestinationsController extends Controller
      */
     public function create()
     {
-        
+        return view('admin.destinations.create');
     }
 
     /**
@@ -39,15 +40,26 @@ class DestinationsController extends Controller
             'name' => 'required',  
             'description' => 'required',  
             'link' => 'nullable|url',   
-            'image' => 'nullable|image|mimes:jpg,png,svg',
+            'image' => 'nullable|image|mimes:jpg,jpeg,png,svg',
             'long' => 'nullable|string',   
             'lat' => 'nullable|string',
         ]);
-        if ($request->hasFile('image')) {
-            $validatedData['image'] = $request->file('image')->store('public/destinations');
+        $image = '';
+        if ($request->hasFile('image')) {  
+            $image = $request->file('image')->store('public/destinations');
         } 
-        $status = \App\Destination::create($data); 
-        return redirect('admin/destinations')->with('status', $status);
+        $destination = new \App\Destination;
+        $destination->name          = $request->get('name');
+        $destination->description   = $request->get('description');
+        $destination->link          = $request->get('link');
+        $destination->image         = $image;
+        $destination->long          = $request->get('long');
+        $destination->lat           = $request->get('lat');
+        if($destination->save()){
+            return response()->json(['success' => true, 'msg' => 'Data Successfully added!']);
+        }else{
+            return response()->json(['success' => false, 'msg' => 'An error occured while adding data!']);
+        }
     }
 
     /**
@@ -70,8 +82,7 @@ class DestinationsController extends Controller
     public function edit($id)
     {
         $destination = \App\Destination::find($id);
-        $destinations = \App\Destination::all();
-        return view('admin.destinations.edit')->with('destination', $destination)->with('destinations', $destinations);
+        return view('admin.destinations.edit')->with('destination', $destination);
     }
 
     /**
@@ -90,12 +101,24 @@ class DestinationsController extends Controller
             'image' => 'nullable|image|mimes:jpg,png,svg',
             'long' => 'nullable|string',   
             'lat' => 'nullable|string',
-        ]);
-        if ($request->hasFile('image')) {
-            $validatedData['image'] = $request->file('image')->store('public/destinations');
+        ]); 
+
+        $destination = \App\Destination::find($id);
+        $image = $destination->image;
+        if ($request->hasFile('image')) {  
+            $image = $request->file('image')->store('public/destinations');
         } 
-        $status = \App\Destination::find($id)->update($data); 
-        return redirect('admin/destinations')->with('updated_status', $status);
+        $destination->name          = $request->get('name');
+        $destination->description   = $request->get('description');
+        $destination->link          = $request->get('link');
+        $destination->image         = $image;
+        $destination->long          = $request->get('long');
+        $destination->lat           = $request->get('lat');
+        if($destination->save()){
+            return response()->json(['success' => true, 'msg' => 'Data Successfully updated!']);
+        }else{
+            return response()->json(['success' => false, 'msg' => 'An error occured while updating data!']);
+        }
     }
 
     /**
@@ -106,7 +129,47 @@ class DestinationsController extends Controller
      */
     public function destroy($id)
     {
-        $status = \App\Destination::destroy($id);
-        return redirect('admin/destinations')->with('is_deleted', $status);
+        $status = \App\Destination::destroy($id); 
+        if($status){
+            return response()->json(['success' => true, 'msg' => 'Data Successfully deleted!']);
+        }else{
+            return response()->json(['success' => false, 'msg' => 'An error occured while deleting data!']);
+        }
+    }
+
+    public function all(){
+        DB::statement(DB::raw('set @row:=0'));
+        $data = \App\Destination::selectRaw('*, @row:=@row+1 as row');
+
+         return DataTables::of($data)
+            ->AddColumn('row', function($column){
+               return $column->row;
+            })
+            ->AddColumn('name', function($column){
+               return $column->name;
+            }) 
+            ->AddColumn('description', function($column){
+               return $column->description;
+            }) 
+            ->AddColumn('image', function($column){
+                if($column->image){
+                    return "<img alt='img' heigth='50' width='50' src='".asset('storage/'.ltrim($column->image,'public'))."'>"; 
+                }else{
+                    return '';
+                }
+            }) 
+            ->AddColumn('actions', function($column){
+              
+                return '<div class="btn-group table-dropdown">
+                            <button class="btn-xs btn btn-primary edit-data-btn" data-id="'.$column->id.'">
+                                <i class="fa fa-edit"></i> Edit
+                            </button>
+                            <button class="btn-xs btn btn-danger delete-data-btn" data-id="'.$column->id.'">
+                                <i class="fa fa-trash-o"></i> Delete
+                            </button> 
+                        </div>';
+            }) 
+            ->rawColumns(['actions','image'])
+            ->make(true);    
     }
 }

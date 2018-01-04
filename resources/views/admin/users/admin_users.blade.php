@@ -9,6 +9,7 @@
                         <section class="panel">
                             <header class="panel-heading">
                                Users 
+                               <button class="btn btn-sm btn-success pull-right add-data-btn"><i class="fa fa-plus"></i> Add User</button>
                             </header>
                             <div class="panel-body table-responsive">
 
@@ -35,91 +36,113 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Name</th>
-                                            {{-- <th>User Type</th> --}}
-                                            <!-- <th>Client</th> -->
-                                            <th>Email</th>
-                                            <!-- <th>Price</th> -->
+                                            <th>Name</th> 
+                                            <th>Email</th> 
                                             <th>Actions</th> 
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                       @foreach($users as $user)
-                                        <tr>
-                                            <td>{{ $user->id }}</td>
-                                            <td>{{ $user->name }}</td>
-                                            {{-- <td>{{ $user->type }}</td> --}}
-                                            <td>{{ $user->email }}</td>
-                                            <td>
-                                                <a href="javascript:;" class="btn btn-primary btn-xs"><i class="fa fa-edit"></i> Edit</a>
-                                                <a href="javascript:;" class="btn btn-danger btn-xs"><i class="fa fa-times"></i> Delete</a>
-                                            </td>
-                                        </tr>
-                                       @endforeach
+                                    <tbody> 
                                     </tbody>
                                 </table>
                             </div>
                         </section>
 
-                    </div>
-                    <div class="col-lg-4">
-
-                        <!--chat start-->
-                        <section class="panel">
-                            <header class="panel-heading">
-                                Add User
-                            </header>
-                            <div class="panel-body">
-                            @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
-
-                                <form  action="{{ url('admin/users') }}" method="POST">
-                                        {{ csrf_field() }}
-                                      <div class="form-group">
-                                          <label for="name">Name</label>
-                                          <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" autocomplete="false">
-                                      </div>
-                                      <div class="form-group">
-                                          <label for="email">Email address</label>
-                                          <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" autocomplete="false">
-                                      </div>
-                                      <div class="form-group">
-                                          <label for="exampleInputPassword1">Password</label>
-                                          <input type="password" class="form-control" id="password" name="password" placeholder="Password" autocomplete="false">
-                                      </div>
-                                      <div class="form-group">
-                                          <label for="exampleInputPassword1">Confirm Password</label>
-                                          <input type="password" class="form-control" id="password_confirm" name="password_confirm" placeholder="Confirm Password" autocomplete="false">
-                                      </div>
-                                      {{-- 
-                                      <div class="form-group">
-                                          <label for="type">Type</label>
-                                            <select name="type" class="form-control">
-                                                <option value="admin">Admin</option>
-                                                <option value="customer">Customer</option>
-                                            </select>
-                                      </div> --}}
-                                      <input type="hidden" name="type" value="admin">
-                                      <button type="submit" class="btn btn-info">Submit</button>
-                                  </form>
-
-
-                            </div>
-                        </section>
-
-                    </div>
+                    </div> 
 
                 </div>  
+
+  <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;" id="addmodal"></div>
+  <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;" id="editmodal"></div>
+
 @endsection
 @section('scripts')
 <script type="text/javascript">
-  $('#users-table').DataTable();
+  $(function(){
+    var table = $('#users-table').DataTable({
+      bProcessing: true,
+      bServerSide: false,
+      sServerMethod: "GET",
+      'ajax': '/admin/get-users',
+      searching: true, 
+      paging: true, 
+      filtering:false, 
+      bInfo: true,
+      responsive: true,
+      language:{
+        "paginate": {
+          "next":       "<i class='fa fa-chevron-right'></i>",
+          "previous":   "<i class='fa fa-chevron-left'></i>"
+        }
+      },
+      "columns": [ 
+        {data: 'row',  name: 'row', className: ' text-left',   searchable: true, sortable: true},
+        {data: 'name',  name: 'name', className: 'col-md-5  text-left',   searchable: true, sortable: true},
+        {data: 'email',  name: 'gender', className: 'col-md-4 text-left',  searchable: true, sortable: true}, 
+        {data: 'actions',   name: 'actions', className: 'col-md-2 text-left',  searchable: false,  sortable: false},
+      ], 
+      'order': [[0, 'asc']]
+    });
+
+    $(".add-data-btn").click(function(x){  
+          x.preventDefault();
+          var that = this;
+          $("#addmodal").html('');
+          $("#addmodal").modal();
+          $.ajax({
+            url: '/admin/users/create',         
+            success: function(data) {
+              $("#addmodal").html(data);
+            }
+          }); 
+    });
+    $(document).off('click','.edit-data-btn').on('click','.edit-data-btn', function(e){
+      e.preventDefault();
+      var that = this; 
+      $("#editmodal").html('');
+      $("#editmodal").modal();
+      $.ajax({
+        url: '/admin/users/'+that.dataset.id+'/edit',         
+        success: function(data) {
+          $("#editmodal").html(data);
+        }
+      }); 
+    });
+    $(document).off('click','.delete-data-btn').on('click','.delete-data-btn', function(e){
+      e.preventDefault();
+      var that = this; 
+            bootbox.confirm({
+              title: "Confirm Delete Data?",
+              className: "del-bootbox",
+              message: "Are you sure you want to delete record?",
+              buttons: {
+                  confirm: {
+                      label: 'Yes',
+                      className: 'btn-success'
+                  },
+                  cancel: {
+                      label: 'No',
+                      className: 'btn-danger'
+                  }
+              },
+              callback: function (result) {
+                 if(result){
+                  var token = '{{csrf_token()}}'; 
+                  $.ajax({
+                  url:'/admin/users/'+that.dataset.id,
+                  type: 'post',
+                  data: {_method: 'delete', _token :token},
+                  success:function(result){
+                    $("#users-table").DataTable().ajax.url( '/admin/get-users' ).load();
+                    swal({
+                        title: result.msg,
+                        icon: "success"
+                      });
+                  }
+                  }); 
+                 }
+              }
+          });
+    });
+  });
 </script>
 @endsection

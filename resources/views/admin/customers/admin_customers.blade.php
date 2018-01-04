@@ -8,146 +8,141 @@
                     <div class="col-md-8">
                         <section class="panel">
                             <header class="panel-heading">
-                               Customers
+                                Customers
+                               <button class="btn btn-sm btn-success pull-right add-data-btn"><i class="fa fa-plus"></i> Add </button>
                             </header>
                             <div class="panel-body table-responsive">
 
-
                                 @if(session('status') !='')
-                                    @if(session('status'))
+                                    @if( !is_null(session('status')) )
                                         <div class="alert alert-success">
                                             <button data-dismiss="alert" class="close close-sm" type="button">
                                                 <i class="fa fa-times"></i>
                                             </button>
-                                            <strong>Success!</strong> Record added successfully.
+                                            <strong>Success!</strong> User added successfully.
                                         </div>
                                     @else
                                         <div class="alert alert-block alert-danger">
                                             <button data-dismiss="alert" class="close close-sm" type="button">
                                                 <i class="fa fa-times"></i>
                                             </button>
-                                            <strong>Error!</strong> An error occured while adding record.
+                                            <strong>Error!</strong> An error occured while adding user.
                                         </div>
-                                    @endif
-                                @endif
-    
+                                    @endif 
+                                    @endif 
+
 
                                 <table class="table table-hover table-bordered" id="customers-table">
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th class="col-md-2">Name</th> 
-                                            <th class="col-md-3">Email</th> 
-                                            <th class="col-md-2">Actions</th> 
+                                            <th>Name</th> 
+                                            <th>Email</th> 
+                                            <th>Actions</th> 
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                       @foreach($customers as $customer)
-                                        <tr>
-                                            <td>{{ $customer->id }}</td>
-                                            <td>{{ $customer->name }}</td>
-                                            <td>{{ $customer->email }}</td> 
-                                            <td>
-                                                <a href="{{ url('admin/customers/'.$customer->id).'/edit' }}" class="btn btn-primary btn-xs edit-btn" data-id="{{ $customer->id }}"><i class="fa fa-edit"></i> Edit</a>
-                                                <a href="javascript:;" class="btn btn-danger btn-xs del-btn" data-id="{{ $customer->id }}"><i class="fa fa-times"></i> Delete</a>
-                                            </td>
-                                        </tr>
-                                       @endforeach
+                                    <tbody> 
                                     </tbody>
                                 </table>
                             </div>
                         </section>
 
-                    </div>
-                    <div class="col-lg-4">
-
-                        <!--chat start-->
-                        <section class="panel">
-                            <header class="panel-heading">
-                                Add Customer
-                            </header>
-                            <div class="panel-body">
-                            @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif 
- 
-                                {!! Form::open(array('url' => url('admin/customers'), 'enctype' => 'multipart/form-data', 'method' => 'POST', 'id' => 'add-destination-form', 'files' => true)) !!}
-                                      {{ csrf_field() }}
-                                      <div class="form-group">
-                                          <label for="name">Name</label>
-                                          <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" autocomplete="false">
-                                      </div>
-                                      <div class="form-group">
-                                          <label for="email">Email address</label>
-                                          <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" autocomplete="false">
-                                      </div>
-                                      <div class="form-group hidden">
-                                          <label for="exampleInputPassword1">Password</label>
-                                          <input type="password" class="form-control" id="password" name="password" placeholder="Password" autocomplete="false" value="123123">
-                                      </div>
-                                      <div class="form-group hidden">
-                                          <label for="exampleInputPassword1">Confirm Password</label>
-                                          <input type="password" class="form-control" id="password_confirm" name="password_confirm" placeholder="Confirm Password" autocomplete="false" value="123123">
-                                      </div>
-                                      <input type="hidden" name="type" value="customers">
-                                      <button type="submit" class="btn btn-info">Submit</button>
-                                  </form>
-
-
-                            </div>
-                        </section>
-
-                    </div>
+                    </div> 
 
                 </div>  
 
- 
-                  {!! Form::open(array('url' => url('admin/customers'), 'enctype' => 'multipart/form-data', 'method' => 'DELETE', 'id' => 'delete-destination-form', 'files' => true)) !!} 
-                  </form>
+  <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;" id="addmodal"></div>
+  <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;" id="editmodal"></div>
+
 @endsection
 @section('scripts')
 <script type="text/javascript">
-  $('#customers-table').DataTable();
-  $('.del-btn').click(function(){
-    var that = this;
-    $("#delete-destination-form").attr('action','{{ url('admin/customers') }}/'+that.dataset.id);
-    swal({
-      title: "Are you sure?",
-      text: "Once deleted, you will not be able to recover this record!",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    }).then((willDelete) => {
-      if (willDelete) { 
-           $("#delete-destination-form").submit();
-      } else {
-        swal("Record is safe!");
-      }
+  $(function(){
+    var table = $('#customers-table').DataTable({
+      bProcessing: true,
+      bServerSide: false,
+      sServerMethod: "GET",
+      'ajax': '/admin/get-customers',
+      searching: true, 
+      paging: true, 
+      filtering:false, 
+      bInfo: true,
+      responsive: true,
+      language:{
+        "paginate": {
+          "next":       "<i class='fa fa-chevron-right'></i>",
+          "previous":   "<i class='fa fa-chevron-left'></i>"
+        }
+      },
+      "columns": [ 
+        {data: 'row',  name: 'row', className: ' text-left',   searchable: true, sortable: true},
+        {data: 'name',  name: 'name', className: 'col-md-5  text-left',   searchable: true, sortable: true},
+        {data: 'email',  name: 'gender', className: 'col-md-4 text-left',  searchable: true, sortable: true}, 
+        {data: 'actions',   name: 'actions', className: 'col-md-2 text-left',  searchable: false,  sortable: false},
+      ], 
+      'order': [[0, 'asc']]
+    });
+
+    $(".add-data-btn").click(function(x){  
+          x.preventDefault();
+          var that = this;
+          $("#addmodal").html('');
+          $("#addmodal").modal();
+          $.ajax({
+            url: '/admin/customers/create',         
+            success: function(data) {
+              $("#addmodal").html(data);
+            }
+          }); 
+    });
+    $(document).off('click','.edit-data-btn').on('click','.edit-data-btn', function(e){
+      e.preventDefault();
+      var that = this; 
+      $("#editmodal").html('');
+      $("#editmodal").modal();
+      $.ajax({
+        url: '/admin/customers/'+that.dataset.id+'/edit',         
+        success: function(data) {
+          $("#editmodal").html(data);
+        }
+      }); 
+    });
+    $(document).off('click','.delete-data-btn').on('click','.delete-data-btn', function(e){
+      e.preventDefault();
+      var that = this; 
+            bootbox.confirm({
+              title: "Confirm Delete Data?",
+              className: "del-bootbox",
+              message: "Are you sure you want to delete record?",
+              buttons: {
+                  confirm: {
+                      label: 'Yes',
+                      className: 'btn-success'
+                  },
+                  cancel: {
+                      label: 'No',
+                      className: 'btn-danger'
+                  }
+              },
+              callback: function (result) {
+                 if(result){
+                  var token = '{{csrf_token()}}'; 
+                  $.ajax({
+                  url:'/admin/customers/'+that.dataset.id,
+                  type: 'post',
+                  data: {_method: 'delete', _token :token},
+                  success:function(result){
+                    $("#customers-table").DataTable().ajax.url( '/admin/get-customers' ).load();
+                    swal({
+                        title: result.msg,
+                        icon: "success"
+                      });
+                  }
+                  }); 
+                 }
+              }
+          });
     });
   });
-  @if(session('is_deleted') !='')
-      @if(session('is_deleted'))
-        swal({
-            title: "Record has been deleted!",
-            icon: "success"
-          });
-      @endif
-  @endif
-
-
-  @if(session('updated_status') !='')
-      @if(session('updated_status'))
-        swal({
-            title: "Record has been updated successfully!",
-            icon: "success"
-          });
-      @endif
-  @endif
 </script>
 @endsection

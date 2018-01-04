@@ -29,9 +29,9 @@
                     <a href="{{ url('admin/destinations') }}">
                         <i class="fa fa-map-marker"></i> <span>Destinations</span>
                     </a>
-                </li>
-                <li>
-                    <a href="javascript:;">
+                </li> 
+                <li class=" {{Request::segment(2) == 'packages' ? 'active':''}}">
+                    <a href="{{ url('admin/packages') }}">
                         <i class="fa fa-gift"></i> <span>Packages</span>
                     </a>
                 </li>

@@ -19,17 +19,34 @@ Route::get('/', function () {
 });
 
 Route::get('/destinations', function () {
-    return view('destinations');
+	$destinations = \App\Destination::all();
+    return view('destinations')->with('destinations', $destinations);
 });
 
 /** END OF URL **/
 
 /** URL FOR ADMIN SIDE **/
 Route::middleware('auth')->prefix('admin')->group(function () {
+	
+	//Link for your admin homepage
 	Route::get('/home', 'HomeController@index');
+
+	//Links for users functionalities
 	Route::resource('/users', 'UsersController');
+	Route::get('/get-users', 'UsersController@all'); //get-all users returned as json format
+	
+
+	//Links for destinations functionalities
 	Route::resource('/destinations', 'DestinationsController');
+	Route::get('/get-destinations', 'DestinationsController@all'); //get-all destinations returned as json format
+
+	//Links for packages functionalities
+	Route::resource('/packages', 'PackagesController');
+	Route::get('/get-packages', 'PackagesController@all'); //get-all packages returned as json format
+
+	//Links for customers functionalities
 	Route::resource('/customers', 'CustomersController');
+	Route::get('/get-customers', 'CustomersController@all'); //get-all customers returned as json format
 	
 });
 

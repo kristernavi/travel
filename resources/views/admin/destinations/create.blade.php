@@ -2,34 +2,30 @@
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
-      <h4 class="modal-title">Edit Destination</h4>
+      <h4 class="modal-title">Add Destination</h4>
     </div>
  
  
-    {!! Form::open(array('url' => url('admin/destinations/'.$destination->id), 'enctype' => 'multipart/form-data', 'method' => 'PATCH', 'id' => 'edit-destinations-form', 'files' => true)) !!}
+    {!! Form::open(array('url' => url('admin/destinations'), 'enctype' => 'multipart/form-data', 'method' => 'POST', 'id' => 'add-destinations-form', 'files' => true)) !!}
     <div class="modal-body">
         <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" autocomplete="false" value="{{ $destination->name }}">
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" autocomplete="false">
           <span class="help-text text-danger"></span>
         </div>
         <div class="form-group">
             <label for="description">Description</label>
-            <textarea name="description" class="form-control" rows="4" placeholder="Description">{{ $destination->description }}</textarea> 
+            <textarea name="description" class="form-control" rows="4" placeholder="Description"></textarea> 
           <span class="help-text text-danger"></span>
         </div>   
 
         <div class="form-group">
             <label for="name">Image</label>
             <div class="col-md-12 text-center">
-                @if($destination->image)
-                <img src="{{ asset('storage/'.ltrim($destination->image,'public')) }}" align="img" style=" height: 150px; display: inline-block; float: none;box-shadow: 0px 0px 0px 2px #eee;background: #fff;" id="prev_img2">
-                @else
                 <img src="{{ url('images/img_holder.png') }}" align="img" style=" height: 150px; display: inline-block; float: none;box-shadow: 0px 0px 0px 2px #eee;background: #fff;" id="prev_img2">
-                @endif
             </div>
             <div class="col-md-12 text-center  mb-1">
-                <input type="file" name="image" id="image" class="image input_image" style="display: none;">
+                    <input type="file" name="image" id="image" class="image input_image" style="display: none;">
                 <label class="mt-1" >
                     <div class="btn btn-success upload_btn">Upload Photo</div>
                 </label>
@@ -38,17 +34,17 @@
         </div>
         <div class="form-group">
             <label for="link">Destination Website Link</label>
-            <input type="text" class="form-control" id="link" name="link" placeholder="Enter link" autocomplete="false" value="{{ $destination->link }}">
+            <input type="text" class="form-control" id="link" name="link" placeholder="Enter link" autocomplete="false">
           <span class="help-text text-danger"></span>
         </div>
         <div class="form-group">
             <label for="long">Longitude</label>
-            <input type="text" class="form-control" id="long" name="long" placeholder="Enter longitude" autocomplete="false" value="{{ $destination->long }}">
+            <input type="text" class="form-control" id="long" name="long" placeholder="Enter longitude" autocomplete="false">
           <span class="help-text text-danger"></span>
         </div>
         <div class="form-group">
             <label for="lat">Lattude</label>
-            <input type="text" class="form-control" id="lat" name="lat" placeholder="Enter latitude" autocomplete="false" value="{{ $destination->lat }}">
+            <input type="text" class="form-control" id="lat" name="lat" placeholder="Enter latitude" autocomplete="false">
           <span class="help-text text-danger"></span>
         </div>
     </div>
@@ -83,11 +79,12 @@
         else { 
         }
     });
-      $("#edit-destinations-form").on('submit', function(e){
+      $("#add-destinations-form").on('submit', function(e){
         e.preventDefault(); //keeps the form from behaving like a normal (non-ajax) html form
         var $form = $(this);
         var $url = $form.attr('action');
-        var formData = new FormData($("form#edit-destinations-form")[0]); 
+        var formData = new FormData($("form#add-destinations-form")[0]);
+        //submit a POST request with the form data
         //submits an array of key-value pairs to the form's action URL
      /*   $.post(url, formData, function(response)
         {

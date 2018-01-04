@@ -41,7 +41,7 @@
 
 {{--     <script src="{{ asset('css/sweetalert2.all.js') }}"></script>
  --}}
-
+    <script src="{{ asset('js/bootbox.min.js') }}"></script>
     <script src="{{ asset('js/sweetalert.min.js') }}"></script>
     <script src="{{ asset('js/axios.min.js') }}"></script>
     @if(Request::segment(2) == 'home')

@@ -8,18 +8,17 @@
                     <div class="col-md-12">
                         <section class="panel">
                             <header class="panel-heading">
-                               Destinations 
+                               Packages 
                                <button class="btn btn-sm btn-success pull-right add-data-btn"><i class="fa fa-plus"></i> Add</button>
                             </header>
                             <div class="panel-body table-responsive">
 
-                                <table class="table table-hover table-bordered" id="destinations-table">
+                                <table class="table table-hover table-bordered" id="packages-table">
                                     <thead>
                                         <tr>
                                             <th>#</th>
                                             <th>Name</th> 
-                                            <th>Description</th>
-                                            <th>Image</th> 
+                                            <th>Description</th> 
                                             <th>Actions</th> 
                                         </tr>
                                     </thead>
@@ -40,11 +39,11 @@
 @section('scripts')
 <script type="text/javascript">
   $(function(){
-    var table = $('#destinations-table').DataTable({
+    var table = $('#packages-table').DataTable({
       bProcessing: true,
       bServerSide: false,
       sServerMethod: "GET",
-      'ajax': '/admin/get-destinations',
+      'ajax': '/admin/get-packages',
       searching: true, 
       paging: true, 
       filtering:false, 
@@ -59,8 +58,7 @@
       "columns": [ 
         {data: 'row',  name: 'row', className: ' text-left',   searchable: true, sortable: true},
         {data: 'name',  name: 'name', className: 'col-md-3  text-left',   searchable: true, sortable: true}, 
-        {data: 'description',  name: 'description', className: 'col-md-6  text-left',   searchable: true, sortable: true}, 
-        {data: 'image',  name: 'image', className: 'col-md-2  text-left',   searchable: true, sortable: true},   
+        {data: 'description',  name: 'description', className: 'col-md-6  text-left',   searchable: true, sortable: true},  
         {data: 'actions',   name: 'actions', className: 'col-md-1 text-left',  searchable: false,  sortable: false},
       ], 
       'order': [[0, 'asc']]
@@ -72,7 +70,8 @@
           $("#addmodal").html('');
           $("#addmodal").modal();
           $.ajax({
-            url: '/admin/destinations/create',         
+            url: '/admin/packages/create',         
+            cache: false,
             success: function(data) {
               $("#addmodal").html(data);
             }
@@ -84,7 +83,8 @@
       $("#editmodal").html('');
       $("#editmodal").modal();
       $.ajax({
-        url: '/admin/destinations/'+that.dataset.id+'/edit',         
+        url: '/admin/packages/'+that.dataset.id+'/edit',  
+            cache: false,       
         success: function(data) {
           $("#editmodal").html(data);
         }
@@ -111,11 +111,11 @@
                  if(result){
                   var token = '{{csrf_token()}}'; 
                   $.ajax({
-                  url:'/admin/destinations/'+that.dataset.id,
+                  url:'/admin/packages/'+that.dataset.id,
                   type: 'post',
                   data: {_method: 'delete', _token :token},
                   success:function(result){
-                    $("#destinations-table").DataTable().ajax.url( '/admin/get-destinations' ).load();
+                    $("#packages-table").DataTable().ajax.url( '/admin/get-packages' ).load();
                     swal({
                         title: result.msg,
                         icon: "success"
