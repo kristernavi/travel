@@ -11,15 +11,15 @@ class AddUserBindInTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->enum('type', ['admin', 'hotel', 'tourist']);
-        });
+        // Schema::table('users', function (Blueprint $table) {
+        //     $table->enum('type', ['admin', 'hotel', 'tourist']);
+        // });
         Schema::table('package_details', function (Blueprint $table) {
-            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('user_id')->nullable();;
             $table->foreign('user_id')->references('id')->on('users');
         });
         Schema::table('destinations', function (Blueprint $table) {
-            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
         });
     }
