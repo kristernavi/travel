@@ -29,11 +29,29 @@ class LoginController extends Controller
 
     /**
      * Create a new controller instance.
-     *
-     * @return void
      */
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    protected function authenticated($request, $user)
+    {
+        if ('admin' == $user->type) {
+            return redirect('/admin/home');
+        } else {
+            if (!$user->actived) {
+                \Auth::logout();
+
+                return redirect('/login')->with('activate_message', 'Please wait until we verify your account. We active it as soon as possible. Thank');
+            }
+
+            return redirect('/business/home');
+        }
+    }
+
+    public function showLoginForm()
+    {
+        return view('login');
     }
 }

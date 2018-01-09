@@ -1,8 +1,16 @@
 <!-- header logo: style can be found in header.less -->
         <header class="header">
+
+            @if(Auth::user()->type == 'admin')
+
             <a href="{{ url('/admin/home') }}" class="logo">
                 Admin
             </a>
+            @else
+             <a href="{{ url('/business/home') }}" class="logo">
+                Business
+            </a>
+            @endif
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top" role="navigation">
                 <!-- Sidebar toggle button-->
@@ -13,7 +21,7 @@
                     <span class="icon-bar"></span>
                 </a>
                 <div class="navbar-right">
-                    <ul class="nav navbar-nav"> 
+                    <ul class="nav navbar-nav">
                         <!-- User Account: style can be found in dropdown.less -->
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -37,7 +45,7 @@
                                 </li>
  --}}
 {{--                                 <li class="divider"></li> --}}
-{{-- 
+{{--
                                     <li>
                                         <a href="#">
                                         <i class="fa fa-user fa-fw pull-right"></i>
@@ -51,11 +59,11 @@
 
                                         <li class="divider"></li> --}}
 
-                                        <li> 
+                                        <li>
                                             <a href="{{ route('logout') }}"
                                                 onclick="event.preventDefault();
                                                          document.getElementById('logout-form').submit();">
-                                                         <i class="fa fa-sign-out fa-fw pull-right"></i> 
+                                                         <i class="fa fa-sign-out fa-fw pull-right"></i>
                                                 Logout
                                             </a>
 
