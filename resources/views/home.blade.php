@@ -7,20 +7,22 @@
                     <ul class="slides">
                         <li>
                             <div class="banner-w3lstext">
-                                <h2>Enjoy The Beauty Of Nature</h2>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer gravida mauris non mi gravida, at sollicitudin odio efficitur. Mauris ex nulla, aliquam ornare facilisis nec convallis pulvinar a non nunc non leo sollicitudin</p>
+                                <h2>VISIT BOHOL PROVINCE</h2>
+                                <p>Lose yourself amidst the bizarre Chocolate Hills. Fall in love with the cuddly Tarsiers and make friends with smiling locals. Bohol has everything for the perfect gateway.
+                            
+                                </p>
                             </div>
                         </li>
                         <li>
                             <div class="banner-w3lstext">
-                                <h3>Lorem Ipsum Dolor Sit </h3>
-                                <p>Integer gravida mauris non mi gravida, at sollicitudin odio efficitur. Lorem ipsum dolor sit amet elit consectetur adipiscing. Mauris ex nulla, aliquam ornare facilisis nec convallis pulvinar a non nunc non leo sollicitudin</p>
+                                <h3>WHY BOHOL ?</h3>
+                                <p>Bohol is a small piece of the loss paradise with full of wonders and captivating sites. It is not just known locally but as well as globally. Truly, an ideal place for everyone because of its terrific tranquil ambiance.</p>
                             </div>
                         </li>
                         <li>
                             <div class="banner-w3lstext">
-                                <h3>Mauris Ex Nulla Aliquam </h3>
-                                <p>Mauris ex nulla, aliquam ornare facilisis nec convallis pulvinar a non nunc non leo sollicitudin, Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer gravida mauris non mi gravida, at sollicitudin odio efficitur. </p>
+                                <h3>FALLING IN LOVE WITH A WONDERLAND CALLED - - -BOHOL </h3>
+                                <p>People come here for the white beaches and beautiful nature with its diverse wildlife. The world class diving, waterfalls and hundreds of caves for spelunking. People come for the incredible history along with its colonial Spanish churches. </p>
                             </div>
                         </li>
                     </ul> 
@@ -35,17 +37,12 @@
         <div class="container">  
             <div class="welcome-grids"> 
                 <div class="col-md-7 welcome-w3left">
-                    <h4>Temporibus autem quibusdam</h4>
-                    <p>Voluptas assumenda est, omnis dolor repellendus. 
-                        Temporibus autem quibusdam et aut officiis debitis aut 
-                        rerum necessitatibus saepe.Nam libero tempore, cum soluta nobis est eligendi optio cumque 
-                        nihil impedit quo minus id quod maxime placeat facere possimus, 
-                        omnis voluptas assumenda est, omnis dolor repellendus.</p> <br>
-                    <p> Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe  possimus, 
-                        omnis voluptas assumenda est.</p> 
+                    <h4>TOURIST DESTINATIONS</h4>
+                    <p></p> <br>
+                    
                 </div>
                 <div class="col-md-5 welcome-w3right">
-                    <img src="{{ asset('web/images/img1.jpg') }}" class="img-responsive" alt="" />
+                    <img src="{{ asset('web/images/y.jpg') }}" class="img-responsive" alt="" />
                 </div>
                 <div class="clearfix"></div>
             </div>
@@ -60,8 +57,8 @@
                 </div>
             </div>
             <div class="col-md-6 col-sm-6 albums-right">
-                <h4>Our Latest Trips</h4>
-                <p>Duis nulla nulla, faucibus id diam ac, luctus sodales purus. Quisque nibh ipsum, venenatis vitae imperdiet eu, commodo nec sem. Ut accumsan tellus quis velit mattis sollicitudin. Etiam ullamcorper sapien sed purus suscipit, eu congue justo pulvinar. </p>
+                <h4>HOTELS</h4>
+                <p> </p>
             </div>
             <div class="clearfix"></div>
         </div> 
@@ -71,8 +68,8 @@
                 </div>
             </div>
             <div class="col-md-6 col-sm-6 albums1-left">
-                <h4>Our Latest Trips</h4>
-                <p>Duis nulla nulla, faucibus id diam ac, luctus sodales purus. Quisque nibh ipsum, venenatis vitae imperdiet eu, commodo nec sem. Ut accumsan tellus quis velit mattis sollicitudin. Etiam ullamcorper sapien sed purus suscipit, eu congue justo pulvinar. </p>
+                <h4>RESORTS</h4>
+                <p> </p>
             </div>
             <div class="clearfix"></div>
         </div>
@@ -89,8 +86,8 @@
                         <div class="icon-holder">
                             <span class="fa fa-gears icon" aria-hidden="true"></span>
                         </div>
-                        <h4 class="mission">Fugiat Quo</h4>
-                        <p class="description">Sceleris Prae </p>
+                        <h4 class="mission"></h4>
+                        <p class="description"> </p>
                     </div>
                 </div>
                 <div class="col-xs-6 col-md-3 services-grids">
@@ -98,8 +95,8 @@
                         <div class="icon-holder">
                             <span class="fa fa-group icon" aria-hidden="true"></span>
                         </div>
-                        <h4 class="mission">Voluptas </h4>
-                        <p class="description">Scele Praesent</p>
+                        <h4 class="mission"> </h4>
+                        <p class="description"></p>
                     </div>
                 </div>
                 <div class="col-xs-6 col-md-3 services-grids">
@@ -107,8 +104,8 @@
                         <div class="icon-holder">
                             <span class="fa fa-briefcase icon" aria-hidden="true"></span>
                         </div>
-                        <h4 class="mission">Quo fugiat</h4>
-                        <p class="description">Scele Praesent</p>
+                        <h4 class="mission"></h4>
+                        <p class="description"></p>
                     </div>
                 </div>  
                 <div class="col-xs-6 col-md-3 services-grids">
@@ -116,8 +113,8 @@
                         <div class="icon-holder">
                             <span class="fa fa-list-alt icon" aria-hidden="true"></span>
                         </div>
-                        <h4 class="mission">Voluptas</h4>
-                        <p class="description">Scele Aesent</p>
+                        <h4 class="mission"></h4>
+                        <p class="description"></p>
                     </div>
                 </div> 
                 <div class="clearfix"> </div>
@@ -129,7 +126,7 @@
     <div class="slid">
         <div class="container">
             <h4>Today Special</h4> 
-            <p>In malesuada accumsan felis, a imperdiet arcu blandit sed. Ut id faucibus eros. Fusce sed vulputate dui, non consectetur felis. Etiam id enim sem. Suspendisse commodo tempor magna </p>
+            <p></p>
         </div> 
     </div>
     <!-- //slid -->

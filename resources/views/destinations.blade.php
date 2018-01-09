@@ -19,17 +19,13 @@
             <div class="welcome-grids"> 
                 
                 <div class="col-md-7 welcome-w3left">
-                    <h4>Temporibus autem quibusdam</h4>
-                    <p>Voluptas assumenda est, omnis dolor repellendus. 
-                        Temporibus autem quibusdam et aut officiis debitis aut 
-                        rerum necessitatibus saepe.Nam libero tempore, cum soluta nobis est eligendi optio cumque 
-                        nihil impedit quo minus id quod maxime placeat facere possimus, 
-                        omnis voluptas assumenda est, omnis dolor repellendus.</p> <br>
-                    <p> Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe  possimus, 
-                        omnis voluptas assumenda est.</p> 
+                    <h4>CHOCOLATE HILLS</h4>
+                    <p>The greatest pride of Bohol. Basically, its a strange group of cuddly shaped hills, a lot of hills. There are more than 1000. Its not easy to describe the place; its like a piece of art.</p> <br>
+                    <p>An unbelievable scenery. They look extremely surreal. They are natural wonder!<p>
+                
                 </div>
                 <div class="col-md-5 welcome-w3right">
-                    <img src="{{ asset('web/images/img1.jpg') }}" class="img-responsive" alt="" />
+                    <img src="{{ asset('web/images/m.jpg') }}" class="img-responsive" alt="" />
                 </div>
                 <div class="clearfix"></div>
             </div>
