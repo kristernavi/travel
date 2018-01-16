@@ -4,9 +4,65 @@ namespace App\Http\Controllers;
 
 use App\Business;
 use App\User;
+use DB;
+use DataTables;
 
 class BusinessController extends Controller
 {
+    public function activate($id)
+    {
+        $user = \App\User::find($id);
+        $user->actived = !$user->actived;
+        $user->save();
+
+        return response()->json(['success' => true, 'msg' => 'Data Successfully updated!']);
+    }
+
+    public function all()
+    {
+        DB::statement(DB::raw('set @row:=0'));
+        $data = \App\User::selectRaw('*, users.id as u_id , @row:=@row+1 as row')->where('users.type', '!=', 'admin');
+
+        return DataTables::of($data)
+            ->AddColumn('row', function ($column) {
+                return $column->row;
+            })
+            ->AddColumn('name', function ($column) {
+                return $column->name;
+            })
+            ->AddColumn('email', function ($column) {
+                return $column->email;
+            })
+            ->AddColumn('status', function ($column) {
+                return $column->actived ? 'Active' : 'Inactive';
+            })
+
+            ->AddColumn('actions', function ($column) {
+                $label = 'Active';
+                if ($column->actived) {
+                    $label = 'Inactive';
+                }
+
+                return '<div class="btn-group table-dropdown">
+                            <button class="btn-xs btn btn-success active-data-btn" data-id="'.$column->u_id.'">
+                                <i class="fa fa-edit"></i>'.$label.'
+                            </button>
+
+
+                            <button class="btn-xs btn btn-danger delete-data-btn" data-id="'.$column->u_id.'">
+                                <i class="fa fa-trash-o"></i> Delete
+                            </button>
+                        </div>';
+            })
+            ->rawColumns(['actions'])
+            ->make(true);
+    }
+
+    public function index()
+    {
+        return view('admin.business');
+    }
+
     public function create()
     {
         return view('business.register')->with('message', 'Thank you for sign up We verify your account as soon as possible');

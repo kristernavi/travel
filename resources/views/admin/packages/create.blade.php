@@ -4,7 +4,7 @@
       <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
       <h4 class="modal-title">Add</h4>
     </div>
- 
+
 
     {!! Form::open(array('url' => url('/admin/packages'), 'method' => 'POST', 'id' => 'add-packages-form')) !!}
     <input type="hidden" name="type" value="packages">
@@ -13,22 +13,27 @@
           <label for="name">Name</label>
           <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" autocomplete="false">
           <span class="help-text text-danger"></span>
-      </div> 
-        <div class="form-group">
-            <label for="description">Description</label>
-            <textarea name="description" class="form-control" rows="4" placeholder="Description"></textarea> 
-          <span class="help-text text-danger"></span>
-        </div>    
-      <div class="select_hoder">
-        <label>Destinations</label>
-        <div class="row form-group">
-          <div class="col-md-5">
-            <select class="form-control" name="destination_id[]">
+      </div>
+      <div class="form-group">
+          <label for="name">Destination</label>
+      <select class="form-control" name="destination_id">
               <option selected disabled>Select Destination</option>
               @foreach($destinations as $destination)
                 <option value="{{ $destination->id }}">{{ $destination->name }}</option>
               @endforeach
             </select>
+       </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea name="description" class="form-control" rows="4" placeholder="Description"></textarea>
+          <span class="help-text text-danger"></span>
+        </div>
+      <div class="select_hoder">
+        <label>Destinations</label>
+        <div class="row form-group">
+          <div class="col-md-5">
+            <input type="text" name="item[]" class="form-control">
+
           </div>
           <div class="col-md-4">
             <input type="text" name="price[]" class="form-control text-right create_price" placeholder="0.00">
@@ -57,18 +62,18 @@
   </div>
 </div>
 
- 
+
 <script type="text/javascript">
-  $(function(){ 
+  $(function(){
       $("#add-packages-form").on('submit', function(e){
         e.preventDefault(); //keeps the form from behaving like a normal (non-ajax) html form
         var $form = $(this);
-        var $url = $form.attr('action'); 
+        var $url = $form.attr('action');
 
         $.ajax({
           type: 'POST',
           url: $url,
-          data: $("#add-packages-form").serialize(), 
+          data: $("#add-packages-form").serialize(),
           success: function(result){
             if(result.success){
               swal({
@@ -83,10 +88,10 @@
             }
             $("#packages-table").DataTable().ajax.url( '/admin/get-packages' ).load();
             $('.modal').modal('hide');
-            $('.modal').html(''); 
+            $('.modal').html('');
           },
           error: function(xhr,status,error){
-            var response_object = JSON.parse(xhr.responseText); 
+            var response_object = JSON.parse(xhr.responseText);
             associate_errors(response_object.errors, $form);
           }
         });
@@ -94,14 +99,9 @@
       });
 
 
-  var row_str = '<div class="row form-group">'+
+  var row_str = '<div class="row form-group items-row">'+
                   '<div class="col-md-5">'+
-                    '<select class="form-control" name="destination_id[]">'+
-                      '<option selected disabled>Select Destination</option>'+
-                      '@foreach($destinations as $destination)'+
-                        '<option value="{{ $destination->id }}">{{ $destination->name }}</option>'+
-                      '@endforeach'+
-                    '</select>'+
+                    ' <input type="text" name="item[]" class="form-control">'+
                   '</div>'+
                   '<div class="col-md-4">'+
                     '<input type="text" name="price[]" class="form-control text-right create_price" placeholder="0.00">'+
@@ -115,7 +115,8 @@
         $('.select_hoder').append(row_str);
       });
       $(document).off('click', '.del-row-btn').on('click', '.del-row-btn', function(){
-        if($('.select_hoder row').length > 1){
+        console.log($('.items-row').length);
+        if($('.items-row').length > 0){
           $(this).parent().parent().remove();
         }
       });
@@ -127,7 +128,7 @@
             total+=parseFloat($(this).val());
           }
         });
-        $('.total-price').val(parseFloat(total).toFixed(2)); 
+        $('.total-price').val(parseFloat(total).toFixed(2));
       });
-  });  
- </script> 
+  });
+ </script>

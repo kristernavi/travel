@@ -25,7 +25,11 @@ class PackagesController extends Controller
      */
     public function create()
     {
-        $destinations = \App\Destination::all();
+        if ('admin' == \Auth::user()->type) {
+            $destinations = \App\Destination::all();
+        } else {
+            $destinations = \App\Destination::where('user_id', \Auth::id())->get();
+        }
 
         return view('admin.packages.create')->with('destinations', $destinations);
     }
@@ -46,13 +50,13 @@ class PackagesController extends Controller
             $package->name = $request->get('name');
             $package->description = $request->get('description');
             $package->user_id = \Auth::id();
+            $package->destination_id = $request->get('destination_id');
             $package->min = $request->get('min');
             $package->save();
 
-            for ($i = 0; $i < sizeof($request->get('destination_id')); ++$i) {
+            for ($i = 0; $i < sizeof($request->get('items')); ++$i) {
                 $destination = new \App\PackageDetails();
                 $destination->package_id = $package->id;
-                $destination->destination_id = $request->get('destination_id')[$i];
                 $destination->price = $request->get('price')[$i];
                 $destination->save();
             }

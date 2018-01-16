@@ -24,11 +24,10 @@ Route::get('/', function () {
 Route::get('/business/signup', 'BusinessController@create')->name('business-register');
 Route::post('/business/signup', 'BusinessController@store');
 
-Route::get('/destinations', function () {
-    $destinations = \App\Destination::all();
+Route::get('/destinations-new', 'HomeDestinationsController@index');
+Route::get('/destination/{id}', 'HomeDestinationsController@show');
 
-    return view('destinations')->with('destinations', $destinations);
-});
+Route::get('/destinations', 'HomeDestinationsController@index');
 
 /* END OF URL **/
 
@@ -40,6 +39,11 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     //Links for users functionalities
     Route::resource('/users', 'UsersController');
     Route::get('/get-users', 'UsersController@all'); //get-all users returned as json format
+
+    //Links for business functionalities
+    Route::get('/business-account', 'BusinessController@index');
+    Route::get('/business-active/{id}', 'BusinessController@activate');
+    Route::get('/get-business', 'BusinessController@all'); //get-all users returned as json format
 
     //Links for destinations functionalities
     Route::resource('/destinations', 'DestinationsController');

@@ -34,6 +34,11 @@
                         <i class="fa fa-users"></i> <span>Users</span>
                     </a>
                 </li>
+                 <li class=" {{Request::segment(2) == 'business-account' ? 'active':''}}">
+                    <a href="{{ url($parent.'/business-account') }}">
+                        <i class="fa fa-users"></i> <span>Business Accounts</span>
+                    </a>
+                </li>
                 @endif
 
                 <li class=" {{Request::segment(2) == 'destinations' ? 'active':''}}">
