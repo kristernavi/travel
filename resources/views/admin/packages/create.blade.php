@@ -14,15 +14,6 @@
           <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" autocomplete="false">
           <span class="help-text text-danger"></span>
       </div>
-      <div class="form-group">
-          <label for="name">Destination</label>
-      <select class="form-control" name="destination_id">
-              <option selected disabled>Select Destination</option>
-              @foreach($destinations as $destination)
-                <option value="{{ $destination->id }}">{{ $destination->name }}</option>
-              @endforeach
-            </select>
-       </div>
         <div class="form-group">
             <label for="description">Description</label>
             <textarea name="description" class="form-control" rows="4" placeholder="Description"></textarea>
@@ -32,8 +23,12 @@
         <label>Destinations</label>
         <div class="row form-group">
           <div class="col-md-5">
-            <input type="text" name="item[]" class="form-control">
-
+            <select class="form-control" name="destination_id[]">
+              <option selected disabled>Select Destination</option>
+              @foreach($destinations as $destination)
+                <option value="{{ $destination->id }}">{{ $destination->name }}</option>
+              @endforeach
+            </select>
           </div>
           <div class="col-md-4">
             <input type="text" name="price[]" class="form-control text-right create_price" placeholder="0.00">
@@ -99,9 +94,14 @@
       });
 
 
-  var row_str = '<div class="row form-group items-row">'+
+  var row_str = '<div class="row form-group">'+
                   '<div class="col-md-5">'+
-                    ' <input type="text" name="item[]" class="form-control">'+
+                    '<select class="form-control" name="destination_id[]">'+
+                      '<option selected disabled>Select Destination</option>'+
+                      '@foreach($destinations as $destination)'+
+                        '<option value="{{ $destination->id }}">{{ $destination->name }}</option>'+
+                      '@endforeach'+
+                    '</select>'+
                   '</div>'+
                   '<div class="col-md-4">'+
                     '<input type="text" name="price[]" class="form-control text-right create_price" placeholder="0.00">'+
@@ -115,8 +115,7 @@
         $('.select_hoder').append(row_str);
       });
       $(document).off('click', '.del-row-btn').on('click', '.del-row-btn', function(){
-        console.log($('.items-row').length);
-        if($('.items-row').length > 0){
+        if($('.select_hoder row').length > 1){
           $(this).parent().parent().remove();
         }
       });
