@@ -28,7 +28,7 @@ class PackagesController extends Controller
         if ('admin' == \Auth::user()->type) {
             $destinations = \App\Destination::all();
         } else {
-            $destinations = \App\Destination::where('user_id', \Auth::id())->get();
+            $destinations = \Auth::user()->destinations;
         }
 
         return view('admin.packages.create')->with('destinations', $destinations);
@@ -50,13 +50,14 @@ class PackagesController extends Controller
             $package->name = $request->get('name');
             $package->description = $request->get('description');
             $package->user_id = \Auth::id();
-            $package->destination_id = $request->get('destination_id');
             $package->min = $request->get('min');
             $package->save();
 
-            for ($i = 0; $i < sizeof($request->get('items')); ++$i) {
+            for ($i = 0; $i < sizeof($request->get('destination_id')); ++$i) {
                 $destination = new \App\PackageDetails();
                 $destination->package_id = $package->id;
+                $destination->destination_id = $request->get('destination_id')[$i];
+                $destination->user_id = $package->user_id;
                 $destination->price = $request->get('price')[$i];
                 $destination->save();
             }
@@ -162,11 +163,7 @@ class PackagesController extends Controller
     public function all()
     {
         DB::statement(DB::raw('set @row:=0'));
-        if ('admin' == \Auth::user()->type) {
-            $data = \App\Packages::selectRaw('*, @row:=@row+1 as row');
-        } else {
-            $data = \App\Packages::selectRaw('*, @row:=@row+1 as row')->where('user_id', \Auth::id());
-        }
+        $data = \App\Packages::selectRaw('*, @row:=@row+1 as row');
 
         return DataTables::of($data)
             ->AddColumn('row', function ($column) {

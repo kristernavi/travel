@@ -73,23 +73,42 @@
         <div class="container">
             <div class="welcome-grids">
                 <div class="container">
+                    <div class="col-sm-6 col-sm-offset-3">
+            <div id="imaginary_container">
+                <form>
+                <div class="input-group stylish-input-group">
+                    <input type="text" class="form-control"  placeholder="Search Destinations" name="keyword">
+                    <span class="input-group-addon">
+                        <button type="submit">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                </div>
+                </form>
+            </div>
+        </div>
                 <div id="blog" class="row">
 
-
-
-                    @foreach ($destinations as $destination)
+                    @forelse ($details as $detail)
+                    @php
+                    $package = $detail->master;
+                    @endphp
                         <div class="col-md-10 col-lg-offset-1 blogShort">
-                     <h1>{{ $destination->name }}</h1>
-                     <img src="{{  asset('storage/'.ltrim($destination->image, 'public')) }}" alt="post img" class="pull-left img-responsive thumb margin10 img-thumbnail" height="150" width="150">
+                     <h1>{{ $package->name }}</h1>
+                     <img src="{{  asset('storage/'.ltrim($detail->destination->image, 'public')) }}" alt="post img" class="pull-left img-responsive thumb margin10 img-thumbnail" height="150" width="150">
 
-                         <em>Owned By: <a href="{{ $destination->user->business->website ?  $destination->user->business->website: '#'}}">{{ $destination->user->business->name }}</a></em>
+                         <em>Owned By: <a href="{{ $package->user->business ?  $package->user->business->website: '#'}}">{{ $package->user->business ? $package->user->business->name: 'Admin'}}</a></em>
                      <article><p class="description">
-                         {{ substr($destination->description, 0, 250) }}...
+                         {{ substr($package->description, 0, 250) }}...
 
                          </p></article>
-                     <a class="btn btn-blog pull-right marginBottom10" href="{{ url('destination/'.$destination->id)}}">READ MORE</a>
+                     <a class="btn btn-blog pull-right marginBottom10" href="{{ url('package/'.$package->id)}}">READ MORE</a>
                  </div>
-                    @endforeach
+
+
+                     @empty
+                        <div>No result</div>
+                    @endforelse
 
                <div class="col-md-12 gap10"></div>
              </div>

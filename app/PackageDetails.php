@@ -8,11 +8,16 @@ class PackageDetails extends Model
 {
     public function master()
     {
-        return $this->belongsTo('\App\Packages');
+        return $this->belongsTo('\App\Packages', 'package_id');
     }
 
     public function destination()
     {
         return $this->belongsTo('\App\Destination');
+    }
+
+    public function scopeUniquePackage($query)
+    {
+        return $query->groupBy('package_id');
     }
 }

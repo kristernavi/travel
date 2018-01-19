@@ -31,4 +31,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Business::class);
     }
+
+    public function destinations()
+    {
+        return $this->hasMany(Destination::class);
+    }
 }
