@@ -56,6 +56,7 @@ class DestinationsController extends Controller
         $destination->description = $request->get('description');
         $destination->link = $request->get('link');
         $destination->image = $image;
+        $destination->municipality_id = $request->get('municipality_id');
         $destination->user_id = \Auth::id();
         $destination->long = $request->get('long');
         $destination->lat = $request->get('lat');
