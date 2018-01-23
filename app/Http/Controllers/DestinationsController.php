@@ -45,6 +45,7 @@ class DestinationsController extends Controller
             'image' => 'nullable|image|mimes:jpg,jpeg,png,svg',
             'long' => 'nullable|string',
             'lat' => 'nullable|string',
+            'municipality_id' => 'required',
         ]);
         $image = '';
         if ($request->hasFile('image')) {
