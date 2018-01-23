@@ -4,8 +4,8 @@
       <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
       <h4 class="modal-title">Add Destination</h4>
     </div>
- 
- 
+
+
     {!! Form::open(array('url' => url('admin/destinations'), 'enctype' => 'multipart/form-data', 'method' => 'POST', 'id' => 'add-destinations-form', 'files' => true)) !!}
     <div class="modal-body">
         <div class="form-group">
@@ -15,9 +15,9 @@
         </div>
         <div class="form-group">
             <label for="description">Description</label>
-            <textarea name="description" class="form-control" rows="4" placeholder="Description"></textarea> 
+            <textarea name="description" class="form-control" rows="4" placeholder="Description"></textarea>
           <span class="help-text text-danger"></span>
-        </div>   
+        </div>
 
         <div class="form-group">
             <label for="name">Image</label>
@@ -38,15 +38,11 @@
           <span class="help-text text-danger"></span>
         </div>
         <div class="form-group">
-            <label for="long">Longitude</label>
-            <input type="text" class="form-control" id="long" name="long" placeholder="Enter longitude" autocomplete="false">
+            <label for="long">Municipality: </label>
+             {{ Form::select('municipality_id', \App\Municipality::pluck('name','id'), null, ['class' => 'form-control']) }}
           <span class="help-text text-danger"></span>
         </div>
-        <div class="form-group">
-            <label for="lat">Lattude</label>
-            <input type="text" class="form-control" id="lat" name="lat" placeholder="Enter latitude" autocomplete="false">
-          <span class="help-text text-danger"></span>
-        </div>
+
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -57,17 +53,17 @@
   </div>
 </div>
 
- 
+
 <script type="text/javascript">
-  $(function(){ 
+  $(function(){
 
     $(document).off('click', '.upload_btn').on('click', '.upload_btn', function(){
-        $('.input_image').click(); 
+        $('.input_image').click();
     });
 
     $(document).off('change',  '#image').on('change',  '#image', function(evt){
         var tgt = evt.target || window.event.srcElement,
-            files = tgt.files; 
+            files = tgt.files;
         if (FileReader && files && files.length) {
             var fr = new FileReader();
             fr.onload = function () {
@@ -75,8 +71,8 @@
                 $('.upload_btn').html('Change Photo');
             }
             fr.readAsDataURL(files[0]);
-        } 
-        else { 
+        }
+        else {
         }
     });
       $("#add-destinations-form").on('submit', function(e){
@@ -119,11 +115,11 @@
             $('.modal').modal('hide');
           },
           error: function(xhr,status,error){
-            var response_object = JSON.parse(xhr.responseText); 
+            var response_object = JSON.parse(xhr.responseText);
             associate_errors(response_object.errors, $form);
           }
         });
 
       });
-  });  
- </script> 
+  });
+ </script>
