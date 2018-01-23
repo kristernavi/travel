@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Destination;
 use App\Municipality;
 use App\PackageDetails;
+use App\Packages;
 
 class HomeDestinationsController extends Controller
 {
@@ -23,8 +24,8 @@ class HomeDestinationsController extends Controller
 
     public function show($id)
     {
-        $destination = Destination::find($id);
+        $package = Packages::findOrFail($id);
 
-        return view('destinations', compact('destination'));
+        return view('destinations', compact('package'));
     }
 }

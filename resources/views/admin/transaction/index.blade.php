@@ -39,6 +39,7 @@
                                             <th>Name</th>
                                             <th>Email</th>
                                             <th>Address</th>
+                                            <th>Status</th>
                                             <th>Mobile Number</th>
                                             <th>Phone Number</th>
                                         </tr>
@@ -64,7 +65,7 @@
       bProcessing: true,
       bServerSide: false,
       sServerMethod: "GET",
-      'ajax': '/admin/get-customers',
+      'ajax': '/admin/get-transcations',
       searching: true,
       paging: true,
       filtering:false,
@@ -77,12 +78,13 @@
         }
       },
       "columns": [
-        {data: 'row',  name: 'row', className: ' text-left',   searchable: true, sortable: true},
-        {data: 'name',  name: 'name', className: 'col-md-5  text-left',   searchable: true, sortable: true},
-        {data: 'email',  name: 'email', className: 'col-md-4 text-left',  searchable: true, sortable: true},
-        {data: 'address',  name: 'address', className: 'col-md-4 text-left',  searchable: true, sortable: true},
-        {data: 'mobile',   name: 'mobile', className: 'col-md-2 text-left',  searchable: false,  sortable: false},
-        {data: 'phone',   name: 'phone', className: 'col-md-2 text-left',  searchable: false,  sortable: false},
+        {data: 'date',  name: 'date', className: 'col-md-2 text-left',   searchable: true, sortable: true},
+        {data: 'name',  name: 'name', className: 'col-md-2  text-left',   searchable: true, sortable: true},
+        {data: 'email',  name: 'email', className: 'col-md-2 text-left',  searchable: true, sortable: true},
+        {data: 'package',  name: 'package', className: 'col-md-2 text-left',  searchable: true, sortable: true},
+        {data: 'status',   name: 'status', className: 'col-md-1 text-left',  searchable: false,  sortable: false},
+        {data: 'amount',   name: 'amount', className: 'col-md-1 text-center',  searchable: false,  sortable: false},
+        {data: 'actions',   name: 'actions', className: 'col-md-2 text-left',  searchable: false,  sortable: false},
       ],
       'order': [[0, 'asc']]
     });

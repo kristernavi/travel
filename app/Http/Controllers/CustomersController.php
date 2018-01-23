@@ -135,7 +135,7 @@ class CustomersController extends Controller
     public function all()
     {
         DB::statement(DB::raw('set @row:=0'));
-        $data = \App\User::selectRaw('*, users.id as u_id , @row:=@row+1 as row')->where('users.type', 'customers');
+        $data = \App\Customer::selectRaw('*, customers.id as u_id , @row:=@row+1 as row');
 
         return DataTables::of($data)
             ->AddColumn('row', function ($column) {
@@ -144,17 +144,6 @@ class CustomersController extends Controller
             ->AddColumn('name', function ($column) {
                 return $column->name;
             })
-            ->AddColumn('actions', function ($column) {
-                return '<div class="btn-group table-dropdown">
-                            <button class="btn-xs btn btn-primary edit-data-btn" data-id="'.$column->u_id.'">
-                                <i class="fa fa-edit"></i> Edit
-                            </button>
-                            <button class="btn-xs btn btn-danger delete-data-btn" data-id="'.$column->u_id.'">
-                                <i class="fa fa-trash-o"></i> Delete
-                            </button>
-                        </div>';
-            })
-            ->rawColumns(['actions'])
             ->make(true);
     }
 }

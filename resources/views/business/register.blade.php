@@ -34,6 +34,11 @@
     </div>
     @endif
 
+@if(session('success'))
+  <div class="alert alert-warning">
+       <strong> {{ session('success')}} </strong> <br>
+    </div>
+@endif
                 <form method="POST" action="{{ url('business/signup')}}">
                   {{ csrf_field()}}
   <div class="form-group col-md-6">

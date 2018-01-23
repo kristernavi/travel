@@ -11,14 +11,14 @@ class Card extends Model
     {
         $remain = $this->balance - $paidAmount;
         if ($remain < 0) {
-            throw new Exception('Error Processing Request', 422);
+            throw new \Exception('Error Processing Request', 422);
         }
     }
 
     protected function active()
     {
         if (!$this->actived) {
-            throw new Exception('Error Processing Request', 422);
+            throw new \Exception('Error Processing Request', 422);
         }
     }
 
@@ -27,7 +27,7 @@ class Card extends Model
         $now = Carbon::now();
         $expire_date = Carbon::create($this->expire_date);
         if ($now->diffInDays($expire_date) < 0) {
-            throw new Exception('Error Processing Request', 422);
+            throw new \Exception('Error Processing Request', 422);
         }
     }
 

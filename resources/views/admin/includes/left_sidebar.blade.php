@@ -56,8 +56,8 @@
                         <i class="fa fa-users"></i> <span>Customers</span>
                     </a>
                 </li>
-                <li>
-                    <a href="javascript:;">
+                <li class=" {{Request::segment(2) == 'transactions' ? 'active':''}}">
+                    <a href="{{ url($parent.'/transactions') }}">
                         <i class="fa fa-money"></i> <span>Transactions</span>
                     </a>
                 </li>

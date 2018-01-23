@@ -17,23 +17,26 @@
         <div class="w3lalbums-grid">
             <div class="col-md-12 albums-right padding-0" style="background: #f6f7fb;padding-top: 2em; padding-bottom: 1em; ">
                 <div class="container">
-                    <h4>Destinations</h4>
+                    <h4>{{ $package->name}}</h4>
                 </div>
             </div>
             <div class="clearfix"></div>
         </div>
     </div>
+    @foreach ($package->details as $index => $detail)
+
+    @if ($index % 2 == 0)
     <div class="welcome">
         <div class="container">
             <div class="welcome-grids">
 
                 <div class="col-md-7 welcome-w3left">
-                    <h4>{{ $destination->name}}</h4>
-                    {{ $destination->description}}
+                    <h4>{{ $detail->destination->name}}</h4>
+                    {{ $detail->destination->description}}
 
                 </div>
                 <div class="col-md-5 welcome-w3right">
-                    <img src="{{  asset('storage/'.ltrim($destination->image, 'public')) }}" class="img-responsive" alt="" />
+                    <img src="{{  asset('storage/'.ltrim($detail->destination->image, 'public')) }}" class="img-responsive" alt="" />
                 </div>
                 <div class="clearfix"></div>
 
@@ -41,12 +44,35 @@
             </div>
         </div>
     </div>
+     @else
+     <div class="welcome">
+        <div class="container">
+            <div class="welcome-grids">
+
+                <div class="col-md-5 welcome-w3right">
+                   <img src="{{  asset('storage/'.ltrim($detail->destination->image, 'public')) }}" class="img-responsive" alt="" />
+
+
+                </div>
+                <div class="col-md-7 welcome-w3left">
+                     <h4>{{ $detail->destination->name}}</h4>
+                    {{ $detail->destination->description}}
+                </div>
+                <div class="clearfix"></div>
+
+
+            </div>
+        </div>
+    </div>
+     @endif
+    @endforeach
+
      <div class="row bg-light navbar-fixed-bottom" id="sticker" >
     <div class="container text-center p-3">
-        <strong>Are you interested? </strong>
-        <button class="btn btn-success text-dark open-subscribe ml-5 mr-5">
+        <strong>Are you interested? As low as PHP {{ number_format($package->details->sum('price'),2)}} </strong>
+        <a class="btn btn-success text-dark open-subscribe ml-5 mr-5" href="{{ url('new-book/'. $package->id)}}">
           Book Now
-        </button>
+        </a>
     </div>
   </div>
     <!-- //welcome -->

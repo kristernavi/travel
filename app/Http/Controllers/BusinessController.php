@@ -103,6 +103,6 @@ class BusinessController extends Controller
         $business->phone = request('phone');
         $business->save();
 
-        return redirect()->back()->with('message', 'Thank you for sign up We verify your account as soon as possible');
+        return back()->withSuccess('Thank you for sign up We verify your account as soon as possible');
     }
 }

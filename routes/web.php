@@ -21,11 +21,15 @@ Route::get('logout', 'Auth\LoginController@logout');
 Route::get('/', function () {
     return view('home');
 });
+
+Route::get('new-book/{id}', 'BookController@create');
+Route::post('new-book/{id}', 'BookController@store');
+
 Route::get('/business/signup', 'BusinessController@create')->name('business-register');
 Route::post('/business/signup', 'BusinessController@store');
 
 Route::get('/destinations-new', 'HomeDestinationsController@index');
-Route::get('/destination/{id}', 'HomeDestinationsController@show');
+Route::get('/package/{id}', 'HomeDestinationsController@show');
 
 Route::get('/destinations', 'HomeDestinationsController@index');
 
@@ -56,6 +60,9 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     //Links for customers functionalities
     Route::resource('/customers', 'CustomersController');
     Route::get('/get-customers', 'CustomersController@all'); //get-all customers returned as json format
+
+    Route::get('/get-transcations', 'AdminBookController@all');
+    Route::get('/transactions', 'AdminBookController@index');
 });
 
 /* END OF URL **/
