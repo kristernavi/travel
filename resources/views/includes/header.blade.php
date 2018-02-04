@@ -20,10 +20,20 @@
 							<li><a href="{{ url('') }}" class="w3ls-hover {{ Request::segment(1) == '' ? ' active':'' }}">Home</a></li>
 							<li><a href="#" class="btn w3ls-hover">About</a></li>
 							<li><a href="{{ url('destinations') }}" class="btn w3ls-hover {{ Request::segment(1) == 'destinations' ? ' active':'' }}">Destinations</a></li>
-							<li><a href="#" class="btn w3ls-hover">Packages</a></li>
 							<li><a href="#" class="btn w3ls-hover">Contact</a></li>
-							<li><a href="{{ route('business-register')}}" class="btn w3ls-hover">Register Your Business</a></li>
-							<li><a href="{{ route('login') }}" class="btn w3ls-hover">Login</a></li>
+							<li><a href="{{ route('business-register')}}" class="btn w3ls-hover">Register</a></li>
+							@guest
+    						<li><a href="{{ route('login') }}" class="btn w3ls-hover" >Login</a></li>
+							@endguest
+							@auth
+						    <li><a href="{{ route('logout') }}" class="btn w3ls-hover"  onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">Logout</a></li>
+						    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            {{ csrf_field() }}
+                                        </form>
+							@endauth
+
+
 
 						</ul>
 						<div class="clearfix"> </div>

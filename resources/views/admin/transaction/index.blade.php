@@ -8,40 +8,23 @@
                     <div class="col-md-12">
                         <section class="panel">
                             <header class="panel-heading">
-                                Customers
-                               <button class="btn btn-sm btn-success pull-right add-data-btn"><i class="fa fa-plus"></i> Add </button>
+                                Book
+
                             </header>
                             <div class="panel-body table-responsive">
 
-                                @if(session('status') !='')
-                                    @if( !is_null(session('status')) )
-                                        <div class="alert alert-success">
-                                            <button data-dismiss="alert" class="close close-sm" type="button">
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                            <strong>Success!</strong> User added successfully.
-                                        </div>
-                                    @else
-                                        <div class="alert alert-block alert-danger">
-                                            <button data-dismiss="alert" class="close close-sm" type="button">
-                                                <i class="fa fa-times"></i>
-                                            </button>
-                                            <strong>Error!</strong> An error occured while adding user.
-                                        </div>
-                                    @endif
-                                    @endif
 
 
                                 <table class="table table-hover table-bordered" id="customers-table">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
+                                            <th>Date Reserve</th>
                                             <th>Name</th>
                                             <th>Email</th>
-                                            <th>Address</th>
+                                            <th>Package</th>
                                             <th>Status</th>
-                                            <th>Mobile Number</th>
-                                            <th>Phone Number</th>
+                                            <th>Amount</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -54,8 +37,7 @@
 
                 </div>
 
-  <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;" id="addmodal"></div>
-  <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;" id="editmodal"></div>
+
 
 @endsection
 @section('scripts')
@@ -101,25 +83,13 @@
             }
           });
     });
-    $(document).off('click','.edit-data-btn').on('click','.edit-data-btn', function(e){
-      e.preventDefault();
-      var that = this;
-      $("#editmodal").html('');
-      $("#editmodal").modal();
-      $.ajax({
-        url: '/admin/customers/'+that.dataset.id+'/edit',
-        success: function(data) {
-          $("#editmodal").html(data);
-        }
-      });
-    });
-    $(document).off('click','.delete-data-btn').on('click','.delete-data-btn', function(e){
+    $(document).off('click','.reject-data-btn').on('click','.reject-data-btn', function(e){
       e.preventDefault();
       var that = this;
             bootbox.confirm({
-              title: "Confirm Delete Data?",
+              title: "Reject  Reservation?",
               className: "del-bootbox",
-              message: "Are you sure you want to delete record?",
+              message: "Are you sure you want to reject record?",
               buttons: {
                   confirm: {
                       label: 'Yes',
@@ -134,11 +104,55 @@
                  if(result){
                   var token = '{{csrf_token()}}';
                   $.ajax({
-                  url:'/admin/customers/'+that.dataset.id,
+                  url:'/admin/reservation-reject/'+that.dataset.id,
                   type: 'post',
-                  data: {_method: 'delete', _token :token},
+                  data: {_token :token},
                   success:function(result){
-                    $("#customers-table").DataTable().ajax.url( '/admin/get-customers' ).load();
+                    $("#customers-table").DataTable().ajax.url( '/admin/get-transcations' ).load();
+                    if(result.success)
+                    {
+                    swal({
+                        title: result.msg,
+                        icon: "success"
+                      });
+                  }else{
+                    swal({
+                        title: result.msg,
+                        icon: "error"
+                      });
+                  }
+                  }
+                  });
+                 }
+              }
+          });
+    });
+    $(document).off('click','.confirm-data-btn').on('click','.confirm-data-btn', function(e){
+      e.preventDefault();
+      var that = this;
+            bootbox.confirm({
+              title: "Confirm  Reservation?",
+              className: "del-bootbox",
+              message: "Are you sure you want to confirm record?",
+              buttons: {
+                  confirm: {
+                      label: 'Yes',
+                      className: 'btn-success'
+                  },
+                  cancel: {
+                      label: 'No',
+                      className: 'btn-danger'
+                  }
+              },
+              callback: function (result) {
+                 if(result){
+                  var token = '{{csrf_token()}}';
+                  $.ajax({
+                  url:'/admin/reservation-confirm/'+that.dataset.id,
+                  type: 'post',
+                  data: {_token :token},
+                  success:function(result){
+                    $("#customers-table").DataTable().ajax.url( '/admin/get-transcations' ).load();
                     swal({
                         title: result.msg,
                         icon: "success"

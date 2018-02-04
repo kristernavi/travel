@@ -6,7 +6,22 @@
                         <div class="sm-st clearfix">
                             <span class="sm-st-icon st-red"><i class="fa fa-users"></i></span>
                             <div class="sm-st-info">
-                                <span>3200</span> Customers
+                                @php
+                                if(Auth::user()->type == 'admin'){
+                                    $customer = \App\Book::count();
+                                    $services = \App\Destination::count();
+                                    $packages = \App\Packages::count();
+                                    $book = \App\Book::where('actioned',0)->count();
+                                }
+                                else{
+                                    $ids = Auth::user()->packages->pluck('id');
+                                    $customer = \App\Book::whereIn('package_id', $ids)->count();
+                                    $services = Auth::user()->destinations->count();
+                                    $packages = Auth::user()->packages->count();
+                                    $book = \App\Book::where('actioned', 0)->whereIn('package_id', $ids)->count();
+                                }
+                                @endphp
+                                <span>{{ $customer}}</span> Customers
                             </div>
                         </div>
                     </div>
@@ -14,7 +29,7 @@
                         <div class="sm-st clearfix">
                             <span class="sm-st-icon st-violet"><i class="fa fa-map-marker"></i></span>
                             <div class="sm-st-info">
-                                <span>2200</span> Destinations
+                                <span>{{ $services }}</span> Services
                             </div>
                         </div>
                     </div>
@@ -22,7 +37,7 @@
                         <div class="sm-st clearfix">
                             <span class="sm-st-icon st-blue"><i class="fa fa-paperclip"></i></span>
                             <div class="sm-st-info">
-                                <span>100,320</span> Packages
+                                <span>{{ $packages }}</span> Packages
                             </div>
                         </div>
                     </div>
@@ -30,7 +45,7 @@
                         <div class="sm-st clearfix">
                             <span class="sm-st-icon st-green"><i class="fa fa-dollar"></i></span>
                             <div class="sm-st-info">
-                                <span>4567</span> Transactions
+                                <span>{{ $book }}</span> Books
                             </div>
                         </div>
                     </div>
@@ -39,9 +54,9 @@
                 <!-- Main row -->
                 <div class="row">
 
-                    
+
                     <div class="col-md-8">
-                        <section class="panel">
+                      {{--   <section class="panel">
                             <header class="panel-heading">
                                 Work Progress
                             </header>
@@ -133,13 +148,13 @@
                                     </tbody>
                                 </table>
                             </div>
-                        </section>
+                        </section> --}}
 
                     </div>
                     <div class="col-lg-4">
 
                         <!--chat start-->
-                        <section class="panel">
+                       {{--  <section class="panel">
                             <header class="panel-heading">
                                 Notifications
                             </header>
@@ -196,9 +211,9 @@
                                 </div>
 
                             </div>
-                        </section>
+                        </section> --}}
 
                     </div>
 
-                </div>  
+                </div>
 @endsection

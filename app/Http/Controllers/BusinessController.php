@@ -81,7 +81,7 @@ class BusinessController extends Controller
             'license' => 'nullable|min:3',
             'webiste' => 'nullable|regex:@^(http\:\/\/|https\:\/\/)?([a-z0-9][a-z0-9\-]*\.)+[a-z0-9][a-z0-9\-]*$@i',
             'address' => 'required',
-            'mobile' => 'required|integer',
+            'mobile' => 'required|number',
             'phone' => 'nullable',
             'password' => 'required|string|min:6|confirmed',
         ]);

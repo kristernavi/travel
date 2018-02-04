@@ -135,7 +135,14 @@ class CustomersController extends Controller
     public function all()
     {
         DB::statement(DB::raw('set @row:=0'));
-        $data = \App\Customer::selectRaw('*, customers.id as u_id , @row:=@row+1 as row');
+        if ('admin' == \Auth::user()->type) {
+            $data = \App\Customer::selectRaw('*, customers.id as u_id , @row:=@row+1 as row');
+        } else {
+            $ids = \Auth::user()->packages->pluck('id');
+
+            $book = \App\Book::whereIn('package_id', $ids)->pluck('customer_id');
+            $data = \App\Customer::whereIn('id', $book)->selectRaw('*, customers.id as u_id , @row:=@row+1 as row');
+        }
 
         return DataTables::of($data)
             ->AddColumn('row', function ($column) {

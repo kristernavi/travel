@@ -16,6 +16,9 @@ Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 Route::get('logout', 'Auth\LoginController@logout');
+Route::get('location', function () {
+    return \App\Municipality::orWhere('name', 'like', '%'.request('name').'%')->get();
+});
 
 /* URLS FOR PUBLIC/HOMEPAGE SIDE **/
 Route::get('/', function () {
@@ -63,6 +66,9 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 
     Route::get('/get-transcations', 'AdminBookController@all');
     Route::get('/transactions', 'AdminBookController@index');
+
+    Route::post('/reservation-confirm/{id}', 'AdminBookController@confirm');
+    Route::post('reservation-reject/{id}', 'AdminBookController@reject');
 });
 
 /* END OF URL **/
@@ -83,6 +89,10 @@ Route::middleware('auth')->prefix('business')->group(function () {
     //Links for customers functionalities
     Route::resource('/customers', 'CustomersController');
     Route::get('/get-customers', 'CustomersController@all'); //get-all customers returned as json format
+    Route::get('/get-transcations', 'AdminBookController@all');
+    Route::get('/transactions', 'AdminBookController@index');
+
+    Route::get('/card', 'BusinessCardController@index');
 });
 
 /* END OF URL **/

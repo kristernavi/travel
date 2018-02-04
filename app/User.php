@@ -36,4 +36,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Destination::class);
     }
+
+    public function packages()
+    {
+        return $this->hasMany(Packages::class);
+    }
 }

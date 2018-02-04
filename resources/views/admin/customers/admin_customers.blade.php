@@ -9,7 +9,7 @@
                         <section class="panel">
                             <header class="panel-heading">
                                 Customers
-                               <button class="btn btn-sm btn-success pull-right add-data-btn"><i class="fa fa-plus"></i> Add </button>
+
                             </header>
                             <div class="panel-body table-responsive">
 

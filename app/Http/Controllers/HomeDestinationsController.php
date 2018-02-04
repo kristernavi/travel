@@ -17,6 +17,8 @@ class HomeDestinationsController extends Controller
             $municipalities = Municipality::where('name', 'LIKE', "%$keyword%")->pluck('id');
             $destinations = Destination::whereIn('municipality_id', $municipalities)->pluck('id');
             $details = PackageDetails::whereIn('destination_id', $destinations)->uniquePackage()->get();
+        } else {
+            $details = PackageDetails::inRandomOrder()->uniquePackage()->take(10)->get();
         }
 
         return view('price', compact('details'));

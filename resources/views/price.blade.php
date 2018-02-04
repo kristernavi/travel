@@ -40,6 +40,13 @@
     text-overflow:ellipsis;
 }
 
+.twitter-typeahead{
+        width: 100%;
+    }
+    .tt-menu{
+        width: 100%;
+    }
+
 .btn-blog {
     color: #ffffff;
     background-color: #37d980;
@@ -77,7 +84,7 @@
             <div id="imaginary_container">
                 <form>
                 <div class="input-group stylish-input-group">
-                    <input type="text" class="form-control"  placeholder="Search Destinations" name="keyword">
+                    <input type="text" class="form-control"  placeholder="Search Destinations" name="keyword" id="name">
                     <span class="input-group-addon">
                         <button type="submit">
                             <span class="glyphicon glyphicon-search"></span>
@@ -121,3 +128,67 @@
     <!-- //welcome -->
     <!-- //newsletter -->
 @endsection
+
+
+ <!-- jQuery (necessary for Bootstrap's JavaScript plugins  and Typeahead) -->
+    <script src="{{ asset('js/jquery.min.js')}}"></script>
+    <!-- Bootstrap JS -->
+    <script src="{{ asset('js/bootstrap.min.js')}}"></script>
+    <!-- Typeahead.js Bundle -->
+    <script src="{{ asset('js/typeahead.bundle.min.js')}}"></script>
+
+    <!-- Typeahead Initialization -->
+    <script>
+        jQuery(document).ready(function($) {
+
+
+            var engine_serviceS1= new Bloodhound({
+                remote: {
+                    url: '/location?name=%QUERY%',
+                    wildcard: '%QUERY%'
+                },
+                datumTokenizer: Bloodhound.tokenizers.whitespace('services_name'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace
+            });
+
+            var tradetp = $("#name").typeahead({
+                hint: false,
+                highlight: true,
+                minLength: 1,
+
+
+            }, {
+                source: engine_serviceS1.ttAdapter(),
+
+                // This will be appended to "tt-dataset-" to form the class name of the suggestion menu.
+                name: 'tradeList',
+
+                // the key from the array we want to display (name,id,email,etc...)
+                templates: {
+                    empty: [
+                        '<div class="list-group search-results-dropdown"><div class="list-group-item">Nothing found.</div></div>'
+                    ],
+                    header: [
+                        //'<div class="list-group search-results-dropdown">'
+                        ''
+                    ],
+                    suggestion: function (data) {
+                        return '<div class="list-group-item">' + data.name+'</div>'
+
+                      }
+
+                }
+                ,
+                display: function(data){
+                      return data.name;
+                    },
+
+
+            });
+
+        });
+
+
+
+
+    </script>
