@@ -164,6 +164,9 @@ class PackagesController extends Controller
     {
         DB::statement(DB::raw('set @row:=0'));
         $data = \App\Packages::selectRaw('*, @row:=@row+1 as row');
+        if ('admin' != \Auth::user()->type) {
+            $data = \App\Packages::selectRaw('*, @row:=@row+1 as row')->where('user_id', \Auth::id());
+        }
 
         return DataTables::of($data)
             ->AddColumn('row', function ($column) {
