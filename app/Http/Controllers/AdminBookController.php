@@ -101,8 +101,9 @@ class AdminBookController extends Controller
         $card_business->type = 'TRANSFER';
         $card_business->user_id = $book->package->user->business->user_id;
         $card_business->save();
-
-        \Mail::to($book->customer->email)->send(new ReservationConfirm($book));
+        if (!env('LAN_TEST')) {
+            \Mail::to($book->customer->email)->send(new ReservationConfirm($book));
+        }
 
         return response()->json(['success' => true, 'msg' => 'Reservation Confirm']);
     }
@@ -141,7 +142,9 @@ class AdminBookController extends Controller
             $card_business->user_id = $book->package->user->business->user_id;
             $card_business->save();
         }
-        \Mail::to($book->customer->email)->send(new ReservationReject($book));
+        if (!env('LAN_TEST')) {
+            \Mail::to($book->customer->email)->send(new ReservationReject($book));
+        }
 
         return response()->json(['success' => true, 'msg' => 'Reservation Rejected']);
     }

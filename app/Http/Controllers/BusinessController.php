@@ -15,7 +15,9 @@ class BusinessController extends Controller
         $user = \App\User::find($id);
         $user->actived = !$user->actived;
         $user->save();
-        \Mail::to($user->email)->send(new UserActive($user));
+        if (!env('LAN_TEST')) {
+            \Mail::to($user->email)->send(new UserActive($user));
+        }
 
         return response()->json(['success' => true, 'msg' => 'Data Successfully updated!']);
     }
