@@ -16,7 +16,8 @@
       </div>
         <div class="form-group">
             <label for="description">Description</label>
-            <textarea name="description" class="form-control" rows="4" placeholder="Description"></textarea>
+           <div id="summernote"></div>
+           <input type="hidden" name="description" id="description">
           <span class="help-text text-danger"></span>
         </div>
       <div class="select_hoder">
@@ -57,14 +58,53 @@
   </div>
 </div>
 
+<!-- include summernote css/js-->
+<link href="{{url('summernote/summernote.css')}}" rel="stylesheet">
+<script src="{{url('summernote/summernote.js')}}"></script>
 
 <script type="text/javascript">
+$('#summernote').summernote({
+        popover: {
+            image: [
+                ['custom', ['imageAttributes']],
+                ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+                ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                ['remove', ['removeMedia']]
+            ],
+        },
+        lang: 'en-US',
+        imageAttributes:{
+            imageDialogLayout:'default', // default|horizontal
+            icon:'<i class="note-icon-pencil"/>',
+            removeEmpty:false // true = remove attributes | false = leave empty if present
+        },
+        displayFields:{
+            imageBasic:true,  // show/hide Title, Source, Alt fields
+            imageExtra:true, // show/hide Alt, Class, Style, Role fields
+            linkBasic:true,   // show/hide URL and Target fields for link
+            linkExtra:false   // show/hide Class, Rel, Role fields for link
+        },
+
+            height: 150,
+            minHeight: null,
+            maxHeight: null,
+            focus: true,
+            toolbar: [
+              ['style', ['bold', 'italic', 'underline', 'clear']],
+              ['font', ['fontname', 'fontsize', 'color', 'bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
+              ['para', ['ul', 'ol', 'paragraph', 'style', 'height']],
+              ['insert', ['picture', 'link', 'video', 'table', 'hr']],
+              ['msic', ['codeview', 'undo', 'redo', 'help']]
+            ]
+    });
   $(function(){
+
       $("#add-packages-form").on('submit', function(e){
         e.preventDefault(); //keeps the form from behaving like a normal (non-ajax) html form
         var $form = $(this);
         var $url = $form.attr('action');
-
+        var html = $('#summernote').summernote('code');
+        $('#description').val(html);
         $.ajax({
           type: 'POST',
           url: $url,

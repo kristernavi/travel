@@ -1,14 +1,14 @@
 @extends('admin.includes.app')
-@section('content') 
+@section('content')
 
                 <!-- Main row -->
                 <div class="row">
 
-                    
+
                     <div class="col-md-12">
                         <section class="panel">
                             <header class="panel-heading">
-                               Destinations 
+                               Services
                                <button class="btn btn-sm btn-success pull-right add-data-btn"><i class="fa fa-plus"></i> Add</button>
                             </header>
                             <div class="panel-body table-responsive">
@@ -17,21 +17,21 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>Name</th> 
+                                            <th>Name</th>
                                             <th>Description</th>
-                                            <th>Image</th> 
-                                            <th>Actions</th> 
+                                            <th>Image</th>
+                                            <th>Actions</th>
                                         </tr>
                                     </thead>
-                                    <tbody> 
+                                    <tbody>
                                     </tbody>
                                 </table>
                             </div>
                         </section>
 
-                    </div> 
+                    </div>
 
-                </div>  
+                </div>
 
   <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;" id="addmodal"></div>
   <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;" id="editmodal"></div>
@@ -45,9 +45,9 @@
       bServerSide: false,
       sServerMethod: "GET",
       'ajax': '/admin/get-destinations',
-      searching: true, 
-      paging: true, 
-      filtering:false, 
+      searching: true,
+      paging: true,
+      filtering:false,
       bInfo: true,
       responsive: true,
       language:{
@@ -56,43 +56,43 @@
           "previous":   "<i class='fa fa-chevron-left'></i>"
         }
       },
-      "columns": [ 
+      "columns": [
         {data: 'row',  name: 'row', className: ' text-left',   searchable: true, sortable: true},
-        {data: 'name',  name: 'name', className: 'col-md-3  text-left',   searchable: true, sortable: true}, 
-        {data: 'description',  name: 'description', className: 'col-md-6  text-left',   searchable: true, sortable: true}, 
-        {data: 'image',  name: 'image', className: 'col-md-2  text-left',   searchable: true, sortable: true},   
+        {data: 'name',  name: 'name', className: 'col-md-3  text-left',   searchable: true, sortable: true},
+        {data: 'description',  name: 'description', className: 'col-md-6  text-left',   searchable: true, sortable: true},
+        {data: 'image',  name: 'image', className: 'col-md-2  text-left',   searchable: true, sortable: true},
         {data: 'actions',   name: 'actions', className: 'col-md-1 text-left',  searchable: false,  sortable: false},
-      ], 
+      ],
       'order': [[0, 'asc']]
     });
 
-    $(".add-data-btn").click(function(x){  
+    $(".add-data-btn").click(function(x){
           x.preventDefault();
           var that = this;
           $("#addmodal").html('');
           $("#addmodal").modal();
           $.ajax({
-            url: '/admin/destinations/create',         
+            url: '/admin/destinations/create',
             success: function(data) {
               $("#addmodal").html(data);
             }
-          }); 
+          });
     });
     $(document).off('click','.edit-data-btn').on('click','.edit-data-btn', function(e){
       e.preventDefault();
-      var that = this; 
+      var that = this;
       $("#editmodal").html('');
       $("#editmodal").modal();
       $.ajax({
-        url: '/admin/destinations/'+that.dataset.id+'/edit',         
+        url: '/admin/destinations/'+that.dataset.id+'/edit',
         success: function(data) {
           $("#editmodal").html(data);
         }
-      }); 
+      });
     });
     $(document).off('click','.delete-data-btn').on('click','.delete-data-btn', function(e){
       e.preventDefault();
-      var that = this; 
+      var that = this;
             bootbox.confirm({
               title: "Confirm Delete Data?",
               className: "del-bootbox",
@@ -109,7 +109,7 @@
               },
               callback: function (result) {
                  if(result){
-                  var token = '{{csrf_token()}}'; 
+                  var token = '{{csrf_token()}}';
                   $.ajax({
                   url:'/admin/destinations/'+that.dataset.id,
                   type: 'post',
@@ -121,7 +121,7 @@
                         icon: "success"
                       });
                   }
-                  }); 
+                  });
                  }
               }
           });

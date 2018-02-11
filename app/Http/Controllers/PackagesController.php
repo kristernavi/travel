@@ -120,6 +120,7 @@ class PackagesController extends Controller
             for ($i = 0; $i < sizeof($request->get('destination_id')); ++$i) {
                 $destination = new \App\PackageDetails();
                 $destination->package_id = $package->id;
+                $destination->user_id = \Auth::id();
                 $destination->destination_id = $request->get('destination_id')[$i];
                 $destination->price = $request->get('price')[$i];
                 $destination->save();
@@ -188,7 +189,7 @@ class PackagesController extends Controller
                             </button>
                         </div>';
             })
-            ->rawColumns(['actions', 'image'])
+            ->rawColumns(['actions', 'image', 'description'])
             ->make(true);
     }
 }

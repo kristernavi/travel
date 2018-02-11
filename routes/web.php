@@ -22,7 +22,17 @@ Route::get('location', function () {
 
 /* URLS FOR PUBLIC/HOMEPAGE SIDE **/
 Route::get('/', function () {
-    return view('home');
+    $details = \App\PackageDetails::inRandomOrder()->uniquePackage()->take(4)->get();
+
+    return view('home', compact('details'));
+});
+Route::get('/contact', function () {
+    return view('contact');
+});
+Route::post('/contact', 'ContactUsController@store');
+
+Route::get('/about-us', function () {
+    return view('about');
 });
 
 Route::get('new-book/{id}', 'BookController@create');
@@ -35,6 +45,8 @@ Route::get('/destinations-new', 'HomeDestinationsController@index');
 Route::get('/package/{id}', 'HomeDestinationsController@show');
 
 Route::get('/destinations', 'HomeDestinationsController@index');
+Route::get('/review/{id}', 'ReviewController@create');
+Route::post('/review/{id}', 'ReviewController@store');
 
 /* END OF URL **/
 

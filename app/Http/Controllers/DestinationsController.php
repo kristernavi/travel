@@ -183,7 +183,7 @@ class DestinationsController extends Controller
                             </button>
                         </div>';
             })
-            ->rawColumns(['actions', 'image'])
+            ->rawColumns(['actions', 'image', 'description'])
             ->make(true);
     }
 }

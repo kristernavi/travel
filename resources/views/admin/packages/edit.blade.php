@@ -4,7 +4,7 @@
       <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
       <h4 class="modal-title">Edit</h4>
     </div>
- 
+
 
     {!! Form::open(array('url' => url('/admin/packages/'.$package->id), 'method' => 'PATCH', 'id' => 'edit-packages-form')) !!}
     <input type="hidden" name="type" value="packages">
@@ -13,12 +13,13 @@
           <label for="name">Name</label>
           <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" autocomplete="false" value="{{ $package->name }}">
           <span class="help-text text-danger"></span>
-      </div> 
+      </div>
         <div class="form-group">
             <label for="description">Description</label>
-            <textarea name="description" class="form-control" rows="4" placeholder="Description">{{ $package->description }}</textarea> 
+            <div id="summernote"> {!! $package->description !!}</div>
+            <input type="hidden" name="description" id="description">
           <span class="help-text text-danger"></span>
-        </div>    
+        </div>
       <div class="select_hoder">
         <label>Destinations</label>
         @foreach($package->details as $detail)
@@ -60,18 +61,24 @@
   </div>
 </div>
 
- 
+ <!-- include summernote css/js-->
+<link href="{{url('summernote/summernote.css')}}" rel="stylesheet">
+<script src="{{url('summernote/summernote.js')}}"></script>
+
 <script type="text/javascript">
-  $(function(){ 
+
+  $(function(){
       $("#edit-packages-form").on('submit', function(e){
         e.preventDefault(); //keeps the form from behaving like a normal (non-ajax) html form
         var $form = $(this);
-        var $url = $form.attr('action'); 
+        var $url = $form.attr('action');
+        var html = $('#summernote').summernote('code');
+        $('#description').val(html);
 
         $.ajax({
-          type: 'PATCH',
+          type: 'POST',
           url: $url,
-          data: $("#edit-packages-form").serialize(), 
+          data: $("#edit-packages-form").serialize(),
           success: function(result){
             if(result.success){
               swal({
@@ -89,7 +96,7 @@
             $('.modal').html('');
           },
           error: function(xhr,status,error){
-            var response_object = JSON.parse(xhr.responseText); 
+            var response_object = JSON.parse(xhr.responseText);
             associate_errors(response_object.errors, $form);
           }
         });
@@ -130,8 +137,8 @@
             total+=parseFloat($(this).val());
           }
         });
-        $('.total-price').val(parseFloat(total).toFixed(2)); 
+        $('.total-price').val(parseFloat(total).toFixed(2));
       });
       $('input[name="price[]"]').change();
-  });  
- </script> 
+  });
+ </script>

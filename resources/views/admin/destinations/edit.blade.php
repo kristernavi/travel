@@ -2,10 +2,10 @@
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
-      <h4 class="modal-title">Edit Destination</h4>
+      <h4 class="modal-title">Edit Service</h4>
     </div>
- 
- 
+
+
     {!! Form::open(array('url' => url('admin/destinations/'.$destination->id), 'enctype' => 'multipart/form-data', 'method' => 'PATCH', 'id' => 'edit-destinations-form', 'files' => true)) !!}
     <div class="modal-body">
         <div class="form-group">
@@ -15,9 +15,10 @@
         </div>
         <div class="form-group">
             <label for="description">Description</label>
-            <textarea name="description" class="form-control" rows="4" placeholder="Description">{{ $destination->description }}</textarea> 
+            <div id="summernote"> {!! $destination->description !!}</div>
+            <input type="hidden" name="description" id="description">
           <span class="help-text text-danger"></span>
-        </div>   
+        </div>
 
         <div class="form-group">
             <label for="name">Image</label>
@@ -41,16 +42,7 @@
             <input type="text" class="form-control" id="link" name="link" placeholder="Enter link" autocomplete="false" value="{{ $destination->link }}">
           <span class="help-text text-danger"></span>
         </div>
-        <div class="form-group">
-            <label for="long">Longitude</label>
-            <input type="text" class="form-control" id="long" name="long" placeholder="Enter longitude" autocomplete="false" value="{{ $destination->long }}">
-          <span class="help-text text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label for="lat">Lattude</label>
-            <input type="text" class="form-control" id="lat" name="lat" placeholder="Enter latitude" autocomplete="false" value="{{ $destination->lat }}">
-          <span class="help-text text-danger"></span>
-        </div>
+
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -61,17 +53,53 @@
   </div>
 </div>
 
- 
-<script type="text/javascript">
-  $(function(){ 
+ <!-- include summernote css/js-->
+<link href="{{url('summernote/summernote.css')}}" rel="stylesheet">
+<script src="{{url('summernote/summernote.js')}}"></script>
 
+<script type="text/javascript">
+  $(function(){
+$('#summernote').summernote({
+        popover: {
+            image: [
+                ['custom', ['imageAttributes']],
+                ['imagesize', ['imageSize100', 'imageSize50', 'imageSize25']],
+                ['float', ['floatLeft', 'floatRight', 'floatNone']],
+                ['remove', ['removeMedia']]
+            ],
+        },
+        lang: 'en-US',
+        imageAttributes:{
+            imageDialogLayout:'default', // default|horizontal
+            icon:'<i class="note-icon-pencil"/>',
+            removeEmpty:false // true = remove attributes | false = leave empty if present
+        },
+        displayFields:{
+            imageBasic:true,  // show/hide Title, Source, Alt fields
+            imageExtra:true, // show/hide Alt, Class, Style, Role fields
+            linkBasic:true,   // show/hide URL and Target fields for link
+            linkExtra:false   // show/hide Class, Rel, Role fields for link
+        },
+
+            height: 150,
+            minHeight: null,
+            maxHeight: null,
+            focus: true,
+            toolbar: [
+              ['style', ['bold', 'italic', 'underline', 'clear']],
+              ['font', ['fontname', 'fontsize', 'color', 'bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
+              ['para', ['ul', 'ol', 'paragraph', 'style', 'height']],
+              ['insert', ['picture', 'link', 'video', 'table', 'hr']],
+              ['msic', ['codeview', 'undo', 'redo', 'help']]
+            ]
+    });
     $(document).off('click', '.upload_btn').on('click', '.upload_btn', function(){
-        $('.input_image').click(); 
+        $('.input_image').click();
     });
 
     $(document).off('change',  '#image').on('change',  '#image', function(evt){
         var tgt = evt.target || window.event.srcElement,
-            files = tgt.files; 
+            files = tgt.files;
         if (FileReader && files && files.length) {
             var fr = new FileReader();
             fr.onload = function () {
@@ -79,15 +107,17 @@
                 $('.upload_btn').html('Change Photo');
             }
             fr.readAsDataURL(files[0]);
-        } 
-        else { 
+        }
+        else {
         }
     });
       $("#edit-destinations-form").on('submit', function(e){
         e.preventDefault(); //keeps the form from behaving like a normal (non-ajax) html form
         var $form = $(this);
         var $url = $form.attr('action');
-        var formData = new FormData($("form#edit-destinations-form")[0]); 
+        var html = $('#summernote').summernote('code');
+        $('#description').val(html);
+        var formData = new FormData($("form#edit-destinations-form")[0]);
         //submits an array of key-value pairs to the form's action URL
      /*   $.post(url, formData, function(response)
         {
@@ -122,11 +152,11 @@
             $('.modal').modal('hide');
           },
           error: function(xhr,status,error){
-            var response_object = JSON.parse(xhr.responseText); 
+            var response_object = JSON.parse(xhr.responseText);
             associate_errors(response_object.errors, $form);
           }
         });
 
       });
-  });  
- </script> 
+  });
+ </script>

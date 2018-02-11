@@ -31,8 +31,8 @@
             <div class="welcome-grids">
 
                 <div class="col-md-7 welcome-w3left">
-                    <h4>{{ $detail->destination->name}}</h4>
-                    {{ $detail->destination->description}}
+                   <a href="{{ $detail->destination->website }}"> <h4> {{ $detail->destination->name }}</h4> </a>
+                    {!! $detail->destination->description !!}
 
                 </div>
                 <div class="col-md-5 welcome-w3right">
@@ -55,8 +55,8 @@
 
                 </div>
                 <div class="col-md-7 welcome-w3left">
-                     <h4>{{ $detail->destination->name}}</h4>
-                    {{ $detail->destination->description}}
+                     <a href="{{ $detail->destination->website }}"> <h4> {{ $detail->destination->name}}</h4> </a>
+                    {!!  $detail->destination->description !!}
                 </div>
                 <div class="clearfix"></div>
 

@@ -43,7 +43,7 @@
 
                 <li class=" {{Request::segment(2) == 'destinations' ? 'active':''}}">
                     <a href="{{ url($parent.'/destinations') }}">
-                        <i class="fa fa-map-marker"></i> <span>Destinations</span>
+                        <i class="fa fa-map-marker"></i> <span>Services</span>
                     </a>
                 </li>
                 <li class=" {{Request::segment(2) == 'packages' ? 'active':''}}">

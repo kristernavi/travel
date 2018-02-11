@@ -101,12 +101,25 @@
                     $package = $detail->master;
                     @endphp
                         <div class="col-md-10 col-lg-offset-1 blogShort">
-                     <h1>{{ $package->name }}</h1>
+                    @php
+                    $stars = intval($package->avgRating);
+                    $unstars = 5 - $stars;
+                    @endphp
+                     <h1>{{ $package->name . ' (PHP '. number_format($detail->total_price, 2).')' }}</h1>
                      <img src="{{  asset('storage/'.ltrim($detail->destination->image, 'public')) }}" alt="post img" class="pull-left img-responsive thumb margin10 img-thumbnail" height="150" width="150">
 
+                        <em><div class="rating">
+                            @for ($i = 0; $i < $stars; $i++)
+                                <span class="glyphicon glyphicon-star" style="color: #fde16d"></span>
+                            @endfor
+                            @for ($i = 0; $i < $unstars; $i++)
+                                <span class="glyphicon glyphicon-star-empty" ></span>
+                            @endfor
+
+                        </div> Reviews {{ $package->countPositive }}: <a class="rate-this" href="#" data-id="{{ $package->id}}">Add Review</a></em><br/>
                          <em>Owned By: <a href="{{ $package->user->business ?  $package->user->business->website: '#'}}">{{ $package->user->business ? $package->user->business->name: 'Admin'}}</a></em>
                      <article><p class="description">
-                         {{ substr($package->description, 0, 250) }}...
+                         {!!$package->description !!}
 
                          </p></article>
                      <a class="btn btn-blog pull-right marginBottom10" href="{{ url('package/'.$package->id)}}">READ MORE</a>
@@ -125,6 +138,8 @@
             </div>
         </div>
     </div>
+<div id="add-review-modal" class="modal fade"></div>
+
     <!-- //welcome -->
     <!-- //newsletter -->
 @endsection
@@ -139,6 +154,31 @@
 
     <!-- Typeahead Initialization -->
     <script>
+
+        setTimeout(function(){
+
+               $('#add-review-modal').on('hidden.bs.modal', function () {
+            // do something…
+             $('.agileinfo-header').removeClass('hidden');
+
+        });
+
+         }, 3000);
+
+        $(document).off('click', '.rate-this').on('click', '.rate-this', function(x){
+                var that = this;
+                $("#add-review-modal").modal();
+                $("#add-review-modal").html("");
+                 $('.agileinfo-header').addClass('hidden');
+                $.ajax({
+                    url: 'review/'+that.dataset.id,
+                    success: function(data) {
+                        $("#add-review-modal").html(data);
+                    }
+                });
+          });
+
+
         jQuery(document).ready(function($) {
 
 

@@ -1,7 +1,7 @@
 @extends('includes.app')
 
 @section('content') <!-- banner-text -->
-        <div class="banner-text"> 
+        <div class="banner-text">
             <div class="container">
                 <div class="flexslider">
                     <ul class="slides">
@@ -9,7 +9,7 @@
                             <div class="banner-w3lstext">
                                 <h2>VISIT BOHOL PROVINCE</h2>
                                 <p>Lose yourself amidst the bizarre Chocolate Hills. Fall in love with the cuddly Tarsiers and make friends with smiling locals. Bohol has everything for the perfect gateway.
-                            
+
                                 </p>
                             </div>
                         </li>
@@ -25,60 +25,69 @@
                                 <p>People come here for the white beaches and beautiful nature with its diverse wildlife. The world class diving, waterfalls and hundreds of caves for spelunking. People come for the incredible history along with its colonial Spanish churches. </p>
                             </div>
                         </li>
-                    </ul> 
-                </div>   
+                    </ul>
+                </div>
             </div>
         </div>
-        <!-- //banner-text -->    
+        <!-- //banner-text -->
 </div>
-    <!-- //banner --> 
+    <!-- //banner -->
     <!-- welcome -->
     <div class="welcome">
-        <div class="container">  
-            <div class="welcome-grids"> 
+        <div class="container">
+           {{--  <div class="welcome-grids">
                 <div class="col-md-7 welcome-w3left">
                     <h4>TOURIST DESTINATIONS</h4>
                     <p></p> <br>
-                    
+
                 </div>
                 <div class="col-md-5 welcome-w3right">
                     <img src="{{ asset('web/images/y.jpg') }}" class="img-responsive" alt="" />
                 </div>
                 <div class="clearfix"></div>
-            </div>
+            </div> --}}
         </div>
     </div>
     <!-- //welcome -->
     <!--- albums -->
-    <div class="albums"> 
-        <div class="w3lalbums-grid">
-            <div class="col-md-6 col-sm-6 albums-left"> 
-                <div class="wthree-almubimg">  
+    <div class="albums">
+        @foreach ($details as $index => $detail)
+
+        @if ($index % 2 == 0)
+         <div class="w3lalbums-grid">
+            <div class="col-md-6 col-sm-6 albums-left">
+                <div class="col-md-5 welcome-w3right">
+                    <img src="{{  asset('storage/'.ltrim($detail->destination->image, 'public')) }}" class="img-responsive" alt="" style="min-height: 402px; min-width: 616px" />
                 </div>
             </div>
             <div class="col-md-6 col-sm-6 albums-right">
-                <h4>HOTELS</h4>
-                <p> </p>
-            </div>
-            <div class="clearfix"></div>
-        </div> 
-        <div class="w3lalbums-grid">
-            <div class="col-md-6 col-sm-6 albums1-right"> 
-                <div class="wthree-almubimg wthree1-almubimg">  
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-6 albums1-left">
-                <h4>RESORTS</h4>
-                <p> </p>
+                <a href="{{ url('package/'.$detail->master->id) }}"><h4 style="color: #f30d60">{{ $detail->destination->name }}</h4></a>
+                {!! $detail->destination->description !!}
             </div>
             <div class="clearfix"></div>
         </div>
-        <div class="clearfix"></div>  
+        @else
+        <div class="w3lalbums-grid">
+            <div class="col-md-6 col-sm-6 albums1-right">
+                <img src="{{  asset('storage/'.ltrim($detail->destination->image, 'public')) }}" class="img-responsive" alt="" style="min-height: 402px; min-width: 616px" />
+            </div>
+            <div class="col-md-6 col-sm-6 albums1-left">
+                <a href="{{ url('package/'.$detail->master->id) }}"><h4 style="color: #f30d60">{{ $detail->destination->name }}</h4></a>
+                {!! $detail->destination->description !!}
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="clearfix"></div>
+        @endif
+
+        @endforeach
+
+
     </div>
-    <!--- //albums --> 
+    <!--- //albums -->
     <!-- services -->
-    <div class="services"> 
-        <div class="container">  
+    <div class="services">
+        <div class="container">
             <h3 class="agileits-title">Our Services</h3>
             <div class="services-w3ls-row">
                 <div class="col-xs-6 col-md-3 services-grids">
@@ -107,7 +116,7 @@
                         <h4 class="mission"></h4>
                         <p class="description"></p>
                     </div>
-                </div>  
+                </div>
                 <div class="col-xs-6 col-md-3 services-grids">
                     <div class="w3agile-servs-img">
                         <div class="icon-holder">
@@ -116,18 +125,18 @@
                         <h4 class="mission"></h4>
                         <p class="description"></p>
                     </div>
-                </div> 
+                </div>
                 <div class="clearfix"> </div>
-            </div>              
-        </div>              
-    </div>          
+            </div>
+        </div>
+    </div>
     <!-- //services -->
     <!-- slid -->
     <div class="slid">
         <div class="container">
-            <h4>Today Special</h4> 
+            <h4>Today Special</h4>
             <p></p>
-        </div> 
+        </div>
     </div>
     <!-- //slid -->
     <!-- newsletter -->
@@ -135,12 +144,12 @@
         <div class="container">
             <h3 class="agileits-title">Newsletter</h3>
             <p>Mauris est odio laoreet laoreet sapien non, sollicitudin bibendum nulla amet purus sodales blandit.</p>
-            <form action="#" method="post"> 
+            <form action="#" method="post">
                 <input type="text" name="email" placeholder="Enter your Email..." required="">
                 <input type="submit" value="Subscribe">
-                <div class="clearfix"> </div> 
-            </form> 
-        </div> 
+                <div class="clearfix"> </div>
+            </form>
+        </div>
     </div> --}}
     <!-- //newsletter -->
 @endsection
