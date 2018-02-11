@@ -79,9 +79,9 @@ class BusinessController extends Controller
             'base' => 'required',
             'type' => 'required|in:hotel,tourist',
             'license' => 'nullable|min:3',
-            'webiste' => 'nullable|regex:@^(http\:\/\/|https\:\/\/)?([a-z0-9][a-z0-9\-]*\.)+[a-z0-9][a-z0-9\-]*$@i',
+            'webiste' => 'nullable|regex:/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/',
             'address' => 'required',
-            'mobile' => 'required|number',
+            'mobile' => 'required|numeric',
             'phone' => 'nullable',
             'password' => 'required|string|min:6|confirmed',
         ]);
