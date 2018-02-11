@@ -15,7 +15,8 @@ class BusinessController extends Controller
         $user = \App\User::find($id);
         $user->actived = !$user->actived;
         $user->save();
-        if (!env('LAN_TEST')) {
+
+        if (!env('APP_DEBUG')) {
             \Mail::to($user->email)->send(new UserActive($user));
         }
 

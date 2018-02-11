@@ -21,8 +21,9 @@ class ContactUsController extends Controller
         $client->message = request('message');
         $client->subject = request('subject');
         $admins = explode(',', env('ADMIN_EMAILS'));
-
-        \Mail::to($admins)->send(new ContactUs($client));
+        if (!env('APP_DEBUG')) {
+            \Mail::to($admins)->send(new ContactUs($client));
+        }
 
         return redirect()->back()->with('success', 'Thank you for emailing us we resolve this as soon as posible');
     }
