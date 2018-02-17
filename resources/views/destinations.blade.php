@@ -66,6 +66,21 @@
     </div>
      @endif
     @endforeach
+    <div class="welcome">
+        <div class="container">
+            <div class="welcome-grids">
+
+               
+                <div class="col-md-12 welcome-w3left">
+                     <a href="{{ $detail->destination->website }}"> <h4> Inclusions</h4> </a>
+                    {!!  $package->description !!}
+                </div>
+                <div class="clearfix"></div>
+
+
+            </div>
+        </div>
+    </div>
 
      <div class="row bg-light navbar-fixed-bottom" id="sticker" >
     <div class="container text-center p-3">
