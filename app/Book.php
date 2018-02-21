@@ -16,6 +16,11 @@ class Book extends Model
         return $this->belongsTo(Packages::class);
     }
 
+    public function service()
+    {
+        return $this->belongsTo(PackageDetails::class);
+    }
+
     public function transactions()
     {
         return $this->hasMany(CardTranscation::class);

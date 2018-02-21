@@ -19,4 +19,9 @@ class Destination extends Model
     {
         return $this->hasMany(PackageDetails::class);
     }
+
+    public function municipality()
+    {
+        return $this->belongsTo(Municipality::class);
+    }
 }

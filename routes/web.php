@@ -31,6 +31,13 @@ Route::get('/contact', function () {
 });
 Route::post('/contact', 'ContactUsController@store');
 
+Route::get('/services', 'ServiceController@index');
+Route::get('/checkout-order', 'ServiceController@index');
+Route::get('remove-cart/{id}', 'CartController@destory');
+Route::get('/checkout-order', 'CheckoutOrder@index');
+Route::post('checkout-order', 'CheckoutOrder@store');
+
+Route::post('/add-cart', 'CartController@store');
 Route::get('/about-us', function () {
     return view('about');
 });

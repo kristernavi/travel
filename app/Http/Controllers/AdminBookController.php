@@ -12,11 +12,11 @@ class AdminBookController extends Controller
     public function all()
     {
         if ('admin' == \Auth::user()->type) {
-            $data = \App\Book::all();
+            $data = \App\Book::whereNotNull('package_id')->get();
         } else {
             $ids = \Auth::user()->packages->pluck('id');
 
-            $data = \App\Book::whereIn('package_id', $ids)->get();
+            $data = \App\Book::whereIn('package_id', $ids)->whereNotNull('package_id')->get();
         }
 
         return DataTables::of($data)

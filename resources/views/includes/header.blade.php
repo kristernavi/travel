@@ -19,9 +19,13 @@
 						<ul class="nav navbar-nav navbar-left">
 							<li><a href="{{ url('') }}" class="w3ls-hover {{ Request::segment(1) == '' ? ' active':'' }}">Home</a></li>
 							<li><a href="{{ url('about-us') }}" class="btn w3ls-hover">About</a></li>
-							<li><a href="{{ url('destinations') }}" class="btn w3ls-hover {{ Request::segment(1) == 'destinations' ? ' active':'' }}">Destinations</a></li>
+							<li><a href="{{ url('destinations') }}" class="btn w3ls-hover {{ Request::segment(1) == 'destinations' ? ' active':'' }}">Packages</a></li>
+							<li><a href="{{ url('services') }}" class="btn w3ls-hover {{ Request::segment(1) == 'services' ? ' active':'' }}">Services</a></li>
 							<li><a href="{{ url('contact') }}" class="btn w3ls-hover">Contact</a></li>
+							<li><a href="{{ url('checkout-order')}}" class="btn w3ls-hover">Cart <lavel id="cart-badge" class="badge badge-warning">{{ Cart::getContent()->count()}}</lavel></a></li>
 							<li><a href="{{ route('business-register')}}" class="btn w3ls-hover">Register</a></li>
+
+
 							@guest
     						<li><a href="{{ route('login') }}" class="btn w3ls-hover" >Login</a></li>
 							@endguest
