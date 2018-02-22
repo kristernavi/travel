@@ -1,5 +1,10 @@
 @extends('includes.app')
-
+<style type="text/css">
+    .banner-w3lstext > p{
+        background-color: rgba(0, 0, 0, 0.56);
+        padding: 8px;
+    }
+</style>
 @section('content') <!-- banner-text -->
         <div class="banner-text">
             <div class="container">
@@ -16,7 +21,7 @@
                         <li>
                             <div class="banner-w3lstext">
                                 <h3>WHY BOHOL ?</h3>
-                                <p>Bohol is a small piece of the loss paradise with full of wonders and captivating sites. It is not just known locally but as well as globally. Truly, an ideal place for everyone because of its terrific tranquil ambiance.</p>
+                                <p >Bohol is a small piece of the loss paradise with full of wonders and captivating sites. It is not just known locally but as well as globally. Truly, an ideal place for everyone because of its terrific tranquil ambiance.</p>
                             </div>
                         </li>
                         <li>
@@ -86,7 +91,7 @@
     </div>
     <!--- //albums -->
     <!-- services -->
-    <div class="services">
+    {{-- <div class="services">
         <div class="container">
             <h3 class="agileits-title">Our Services</h3>
             <div class="services-w3ls-row">
@@ -129,7 +134,7 @@
                 <div class="clearfix"> </div>
             </div>
         </div>
-    </div>
+    </div> --}}
     <!-- //services -->
     <!-- slid -->
     <div class="slid">

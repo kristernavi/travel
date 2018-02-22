@@ -12,11 +12,10 @@ class AdminBookController extends Controller
     public function all()
     {
         if ('admin' == \Auth::user()->type) {
-            $data = \App\Book::whereNotNull('package_id')->get();
+            $data = \App\Book::get();
         } else {
-            $ids = \Auth::user()->packages->pluck('id');
-
-            $data = \App\Book::whereIn('package_id', $ids)->whereNotNull('package_id')->get();
+            $id = \Auth::user()->business->id;
+            $data = \App\Book::where('business_id', $id)->get();
         }
 
         return DataTables::of($data)
@@ -30,7 +29,12 @@ class AdminBookController extends Controller
                  return $column->customer->email;
              })
             ->AddColumn('package', function ($column) {
+                if($column->package !=null){
                 return $column->package->name;
+                }
+                else{
+                    return $column->service->destination->name;
+                }
             })
             ->AddColumn('status', function ($column) {
                 if ($column->actioned) {
@@ -82,7 +86,7 @@ class AdminBookController extends Controller
         $admin_card->balance = $admin_balance + $for_admin;
         $admin_card->save();
 
-        $business_card = $book->package->user->business->card;
+        $business_card = $book->business->card;
         $business_card->balance = $business_card->balance + $for_business;
         $business_card->save();
 
@@ -91,7 +95,7 @@ class AdminBookController extends Controller
         $card_transaction_admin->book_id = $book->id;
         $card_transaction_admin->amount = $for_admin;
         $card_transaction_admin->type = 'TRANSFER';
-        $card_transaction_admin->user_id = $book->package->user->business->user_id;
+        $card_transaction_admin->user_id = $book->business->user_id;
         $card_transaction_admin->save();
 
         $card_business = new CardTranscation();
@@ -99,7 +103,7 @@ class AdminBookController extends Controller
         $card_business->book_id = $book->id;
         $card_business->amount = $for_business;
         $card_business->type = 'TRANSFER';
-        $card_business->user_id = $book->package->user->business->user_id;
+        $card_business->user_id = $book->business->user_id;
         $card_business->save();
         if (!env('APP_DEBUG')) {
             \Mail::to($book->customer->email)->send(new ReservationConfirm($book));
@@ -127,7 +131,7 @@ class AdminBookController extends Controller
         $card_business->book_id = $book->id;
         $card_business->amount = -$amount;
         $card_business->type = 'REFUND';
-        $card_business->user_id = $book->package->user->business->user_id;
+        $card_business->user_id = $book->business->user_id;
         $card_business->save();
 
         $transactions = $book->transactions()->where('type', 'BOOK')->get();
@@ -139,7 +143,7 @@ class AdminBookController extends Controller
             $card_business->book_id = $book->id;
             $card_business->amount = $transaction->amount;
             $card_business->type = 'REFUND';
-            $card_business->user_id = $book->package->user->business->user_id;
+            $card_business->user_id = $book->business->user_id;
             $card_business->save();
         }
         if (!env('APP_DEBUG')) {

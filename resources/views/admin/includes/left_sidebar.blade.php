@@ -62,6 +62,14 @@
                     </a>
                 </li>
 
+                 @if (Auth::user()->type != 'admin')
+                 <li class=" {{Request::segment(2) == 'card' ? 'active':''}}">
+                    <a href="{{ url($parent.'/card') }}">
+                        <i class="fa fa-credit-card"></i> <span>Card Settings</span>
+                    </a>
+                </li>
+                @endif
+
 
             </ul>
         </section>

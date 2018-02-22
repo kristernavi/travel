@@ -10,23 +10,30 @@
 
                             <div class="panel-body table-responsive">
 
-                                @if(session('status') !='')
-                                    @if( !is_null(session('status')) )
+                                @if(session('success'))
+
                                         <div class="alert alert-success">
                                             <button data-dismiss="alert" class="close close-sm" type="button">
                                                 <i class="fa fa-times"></i>
                                             </button>
-                                            <strong>Success!</strong> User added successfully.
+                                            <strong>Success!</strong> {{ session('success') }}
                                         </div>
-                                    @else
-                                        <div class="alert alert-block alert-danger">
+
+
+                                    @endif
+                                     @if (count($errors) > 0)
+
+
+            @foreach ($errors->all() as $error)
+                <div class="alert alert-block alert-danger">
                                             <button data-dismiss="alert" class="close close-sm" type="button">
                                                 <i class="fa fa-times"></i>
                                             </button>
-                                            <strong>Error!</strong> An error occured while adding user.
+                                            <strong>Error!</strong> {{ $error }}
                                         </div>
-                                    @endif
-                                    @endif
+            @endforeach
+
+         @endif
 
 
                               <div class="col-md-5">
@@ -35,16 +42,16 @@
 
                                   <div class="form-group">
                                     <label for="">Card</label>
-                                    <input type="text" class="form-control" id="" placeholder="Card No." value="{{$card}}">
+                                    <input type="text" class="form-control" id="" placeholder="Card No." value="{{$card}}" name="number">
                                   </div>
 
                                   <div class="form-group">
                                     <label for="">Balance</label>
-                                    <input type="text" class="form-control" id="" placeholder="Card No." value="{{$balance}}" disabled="">
+                                    <input type="text" class="form-control" id="" placeholder="Card No." value="{{ number_format($balance,2)}}" disabled="">
                                   </div>
 
 
-
+                                  {{ csrf_field() }}
                                   <button type="submit" class="btn btn-primary">Submit</button>
                                 </form>
                               </div>

@@ -112,6 +112,7 @@ Route::middleware('auth')->prefix('business')->group(function () {
     Route::get('/transactions', 'AdminBookController@index');
 
     Route::get('/card', 'BusinessCardController@index');
+    Route::post('/card', 'BusinessCardController@store');
 });
 
 /* END OF URL **/
