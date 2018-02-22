@@ -55,6 +55,8 @@ Route::get('/destinations', 'HomeDestinationsController@index');
 Route::get('/review/{id}', 'ReviewController@create');
 Route::post('/review/{id}', 'ReviewController@store');
 
+Route::get('/review-service/{id}', 'ServiceReviewController@create');
+Route::post('/review-service/{id}', 'ServiceReviewController@store');
 /* END OF URL **/
 
 /* URL FOR ADMIN SIDE **/
