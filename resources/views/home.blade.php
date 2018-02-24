@@ -137,12 +137,13 @@
     </div> --}}
     <!-- //services -->
     <!-- slid -->
-    <div class="slid">
+    {{-- <div class="slid">
         <div class="container">
             <h4>Today Special</h4>
             <p></p>
         </div>
-    </div>
+    </div> --}}
+    <div class="clear-fix"></div>
     <!-- //slid -->
     <!-- newsletter -->
 {{--     <div class="newsletter">
