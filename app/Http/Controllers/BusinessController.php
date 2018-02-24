@@ -35,6 +35,9 @@ class BusinessController extends Controller
             ->AddColumn('name', function ($column) {
                 return $column->name;
             })
+            ->AddColumn('business', function ($column) {
+                return optional($column->business)->name;
+            })
             ->AddColumn('email', function ($column) {
                 return $column->email;
             })

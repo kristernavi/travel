@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Book;
 use App\Card;
+use App\CardTranscation;
 use App\Customer;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -54,36 +55,28 @@ class CheckoutOrder extends Controller
             $customer->email = $request->email;
             $customer->save();
 
-            $orderService = new \App\OrderService;
-            $orderService->number = \App\OrderService::count() + 1;
-            $orderService->amount = \Cart::getTotal();
-            $orderService->reserve_date = $request->date;
-            $orderService->save();
 
+            $admin_card = Card::findOrFail(1);
              foreach (\Cart::getContent() as $item) {
-                $orderServiceDetail = new \App\OrderServiceDetail;
-                $orderServiceDetail->service_id = $item->id;
-                 $orderServiceDetail->order_service_id = $orderService->id;
-                 $orderServiceDetail->amount = $item->price;
-                 $orderServiceDetail->save();
-
+            $myService = \App\PackageDetails::find($item->id);
             $book = new Book();
             $book->date_book = $request->date;
-            $book->service_id = $item->id;;
+            $book->service_id = $item->id;
             $book->customer_id = $customer->id;
+            $book->business_id = $myService->user->business->id;
             $book->save();
 
 
 
-            $admin_card = Card::findOrFail(1);
+
 
             $card_transcation = new CardTranscation();
             $card_transcation->book_id = $book->id;
             $card_transcation->amount = $item->price;
             $card_transcation->type = 'BOOK';
             $card_transcation->card_id = $admin_card->id;
-            $detail_service = \App\PackageDetail::find($item->id);
-            $card_transcation->user_id = $detail_service->user_id;
+
+            $card_transcation->user_id = $myService->user_id;
             $card->balance = $card->balance - $item->price;
             $card->save();
             $admin_card->balance = $admin_card->balance + $item->price;
@@ -92,14 +85,14 @@ class CheckoutOrder extends Controller
 
              }
 
-
+             \Cart::clear();
             DB::commit();
 
             return back()->withSuccess('Book successfully we email you if we confirm your reservation. Thank you');
         } catch (\Exception $e) {
             DB::rollback();
 
-            return back()->withInput()->withErrors(['Transaction Fail Please Contact your card issuer ']);
+            return back()->withInput()->withErrors(['Transaction Fail Please Contact your card issuer dsadsadsa']);
         }
     }
 }

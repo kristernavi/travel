@@ -34,6 +34,7 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Name</th>
+                                            <th>Business</th>
                                             <th>Email</th>
                                             <th>Status</th>
                                             <th>Actions</th>
@@ -75,7 +76,8 @@
       "columns": [
         {data: 'row',  name: 'row', className: 'col-md-1  text-left',   searchable: true, sortable: true},
         {data: 'name',  name: 'name', className: 'col-md-4  text-left',   searchable: true, sortable: true},
-        {data: 'email',  name: 'email', className: 'col-md-3 text-left',  searchable: true, sortable: true},
+        {data: 'business',  name: 'business', className: 'col-md-4  text-left',   searchable: true, sortable: true},
+        {data: 'email',  name: 'email', className: 'col-md-2 text-left',  searchable: true, sortable: true},
         {data: 'status',  name: 'status', className: 'col-md-1 text-left',  searchable: true, sortable: true},
         {data: 'actions',   name: 'actions', className: 'col-md-2 text-center',  searchable: false,  sortable: false},
       ],

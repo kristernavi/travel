@@ -55,6 +55,8 @@ Route::get('/destinations', 'HomeDestinationsController@index');
 Route::get('/review/{id}', 'ReviewController@create');
 Route::post('/review/{id}', 'ReviewController@store');
 
+Route::get('/review-service/{id}', 'ServiceReviewController@create');
+Route::post('/review-service/{id}', 'ServiceReviewController@store');
 /* END OF URL **/
 
 /* URL FOR ADMIN SIDE **/
@@ -112,6 +114,7 @@ Route::middleware('auth')->prefix('business')->group(function () {
     Route::get('/transactions', 'AdminBookController@index');
 
     Route::get('/card', 'BusinessCardController@index');
+    Route::post('/card', 'BusinessCardController@store');
 });
 
 /* END OF URL **/

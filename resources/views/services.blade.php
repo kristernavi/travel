@@ -167,17 +167,29 @@ h5 {
                         </div>
                     </div>
                     <div class="card-footer">
-                        <strong>PHP 100.00</strong>
+                        <strong>PHP {{ number_format($detail->price,2)}}</strong>
                     </div>
+                    @php
+                    $stars = intval($detail->avgRating);
+                    $unstars = 5 - $stars;
+                    @endphp
                     <div class="card-footer">
-                        <span class="glyphicon glyphicon-star" style="color: #fde16d"></span>
-                         <span class="glyphicon glyphicon-star" style="color: #fde16d"></span>
-                          <span class="glyphicon glyphicon-star" style="color: #fde16d"></span>
-                           <span class="glyphicon glyphicon-star" style="color: #fde16d"></span>
-                            <span class="glyphicon glyphicon-star" style="color: #fde16d"></span>
+                        <em><div class="rating">
+                            @for ($i = 0; $i < $stars; $i++)
+                                <span class="glyphicon glyphicon-star" style="color: #fde16d"></span>
+                            @endfor
+                            @for ($i = 0; $i < $unstars; $i++)
+                                <span class="glyphicon glyphicon-star-empty" ></span>
+                            @endfor
+                             Reviews: {{ $detail->countPositive }}
+                        </div>
+
+                    </em>
+
+
                         <br/>
-                        <button class="btn btn-primary float-right btn-sm add-cart" data-id="{{$detail->id}}">Add Cart</button>
-                        <button class="btn btn-primary float-right btn-sm">Add Review</button>
+                        <button class="btn btn-primary float-right btn-sm add-cart" data-id="{{$detail->id}}"> Add Cart</button>
+                        <button class="btn btn-primary float-right btn-sm rate-this " data-id="{{$detail->id}}">Add Review</button>
                     </div>
                 </div>
             </div>
@@ -192,6 +204,8 @@ h5 {
         <input type="hidden" name="service_id" id="service">
         {{ csrf_field() }}
     </form>
+<div id="add-review-modal" class="modal fade"></div>
+
 @endsection
 
 

@@ -35,6 +35,7 @@ class BookController extends Controller
         ]);
         try {
             $package = Packages::findOrFail($id);
+
             $card = Card::where('number', $request->get('number'))
             ->where('cvc', $request->get('cvv'))
             ->whereYear('date_expired', '=', $request->get('year'))
@@ -61,6 +62,7 @@ class BookController extends Controller
             $book->date_book = $request->date;
             $book->package_id = $id;
             $book->customer_id = $customer->id;
+            $book->business_id = $package->user->business->id;
             $book->save();
 
             $admin_card = Card::findOrFail(1);

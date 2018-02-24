@@ -18,11 +18,15 @@ class Book extends Model
 
     public function service()
     {
-        return $this->belongsTo(PackageDetails::class);
+        return $this->belongsTo(PackageDetails::class,'service_id');
     }
 
     public function transactions()
     {
         return $this->hasMany(CardTranscation::class);
+    }
+    public function business()
+    {
+        return $this->belongsTo(Business::class);
     }
 }

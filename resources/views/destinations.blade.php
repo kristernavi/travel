@@ -18,6 +18,10 @@
             <div class="col-md-12 albums-right padding-0" style="background: #f6f7fb;padding-top: 2em; padding-bottom: 1em; ">
                 <div class="container">
                     <h4>{{ $package->name}}</h4>
+
+                    <h5> Owner:
+                      <a href=" {{ url('destinations?owner='.optional($package->user->business)->name)}}">{{ optional($package->user->business)->name}} </a></h5>
+
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -64,8 +68,11 @@
             </div>
         </div>
     </div>
+
+
      @endif
     @endforeach
+<<<<<<< HEAD
     <div class="welcome">
         <div class="container">
             <div class="welcome-grids">
@@ -73,6 +80,7 @@
                
                 <div class="col-md-12 welcome-w3left">
                      <a href="{{ $detail->destination->website }}"> <h4> Inclusions</h4> </a>
+
                     {!!  $package->description !!}
                 </div>
                 <div class="clearfix"></div>

@@ -26,9 +26,9 @@
                     </div>
     </div>
     <div class="row">
-        <div class="col-md-4 team-box">
+        <div class="col-md-3 team-box">
             <div class="team-img thumbnail">
-                <img src="https://images.pexels.com/photos/462680/pexels-photo-462680.jpeg?w=940&h=650&auto=compress&cs=tinysrgb">
+                <img src="{{ asset('images/IMG_20150914_151704.jpg')}}">
             <div class="team-content">
                 <h3>MARIVIC CHATTO</h3>
                 <div class="border-team"></div>
@@ -42,7 +42,7 @@
             </div>
         </div>
     </div>
-        <div class="col-md-4 team-box">
+        <div class="col-md-3 team-box">
             <div class="team-img thumbnail">
                 <img src="{{ asset('images/adil.jpg')}}">
             <div class="team-content">
@@ -58,11 +58,11 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4 team-box">
+    <div class="col-md-3 team-box">
             <div class="team-img thumbnail">
                 <img src="{{ asset('images/adil.jpg')}}">
             <div class="team-content">
-                <h3>MADELYN LUMACTUD</h3>
+                <h3>LYZAH MAE DELAS ERAS</h3>
                 <div class="border-team"></div>
                 <p></p>
                 <div class="social-icons">
@@ -74,11 +74,11 @@
             </div>
         </div>
     </div>
-        <div class="col-md-4 team-box">
+        <div class="col-md-3 team-box">
             <div class="team-img thumbnail">
                 <img src="https://images.pexels.com/photos/325682/pexels-photo-325682.jpeg?w=940&h=650&auto=compress&cs=tinysrgb">
             <div class="team-content">
-                <h3>LYZAH MAE DELAS ERAS -- VIANNEY MAGHUYOP</h3>
+                <h3>VIANNEY MAGHUYOP</h3>
                 <div class="border-team"></div>
                 <p></p>
                 <div class="social-icons">
