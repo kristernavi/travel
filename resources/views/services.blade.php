@@ -153,7 +153,10 @@ h5 {
     </div>
 <div class="row" style="padding: 5px">
 
-    @foreach ($details as $detail)
+    @foreach ($details as $index => $detail)
+        @if($index % 4 == 0)
+        <div class="row"></div>
+        @endif
         <div class="col-sm-6 col-md-4 col-lg-3 mt-4">
                 <div class="card">
                     <img class="card-img-top" src="{{  asset('storage/'.ltrim($detail->destination->image, 'public')) }}" height="100px">

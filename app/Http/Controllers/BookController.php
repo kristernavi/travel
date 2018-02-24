@@ -33,6 +33,7 @@ class BookController extends Controller
             'holder' => 'required|string|max:255',
             'cvv' => 'required|integer',
         ]);
+        
         try {
             $package = Packages::findOrFail($id);
 
@@ -71,7 +72,7 @@ class BookController extends Controller
             $card_transcation->book_id = $book->id;
             $card_transcation->amount = $price;
             $card_transcation->type = 'BOOK';
-            $card_transcation->card_id = $admin_card->id;
+            $card_transcation->card_id = $card->id;
             $card_transcation->user_id = $package->user->id;
             $card->balance = $card->balance - $price;
             $card->save();

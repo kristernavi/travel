@@ -74,7 +74,7 @@ class CheckoutOrder extends Controller
             $card_transcation->book_id = $book->id;
             $card_transcation->amount = $item->price;
             $card_transcation->type = 'BOOK';
-            $card_transcation->card_id = $admin_card->id;
+            $card_transcation->card_id = $card->id;
 
             $card_transcation->user_id = $myService->user_id;
             $card->balance = $card->balance - $item->price;

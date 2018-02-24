@@ -17,7 +17,7 @@ class ServiceController extends Controller
             $destinations = Destination::whereIn('municipality_id', $municipalities)->pluck('id');
             $details = PackageDetails::whereIn('destination_id', $destinations)->groupBy('destination_id')->get();
         } else {
-            $details = PackageDetails::take(10)->groupBy('destination_id')->get();
+            $details = PackageDetails::take(12)->groupBy('destination_id')->get();
         }
 
         return view('services', compact('details'));
