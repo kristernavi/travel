@@ -145,6 +145,10 @@ class AdminBookController extends Controller
             $card_business->type = 'REFUND';
             $card_business->user_id = $book->business->user_id;
             $card_business->save();
+
+            $card = \App\Card::findOrFail($transaction->card_id);
+            $card->balance = $card->balance +  $transaction->amount;
+            $card->save();
         }
         if (!env('APP_DEBUG')) {
             \Mail::to($book->customer->email)->send(new ReservationReject($book));

@@ -72,7 +72,6 @@
 
      @endif
     @endforeach
-<<<<<<< HEAD
     <div class="welcome">
         <div class="container">
             <div class="welcome-grids">

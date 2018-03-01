@@ -66,7 +66,7 @@
     <input type="text" class="form-control"  placeholder="e.g 000011"  value="{{ old('address2')}}" name="address2">
   </div>
  <div class="form-group col-md-6">
-    <label ">Address 2</label>
+    <label ">Reservation Date</label>
     <input type="date" class="form-control"  placeholder="e.g 000011"  value="{{ old('date')}}" name="date" min="{{ date('Y-m-d',strtotime("+1 days"))}}">
   </div>
  <div class="col-md-12">
@@ -157,7 +157,14 @@
     </div>
     @else
       <div class="container" style="padding: 20px">
+        @if(session('success'))
+  <div class="alert alert-success">
+       <strong> {{ session('success')}} </strong> <br>
+    </div>
+    @else
                     <h4>Empty Cart</h4>
+    
+@endif
                 </div>
     @endif
     <!-- //welcome -->

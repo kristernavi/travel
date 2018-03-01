@@ -60,7 +60,7 @@
     </div>
     <div class="col-md-3 team-box">
             <div class="team-img thumbnail">
-                <img src="{{ asset('images/adil.jpg')}}">
+                <img src="{{ asset('images/lay.jpg')}}">
             <div class="team-content">
                 <h3>LYZAH MAE DELAS ERAS</h3>
                 <div class="border-team"></div>
@@ -76,7 +76,7 @@
     </div>
         <div class="col-md-3 team-box">
             <div class="team-img thumbnail">
-                <img src="https://images.pexels.com/photos/325682/pexels-photo-325682.jpeg?w=940&h=650&auto=compress&cs=tinysrgb">
+                <img src="{{ asset('images/ian.jpg')}}">
             <div class="team-content">
                 <h3>VIANNEY MAGHUYOP</h3>
                 <div class="border-team"></div>
