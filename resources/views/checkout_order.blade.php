@@ -30,11 +30,7 @@
     </div>
 
 @endif
-@if(session('success'))
-  <div class="alert alert-success">
-       <strong> {{ session('success')}} </strong> <br>
-    </div>
-@endif
+
 
 
                 <form method="POST" action="{{ url('checkout-order/')}}">
@@ -157,7 +153,14 @@
     </div>
     @else
       <div class="container" style="padding: 20px">
-                    <h4>Empty Cart</h4>
+        @if(session('success'))
+  <div class="alert alert-success">
+       <strong> {{ session('success')}} </strong> <br>
+    </div>
+    @else
+    <h4>Empty Cart</h4>
+@endif
+
                 </div>
     @endif
     <!-- //welcome -->

@@ -18,6 +18,10 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Name</th>
+                                            <th>Type</th>
+                                            <th>Persons</th>
+                                            <th>Price</th>
+
                                             <th>Description</th>
                                             <th>Image</th>
                                             <th>Actions</th>
@@ -58,10 +62,13 @@
       },
       "columns": [
         {data: 'row',  name: 'row', className: ' text-left',   searchable: true, sortable: true},
-        {data: 'name',  name: 'name', className: 'col-md-3  text-left',   searchable: true, sortable: true},
-        {data: 'description',  name: 'description', className: 'col-md-6  text-left',   searchable: true, sortable: true},
+        {data: 'name',  name: 'name', className: 'col-md-2  text-left',   searchable: true, sortable: true},
+        {data: 'type',  name: 'type', className: 'col-md-1  text-left',   searchable: true, sortable: true},
+        {data: 'persons',  name: 'persons', className: 'col-md-1  text-left',   searchable: true, sortable: true},
+        {data: 'price',  name: 'price', className: 'col-md-2  text-right',   searchable: true, sortable: true},
+        {data: 'description',  name: 'description', className: 'col-md-4  text-left',   searchable: true, sortable: true},
         {data: 'image',  name: 'image', className: 'col-md-2  text-left',   searchable: true, sortable: true},
-        {data: 'actions',   name: 'actions', className: 'col-md-1 text-left',  searchable: false,  sortable: false},
+        {data: 'actions',   name: 'actions', className: 'col-md-1 text-center',  searchable: false,  sortable: false},
       ],
       'order': [[0, 'asc']]
     });

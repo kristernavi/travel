@@ -58,7 +58,7 @@ class CheckoutOrder extends Controller
 
             $admin_card = Card::findOrFail(1);
              foreach (\Cart::getContent() as $item) {
-            $myService = \App\PackageDetails::find($item->id);
+            $myService = \App\Destination::find($item->id);
             $book = new Book();
             $book->date_book = $request->date;
             $book->service_id = $item->id;

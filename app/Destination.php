@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Ghanem\Rating\Traits\Ratingable as Rating;
 
 class Destination extends Model
 {
+    use Rating;
+
     protected $fillable = [
         'name', 'description', 'image', 'link', 'long', 'lat',
     ];

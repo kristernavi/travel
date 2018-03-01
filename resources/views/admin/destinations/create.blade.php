@@ -37,6 +37,23 @@
             <input type="text" class="form-control" id="link" name="link" placeholder="Enter link" autocomplete="false">
           <span class="help-text text-danger"></span>
         </div>
+
+        <div class="form-group">
+            <label for="link">Price</label>
+            <input type="number" onchange="setTwoNumberDecimal" min="1" max="10000" step="0.25" value="1.00" name="price" class="form-control" />
+          <span class="help-text text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label for="link">Number of Person</label>
+            <input type="number"  min="0" max="30"  value="1" name="persons" class="form-control" />
+          <span class="help-text text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label for="long">Type: </label>
+             {{ Form::select('type', ['tourist'=>'Tourist','hotel'=>'Hotel'] , null, ['class' => 'form-control']) }}
+          <span class="help-text text-danger"></span>
+        </div>
         <div class="form-group">
             <label for="long">Municipality: </label>
              {{ Form::select('municipality_id', \App\Municipality::pluck('name','id'), null, ['class' => 'form-control']) }}
@@ -58,6 +75,9 @@
 <script src="{{url('summernote/summernote.js')}}"></script>
 
 <script type="text/javascript">
+function setTwoNumberDecimal(event) {
+    this.value = parseFloat(this.value).toFixed(2);
+}
 
   $('#summernote').summernote({
         popover: {

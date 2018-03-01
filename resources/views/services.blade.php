@@ -151,26 +151,51 @@ h5 {
             </div>
         </div>
     </div>
-<div class="row" style="padding: 5px">
+    @php
+$servicesHotel = $services->filter( function($serve){
+    return $serve->type == 'hotel';
+});
+$servicesTourist = $services->filter( function($serve){
+    return $serve->type == 'tourist';
+});
 
-    @foreach ($details as $detail)
+@endphp
+
+<div class="row" style="padding: 5px">
+    <div class="row">
+
+
+    <div class="clear-fix"></div>
+    <div style="padding: 5px">
+        <h2>Tourist</h2>
+    </div>
+    <div class="clear-fix"></div>
+    <hr size="30" style="border-top: 1px solid #333;">
+    </div>
+    @foreach ($servicesTourist as $service)
         <div class="col-sm-6 col-md-4 col-lg-3 mt-4">
                 <div class="card">
-                    <img class="card-img-top" src="{{  asset('storage/'.ltrim($detail->destination->image, 'public')) }}" height="100px">
+                    <img class="card-img-top" src="{{  asset('storage/'.ltrim($service->image, 'public')) }}" height="100px">
                     <div class="card-block">
-                        <h4 class="card-title">{{ $detail->destination->name}}</h4>
+                        <h4 class="card-title">{{ $service->name}}</h4>
                         <div class="meta">
-                            <a href="#">{{ optional($detail->destination->municipality)->name}}</a>
+                            <a href="#">{{ optional($service->municipality)->name}}</a>
                         </div>
                         <div class="card-text description">
-                            {!! $detail->destination->description !!}
+                            {!! $service->description !!}
                         </div>
                     </div>
                     <div class="card-footer">
-                        <strong>PHP {{ number_format($detail->price,2)}}</strong>
+                        <strong>PHP {{ number_format($service->price,2)}}</strong>
+                    </div>
+                    <div class="card-footer">
+                        <strong>No. of Persons {{ $service->persons }}</strong>
+                    </div>
+                    <div class="card-footer">
+                        <strong>Own by: {{ optional($service->user->business)->name }}</strong>
                     </div>
                     @php
-                    $stars = intval($detail->avgRating);
+                    $stars = intval($service->avgRating);
                     $unstars = 5 - $stars;
                     @endphp
                     <div class="card-footer">
@@ -181,20 +206,91 @@ h5 {
                             @for ($i = 0; $i < $unstars; $i++)
                                 <span class="glyphicon glyphicon-star-empty" ></span>
                             @endfor
-                             Reviews: {{ $detail->countPositive }}
+                             Reviews: {{ $service->countPositive }}
                         </div>
 
                     </em>
 
 
                         <br/>
-                        <button class="btn btn-primary float-right btn-sm add-cart" data-id="{{$detail->id}}"> Add Cart</button>
-                        <button class="btn btn-primary float-right btn-sm rate-this " data-id="{{$detail->id}}">Add Review</button>
+                        <button class="btn btn-primary float-right btn-sm add-cart" data-id="{{$service->id}}"> Add Cart</button>
+                        <button class="btn btn-primary float-right btn-sm rate-this " data-id="{{$service->id}}">Add Review</button>
                     </div>
                 </div>
             </div>
     @endforeach
 
+        </div>
+
+    <!-- //welcome -->
+    <!-- //newsletter -->
+    <form id="cart-form">
+
+        <input type="hidden" name="service_id" id="service">
+        {{ csrf_field() }}
+    </form>
+    <div class="row" style="padding: 5px">
+    <div class="row">
+
+ <hr size="30" style="border-top: 1px solid #333;">
+    <div class="clear-fix"></div>
+    <div style="padding: 5px">
+        <h2>Hotel</h2>
+    </div>
+    <div class="clear-fix"></div>
+
+    @foreach ($servicesHotel as $service)
+        <div class="col-sm-6 col-md-4 col-lg-3 mt-4">
+                <div class="card">
+                    <img class="card-img-top" src="{{  asset('storage/'.ltrim($service->image, 'public')) }}" height="100px">
+                    <div class="card-block">
+                        <h4 class="card-title">{{ $service->name}}</h4>
+                        <div class="meta">
+                            <a href="#">{{ optional($service->municipality)->name}}</a>
+                        </div>
+                        <div class="card-text description">
+                            {!! $service->description !!}
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <strong>PHP {{ number_format($service->price,2)}}</strong>
+                    </div>
+                    <div class="card-footer">
+                        <strong>No. of Persons {{ $service->persons }}</strong>
+                    </div>
+                    <div class="card-footer">
+                        <strong>Own by: {{ optional($service->user->business)->name }}</strong>
+                    </div>
+                    @php
+                    $stars = intval($service->avgRating);
+                    $unstars = 5 - $stars;
+                    @endphp
+                    <div class="card-footer">
+                        <em><div class="rating">
+                            @for ($i = 0; $i < $stars; $i++)
+                                <span class="glyphicon glyphicon-star" style="color: #fde16d"></span>
+                            @endfor
+                            @for ($i = 0; $i < $unstars; $i++)
+                                <span class="glyphicon glyphicon-star-empty" ></span>
+                            @endfor
+                             Reviews: {{ $service->countPositive }}
+                        </div>
+
+                    </em>
+
+
+                        <br/>
+                        <button class="btn btn-primary float-right btn-sm add-cart" data-id="{{$service->id}}"> Add Cart</button>
+                        <button class="btn btn-primary float-right btn-sm rate-this " data-id="{{$service->id}}">Add Review</button>
+                    </div>
+                </div>
+            </div>
+    @endforeach
+
+        </div>
+        <div class="row">
+            <hr size="30" style="border-top: 1px solid #333;">
+    </div>
         </div>
 
     <!-- //welcome -->

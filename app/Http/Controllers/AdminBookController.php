@@ -33,7 +33,7 @@ class AdminBookController extends Controller
                 return $column->package->name;
                 }
                 else{
-                    return $column->service->destination->name;
+                    return $column->service->name;
                 }
             })
             ->AddColumn('status', function ($column) {

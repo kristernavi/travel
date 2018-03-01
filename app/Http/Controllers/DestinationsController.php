@@ -38,6 +38,7 @@ class DestinationsController extends Controller
      */
     public function store(Request $request)
     {
+
         $data = request()->validate([
             'name' => 'required',
             'description' => 'required',
@@ -46,6 +47,9 @@ class DestinationsController extends Controller
             'long' => 'nullable|string',
             'lat' => 'nullable|string',
             'municipality_id' => 'required',
+            'price' => 'required|between:1,9999.99',
+            'persons' => 'required|integer',
+            'type' => 'required'
         ]);
         $image = '';
         if ($request->hasFile('image')) {
@@ -54,6 +58,9 @@ class DestinationsController extends Controller
         $destination = new \App\Destination();
         $destination->name = $request->get('name');
         $destination->description = $request->get('description');
+        $destination->type = request('type');
+        $destination->price = request('price');
+        $destination->persons = request('persons');
         $destination->link = $request->get('link');
         $destination->image = $image;
         $destination->municipality_id = $request->get('municipality_id');
@@ -121,8 +128,9 @@ class DestinationsController extends Controller
         $destination->link = $request->get('link');
         $destination->image = $image;
         $destination->user_id = \Auth::id();
-        $destination->long = $request->get('long');
-        $destination->lat = $request->get('lat');
+        $destination->type = request('type');
+        $destination->price = request('price');
+        $destination->persons = request('persons');
         if ($destination->save()) {
             return response()->json(['success' => true, 'msg' => 'Data Successfully updated!']);
         } else {
@@ -165,6 +173,9 @@ class DestinationsController extends Controller
             })
             ->AddColumn('description', function ($column) {
                 return $column->description;
+            })
+            ->AddColumn('price', function ($column) {
+                return number_format($column->price,2);
             })
             ->AddColumn('image', function ($column) {
                 if ($column->image) {

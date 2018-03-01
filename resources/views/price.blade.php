@@ -118,6 +118,8 @@
 
                         </div> Reviews {{ $package->countPositive }}: <a class="rate-this" href="#" data-id="{{ $package->id}}">Add Review</a></em><br/>
                          <em>Owned By: <a href="{{ $package->user->business ?  $package->user->business->website: '#'}}">{{ $package->user->business ? $package->user->business->name: 'Admin'}}</a></em>
+                         </em><br/>
+                         <em>No. of Persons:{{ $package->persons}}</em>
                      <article><p class="description">
                          {!!$package->description !!}
 

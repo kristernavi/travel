@@ -18,7 +18,7 @@ class Book extends Model
 
     public function service()
     {
-        return $this->belongsTo(PackageDetails::class,'service_id');
+        return $this->belongsTo(Destination::class,'service_id');
     }
 
     public function transactions()

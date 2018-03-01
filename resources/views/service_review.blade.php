@@ -15,9 +15,9 @@
                 <tr>
                     <td class="item-name-col">
                         <figure>
-                            <a href="#"><img src="{{  asset('storage/'.ltrim($detail->destination->image, 'public')) }}" alt="{{ $detail->destination->name }}" height="20%" width="40%"></a>
+                            <a href="#"><img src="{{  asset('storage/'.ltrim($service->image, 'public')) }}" alt="{{ $service->name }}" height="20%" width="40%"></a>
                         </figure>
-                        <header class="item-name"><a href="#">{{ $detail->destination->name }}</a></header>
+                        <header class="item-name"><a href="#">{{ $service->name }}</a></header>
                         <ul>
                             {{-- <li>Price: {{ number_format($product->price,2) }}</li>
                             <li><span>Brand:</span>{{$product->brand->name}}</li> --}}
@@ -81,7 +81,7 @@
             $('button[type=submit], input[type=submit]').prop('disabled',true);
             $.ajax({
                 type: 'POST',
-                url: 'review-service/'+'{{ $detail->id }}',
+                url: 'review-service/'+'{{ $service->id }}',
                 data: $('#add-review-form').serialize(),
                 dataType: 'json',
                 success: function(data){

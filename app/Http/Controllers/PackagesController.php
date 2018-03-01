@@ -49,6 +49,7 @@ class PackagesController extends Controller
             $package = new \App\Packages();
             $package->name = $request->get('name');
             $package->description = $request->get('description');
+            $package->persons = $request->get('persons');
             $package->user_id = \Auth::id();
             $package->min = $request->get('min');
             $package->save();
@@ -115,6 +116,7 @@ class PackagesController extends Controller
             $package->name = $request->get('name');
             $package->description = $request->get('description');
             $package->min = $request->get('min');
+            $package->persons = $request->get('persons');
             $package->save();
             $d = \App\PackageDetails::where('package_id', $id)->delete();
             for ($i = 0; $i < sizeof($request->get('destination_id')); ++$i) {

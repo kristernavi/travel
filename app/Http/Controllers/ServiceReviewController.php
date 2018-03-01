@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Destination;
 use App\PackageDetails;
 use App\Packages;
 
@@ -9,14 +10,14 @@ class ServiceReviewController extends Controller
 {
     public function create($id)
     {
-        $detail = PackageDetails::findOrFail($id);
+        $service = Destination::findOrFail($id);
 
-        return view('service_review', compact('detail'));
+        return view('service_review', compact('service'));
     }
 
     public function store($id)
     {
-        $detail = PackageDetails::findOrFail($id);
+        $detail = Destination::findOrFail($id);
 
         $detail->rating([
             'rating' => request('star'),

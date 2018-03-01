@@ -14,6 +14,11 @@
           <input type="text" class="form-control" id="name" name="name" placeholder="Enter name" autocomplete="false">
           <span class="help-text text-danger"></span>
       </div>
+      <div class="form-group">
+            <label for="link">Number of Person</label>
+            <input type="number"  min="0" max="30"  value="1" name="persons" class="form-control" />
+          <span class="help-text text-danger"></span>
+        </div>
         <div class="form-group">
             <label for="description">Description</label>
            <div id="summernote"></div>
