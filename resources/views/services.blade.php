@@ -172,7 +172,12 @@ $servicesTourist = $services->filter( function($serve){
     <div class="clear-fix"></div>
     <hr size="30" style="border-top: 1px solid #333;">
     </div>
-    @foreach ($servicesTourist as $service)
+    @foreach ($servicesTourist as $index => $service)
+
+        @if($index % 4 == 0)
+        <div class="row"></div>
+        @endif
+
         <div class="col-sm-6 col-md-4 col-lg-3 mt-4">
                 <div class="card">
                     <img class="card-img-top" src="{{  asset('storage/'.ltrim($service->image, 'public')) }}" height="100px">
@@ -239,7 +244,11 @@ $servicesTourist = $services->filter( function($serve){
     </div>
     <div class="clear-fix"></div>
 
-    @foreach ($servicesHotel as $service)
+     @foreach ($servicesTourist as $index => $service)
+
+        @if($index % 4 == 0)
+        <div class="row"></div>
+        @endif
         <div class="col-sm-6 col-md-4 col-lg-3 mt-4">
                 <div class="card">
                     <img class="card-img-top" src="{{  asset('storage/'.ltrim($service->image, 'public')) }}" height="100px">

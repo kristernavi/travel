@@ -72,13 +72,14 @@
 
      @endif
     @endforeach
-     <div class="welcome">
+    <div class="welcome">
         <div class="container">
             <div class="welcome-grids">
 
-
+               
                 <div class="col-md-12 welcome-w3left">
-                     <a href=""><h4>Inclusions: </h4> </a>
+                     <a href="{{ $detail->destination->website }}"> <h4> Inclusions</h4> </a>
+
                     {!!  $package->description !!}
                 </div>
                 <div class="clearfix"></div>

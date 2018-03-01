@@ -11,13 +11,15 @@ class ServiceController extends Controller
     public function index()
     {
         $keyword = request('keyword') ? request('keyword') : '';
-        $details = [];
+        $services = [];
         if (strlen($keyword) > 1) {
             $municipalities = Municipality::where('name', 'LIKE', "%$keyword%")->pluck('id');
             $services = Destination::whereIn('municipality_id', $municipalities)->get();
 
         } else {
+
             $services = Destination::take(12)->get();
+
         }
 
         return view('services', compact('services'));

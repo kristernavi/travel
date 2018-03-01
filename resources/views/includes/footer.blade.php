@@ -8,7 +8,7 @@
 					<div class="agileits-w3layouts-tweets">  
 						<h5><a href="{{url('')}}">Bohol Travel and Stay</a></h5>  
 					</div>
-					<p>Aenean vitae metus sit amet purus sodales blandit. Nullam ut dolor eu urna viverra semper. Mauris est odio, laoreet laoreet sapien non, sollicitudin bibendum nulla.</p>
+					<p></p>
 				</div> 
 				<div class="col-md-3 col-sm-3 footer-wthree-grid">
 					<h3>Quick Links</h3>

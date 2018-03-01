@@ -74,7 +74,7 @@
   </div>
   <div class="form-group col-md-6">
     <label ">Your Address</label>
-    <input type="text" class="form-control"  placeholder="e.g 000011"  value="{{ old('address')}}" name="address">
+    <input type="text" class="form-control"  placeholder="e.g Corella Bohol"  value="{{ old('address')}}" name="address">
   </div>
 
   <div class="form-group col-md-6">

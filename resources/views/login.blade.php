@@ -22,6 +22,14 @@
     </div>
     @endif
 
+      @if ($errors->has('not_verify'))
+     <div class="alert alert-success">
+       <strong> {{  $errors->first('not_verify') }} </strong> <br>
+    </div>
+    @endif
+
+
+
 
 <form class="form-horizontal" method="POST" action="{{ route('login') }}">
                         {{ csrf_field() }}
