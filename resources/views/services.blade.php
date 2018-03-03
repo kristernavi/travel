@@ -151,17 +151,10 @@ h5 {
             </div>
         </div>
     </div>
-    @php
-$servicesHotel = $services->filter( function($serve){
-    return $serve->type == 'hotel';
-});
-$servicesTourist = $services->filter( function($serve){
-    return $serve->type == 'tourist';
-});
 
-@endphp
 
 <div class="row" style="padding: 5px">
+    @if($servicesTourist->count() > 0)
     <div class="row">
 
 
@@ -172,6 +165,7 @@ $servicesTourist = $services->filter( function($serve){
     <div class="clear-fix"></div>
     <hr size="30" style="border-top: 1px solid #333;">
     </div>
+    @endif
     @foreach ($servicesTourist as $index => $service)
 
         @if($index % 4 == 0)
@@ -234,7 +228,9 @@ $servicesTourist = $services->filter( function($serve){
         <input type="hidden" name="service_id" id="service">
         {{ csrf_field() }}
     </form>
+    @if($servicesHotel->count() > 0)
     <div class="row" style="padding: 5px">
+
     <div class="row">
 
  <hr size="30" style="border-top: 1px solid #333;">
@@ -242,9 +238,10 @@ $servicesTourist = $services->filter( function($serve){
     <div style="padding: 5px">
         <h2>Hotel</h2>
     </div>
+    @endif
     <div class="clear-fix"></div>
 
-     @foreach ($servicesTourist as $index => $service)
+     @foreach ($servicesHotel as $index => $service)
 
         @if($index % 4 == 0)
         <div class="row"></div>

@@ -112,6 +112,8 @@
     <thead>
       <tr>
         <th>Destination</th>
+        <th>Persons</th>
+        <th>Owner</th>
         <th>Price</th>
         <th>Action</th>
 
@@ -124,6 +126,9 @@
       @foreach (Cart::getContent() as $item)
       <tr>
         <td>{{ $item->name }}</td>
+          <td> {{ $item->attributes['persons']}} </td>
+          <td> {{ $item->attributes['owner']}} </td>
+
         <td>{{ number_format($item->price,2) }}</td>
         <td><a href="remove-cart/{{$item->id}}" class="btn btn-danger " role="button">Remove</a></td>
       </tr>
@@ -131,6 +136,8 @@
       @endforeach
       <tr>
         <td> <strong>Total</strong></td>
+        <td></td>
+        <td>  </td>
         <td> <strong>{{ number_format(Cart::getTotal(),2) }} </strong></td>
 
       </tr>
@@ -142,6 +149,11 @@
  </div>
 
  <div class="form-group col-md-6 pull-right">
+  <div class="row">
+      <div class="checkbox">
+    <label><input type="checkbox" required> I agree on the <a href="/terms">Terms and Conditions</a></label>
+    </div>
+    </div>
     <input type="submit" class="btn btn-info" value="Submit Button">
   </div>
 </form>
@@ -160,7 +172,7 @@
     @else
   <h4>Empty Cart</h4>
 
-
+    @endif
     @endif
     </div>
     <!-- //welcome -->

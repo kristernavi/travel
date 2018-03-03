@@ -14,14 +14,16 @@ class ServiceController extends Controller
         $services = [];
         if (strlen($keyword) > 1) {
             $municipalities = Municipality::where('name', 'LIKE', "%$keyword%")->pluck('id');
-            $services = Destination::whereIn('municipality_id', $municipalities)->get();
+            $servicesHotel = Destination::whereIn('municipality_id', $municipalities)->where('type','hotel')->get();
+            $servicesTourist =  Destination::whereIn('municipality_id', $municipalities)->where('type','tourist')->get();
+
 
         } else {
 
-            $services = Destination::take(12)->get();
+            $servicesHotel = Destination::where('type','hotel')->take(8)->get();
+            $servicesTourist =  Destination::where('type','tourist')->take(8)->get();
 
         }
-
-        return view('services', compact('services'));
+        return view('services', ['servicesHotel' => $servicesHotel, 'servicesTourist' => $servicesTourist]);
     }
 }

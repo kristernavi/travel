@@ -19,7 +19,7 @@ class CartController extends Controller
             'name' => $service->name,
             'price' => $service->price,
             'quantity' => 1,
-            'attributes' => [],
+            'attributes' => ['persons' => $service->persons, 'owner' => optional($service->user->business)->name],
         ]);
         }
 

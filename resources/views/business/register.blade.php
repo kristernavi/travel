@@ -98,6 +98,11 @@
   </div>
 
  <div class="form-group col-md-6 pull-right">
+   <div class="row">
+      <div class="checkbox">
+    <label><input type="checkbox" required> I agree on the <a href="/terms">Terms and Conditions</a></label>
+    </div>
+    </div>
     <input type="submit" class="btn btn-info" value="Submit Button">
   </div>
 </form>
