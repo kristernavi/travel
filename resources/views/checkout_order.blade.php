@@ -63,7 +63,7 @@
   </div>
  <div class="form-group col-md-6">
     <label ">Reservation Date</label>
-    <input type="date" class="form-control"  placeholder="e.g 000011"  value="{{ old('date')}}" name="date" min="{{ date('Y-m-d',strtotime("+1 days"))}}">
+    <input type="date" class="form-control"  placeholder="e.g 000011"  value="{{ old('date')}}" name="date" min="{{ date('Y-m-d')}}">
   </div>
  <div class="col-md-12">
     <fieldset>
