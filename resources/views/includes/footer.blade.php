@@ -17,7 +17,9 @@
 						<li><a href="#"><span class="glyphicon glyphicon-menu-right"></span> About</a></li> 
 						<li><a href="#"><span class="glyphicon glyphicon-menu-right"></span> Destinations</a></li> 
 						<li><a href="#"><span class="glyphicon glyphicon-menu-right"></span> Packages</a></li> 
-						<li><a href="#"><span class="glyphicon glyphicon-menu-right"></span> Contact Us</a></li> 
+						<li><a href="#"><span class="glyphicon glyphicon-menu-right"></span> Contact Us</a></li>
+						<li><a href="{{ url('/terms')}}"><span class="glyphicon glyphicon-menu-right"></span> Terms and Conditions</a></li> 
+
 					</ul>
 				</div> 	 
 				<div class="col-md-4 col-sm-4 footer-wthree-grid">

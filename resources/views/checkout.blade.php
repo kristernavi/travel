@@ -113,6 +113,7 @@
         <table class="table">
     <thead>
       <tr>
+        <th>Service</th>
         <th>Destination</th>
         <th>Price</th>
 
@@ -126,6 +127,8 @@
       @foreach ($details as $detail)
       <tr>
         <td>{{ $detail->destination->name }}</td>
+        <td>{{ $detail->destination->municipality->name }}</td>
+
         <td>{{ number_format($detail->price,2) }}</td>
 
       </tr>
@@ -133,6 +136,7 @@
       @endforeach
       <tr>
         <td> <strong>Total</strong></td>
+        <td>  </td>
         <td> <strong>{{ number_format($details->sum('price'),2) }} </strong></td>
 
       </tr>
@@ -144,9 +148,9 @@
  </div>
 
  <div class="form-group col-md-6 pull-right">
-    <div class="row">
+     <div class="row">
       <div class="checkbox">
-    <label><input type="checkbox" required>Option 1</label>
+    <label><input type="checkbox" required> I agree on the <a href="/terms">Terms and Conditions</a></label>
     </div>
     </div>
     <input type="submit" class="btn btn-info" value="Submit Button">

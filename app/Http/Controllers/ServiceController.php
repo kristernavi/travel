@@ -20,8 +20,8 @@ class ServiceController extends Controller
 
         } else {
 
-            $servicesHotel = Destination::where('type','hotel')->take(8)->get();
-            $servicesTourist =  Destination::where('type','tourist')->take(8)->get();
+            $servicesHotel = Destination::where('type','hotel')->inRandomOrder()->take(8)->get();
+            $servicesTourist =  Destination::where('type','tourist')->inRandomOrder()->take(8)->get();
 
         }
         return view('services', ['servicesHotel' => $servicesHotel, 'servicesTourist' => $servicesTourist]);

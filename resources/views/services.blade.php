@@ -160,7 +160,7 @@ h5 {
 
     <div class="clear-fix"></div>
     <div style="padding: 5px">
-        <h2>Tourist</h2>
+        <h2>Tourist Destinations</h2>
     </div>
     <div class="clear-fix"></div>
     <hr size="30" style="border-top: 1px solid #333;">

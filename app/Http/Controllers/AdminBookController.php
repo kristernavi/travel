@@ -71,7 +71,7 @@ class AdminBookController extends Controller
     {
         $book = \App\Book::findOrFail($id);
 
-        if ($book->date_book <= date('Y-m-d')) {
+        if ($book->date_book < date('Y-m-d')) {
             return response()->json(['success' => false, 'msg' => 'Reservation cannot be confirm due for some reason do the reject action']);
         }
         $book->confirmed = true;
