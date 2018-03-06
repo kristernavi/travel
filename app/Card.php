@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Card extends Model
 {
+    protected $connection = 'mysql2';
+
     protected function enoughBalance($paidAmount)
     {
         $remain = $this->balance - $paidAmount;
