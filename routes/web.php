@@ -57,9 +57,9 @@ Route::post('/review/{id}', 'ReviewController@store');
 
 Route::get('/review-service/{id}', 'ServiceReviewController@create');
 Route::post('/review-service/{id}', 'ServiceReviewController@store');
- Route::get('terms', function(){
-            return view('term');
-    });
+ Route::get('terms', function () {
+     return view('term');
+ });
 /* END OF URL **/
 
 /* URL FOR ADMIN SIDE **/
@@ -93,6 +93,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 
     Route::post('/reservation-confirm/{id}', 'AdminBookController@confirm');
     Route::post('reservation-reject/{id}', 'AdminBookController@reject');
+    Route::post('book-update/{id}', 'AdminBookController@updateBook');
 });
 
 /* END OF URL **/

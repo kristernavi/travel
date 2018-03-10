@@ -4,7 +4,11 @@
 </div>
     <!-- //banner -->
     <!-- welcome -->
-
+<style type="text/css">
+  p {
+    color: #333 !important;
+  }
+</style>
     @if(!Cart::isEmpty())
     <div class="albums">
         <div class="w3lalbums-grid">
@@ -65,7 +69,17 @@
     <label ">Reservation Date</label>
     <input type="date" class="form-control"  placeholder="e.g 000011"  value="{{ old('date')}}" name="date" min="{{ date('Y-m-d')}}">
   </div>
- <div class="col-md-12">
+  <div class="form-group col-md-6">
+    <label ">Payment Option</label>
+    <select class="form-control" id="payment-option" name="type">
+        <option value="card">Credit / Debit Card</option>
+        <option value="Bayad Center">Bayad Center</option>
+        <option value="Palawan">Palawan</option>
+        <option value="Mhuiler">Mhuiler</option>
+    </select>
+
+  </div>
+ <div class="col-md-12" id="card-area">
     <fieldset>
       <legend>Payment</legend>
       <div class="form-group">
@@ -166,9 +180,97 @@
     @else
       <div class="container" style="padding: 20px">
         @if(session('success'))
-  <div class="alert alert-success">
-       <strong> {{ session('success')}} </strong> <br>
+        @php
+          $book = session('book');
+        @endphp
+      @if($book->booked)
+        <div class="alert alert-success">
+        <strong> {{ session('success')}} </strong> <br>
+        </div>
+      @else
+       <div class="albums">
+        <div class="w3lalbums-grid">
+            <div class="col-md-12 albums-right padding-0" style="background: #f6f7fb;padding-top: 2em; padding-bottom: 1em; ">
+                <div class="container">
+                    <h4>How to pay in {{ session('payment')}}</h4>
+                    <p style="text-align: justify;">
+                      <strong>Your Book #: {{$book->book_no }}
+                        </strong>
+                    </p>
+                    <br/>
+                            <ol style="text-align:justify; color: #333 !important;">
+
+
+
+<li>
+<p>
+            <b>Go to the nearest {{ session('payment')}}</b>
+        </p>
+<p>
+            Fill up the neccesary information that given by the form in sender area
+        </p>
+</li>
+<li>
+<p>
+            <b>Reciever Information</b>
+        </p>
+<p>
+            The reciever information must our information given below and it must in correct spelling.
+            <div style="padding: 5px">
+              <p>* Name: <strong>John Doe </strong></p>
+
+              <p>* Mobile Number:<strong> 090912312312 </strong></p>
+
+              <p>* Location: <strong>Balilihan Bohol</strong> </p>
+
+            </div>
+        </p>
+</li>
+
+<li>
+<p>
+            <b>After Paying in {{ session('payment')}}</b>
+        </p>
+<p>
+           <p>Contact Us via the follwing:</p>
+           <p>Email: bisubohol.travel@gmail.com</p>
+           <p>Mobile: 090912312312</p>
+         <p>Our in offical <a href="https://www.facebook.com/">facebook page</a>
+        </p>
+</li>
+
+<li>
+<p>
+            <b>On this format</b>
+        </p>
+<p>
+           <p>Sender Name: EX. Jane Doe</p>
+           <p>Transaction ID: EX. (ANC-XX0-1DSS-1SS)</p>
+           <p>Book #: EX. ({{$book->book_no }})</p>
+           <p>Via: {{ session('payment')}}</p>
+
+</li>
+<li>
+<p>
+            <b>And will contact you as soon as the book is confirm</b>
+        </p>
+<p>
+
+
+</li>
+
+
+
+
+</ol>
+                </div>
+
+            </div>
+            <div class="clearfix"></div>
+        </div>
     </div>
+
+      @endif
     @else
   <h4>Empty Cart</h4>
 
@@ -177,4 +279,16 @@
     </div>
     <!-- //welcome -->
     <!-- //newsletter -->
+    <script type="text/javascript">
+      $('#payment-option').on('change', function() {
+
+        if( $(this).find(":checked").val() != 'card'){
+          $('#card-area').addClass('hidden');
+
+        }
+        else{
+          $('#card-area').removeClass('hidden');
+        }
+    });
+    </script>
 @endsection

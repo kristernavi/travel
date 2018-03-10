@@ -15,7 +15,7 @@ class AdminBookController extends Controller
             $data = \App\Book::get();
         } else {
             $id = \Auth::user()->business->id;
-            $data = \App\Book::where('business_id', $id)->get();
+            $data = \App\Book::where('business_id', $id)->where('booked', 1)->get();
         }
 
         return DataTables::of($data)
@@ -28,12 +28,14 @@ class AdminBookController extends Controller
              ->AddColumn('email', function ($column) {
                  return $column->customer->email;
              })
+             ->AddColumn('book_no', function ($column) {
+                 return  $column->book_no;
+             })
             ->AddColumn('package', function ($column) {
-                if($column->package !=null){
-                return $column->package->name;
-                }
-                else{
-                    return $column->service->name;
+                if (null != $column->package) {
+                    return $column->package->name;
+                } else {
+                    return '';
                 }
             })
             ->AddColumn('status', function ($column) {
@@ -45,6 +47,21 @@ class AdminBookController extends Controller
             })
             ->AddColumn('amount', function ($column) {
                 return number_format($column->transactions()->where('type', 'BOOK')->sum('amount'), 2);
+            })
+            ->AddColumn('booked', function ($column) {
+                $label = 'Confirm';
+                $btnClass = 'success';
+                if ($column->booked) {
+                    $label = 'Revoke';
+                    $btnClass = 'danger';
+                }
+                if (!$column->actioned) {
+                    return '<div class="btn-group table-dropdown">
+                            <button class="btn-xs btn btn-'.$btnClass.' update-data-btn" data-id="'.$column->id.'">
+                                <i class="fa fa-edit"></i> '.$label.'
+                            </button>
+                            ';
+                }
             })
             ->AddColumn('actions', function ($column) {
                 if (!$column->actioned) {
@@ -58,7 +75,7 @@ class AdminBookController extends Controller
                         </div>';
                 }
             })
-            ->rawColumns(['actions'])
+            ->rawColumns(['actions', 'booked'])
             ->make(true);
     }
 
@@ -70,7 +87,6 @@ class AdminBookController extends Controller
     public function confirm($id)
     {
         $book = \App\Book::findOrFail($id);
-
         if ($book->date_book < date('Y-m-d')) {
             return response()->json(['success' => false, 'msg' => 'Reservation cannot be confirm due for some reason do the reject action']);
         }
@@ -147,7 +163,7 @@ class AdminBookController extends Controller
             $card_business->save();
 
             $card = \App\Card::findOrFail($transaction->card_id);
-            $card->balance = $card->balance +  $transaction->amount;
+            $card->balance = $card->balance + $transaction->amount;
             $card->save();
         }
         if (!env('APP_DEBUG')) {
@@ -155,5 +171,14 @@ class AdminBookController extends Controller
         }
 
         return response()->json(['success' => true, 'msg' => 'Reservation Rejected']);
+    }
+
+    public function updateBook($id)
+    {
+        $book = \App\Book::findOrFail($id);
+        $book->booked = !$book->booked;
+        $book->save();
+
+        return response()->json(['success' => true, 'msg' => 'Book Updated']);
     }
 }

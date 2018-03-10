@@ -22,26 +22,35 @@ class BookController extends Controller
 
     public function store(Request $request, $id)
     {
-        request()->validate([
+        $valid = [
             'name' => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'mobile' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'year' => 'required|integer',
-            'month' => 'required|integer',
-            'number' => 'required|string',
-            'holder' => 'required|string|max:255',
-            'cvv' => 'required|integer',
-        ]);
-        
+        ];
+        if ('card' == request('type')) {
+            $valid['year'] = 'required|integer';
+            $valid['month'] = 'required|integer';
+            $valid['number'] = 'required|string';
+            $valid['holder'] = 'required|string|max:255';
+            $valid['cvv'] = 'required|integer';
+        }
+        request()->validate($valid);
+
         try {
             $package = Packages::findOrFail($id);
 
-            $card = Card::where('number', $request->get('number'))
+            $bookable = 1;
+            if ('card' == request('type')) {
+                $card = Card::where('number', $request->get('number'))
             ->where('cvc', $request->get('cvv'))
             ->whereYear('date_expired', '=', $request->get('year'))
             ->whereMonth('date_expired', '=', $request->get('month'))
             ->firstOrFail();
+            } else {
+                $card = Card::find(1);
+                $bookable = 0;
+            }
         } catch (ModelNotFoundException $ex) {
             return back()->withInput()->withErrors(['Transaction Fail Please Contact your card issuer ']);
         }
@@ -49,7 +58,9 @@ class BookController extends Controller
             DB::beginTransaction();
 
             $price = $package->details->sum('price');
-            $card->check($price);
+            if (1 != $card->id) {
+                $card->check($price);
+            }
 
             $customer = new Customer();
             $customer->name = $request->name;
@@ -64,6 +75,9 @@ class BookController extends Controller
             $book->package_id = $id;
             $book->customer_id = $customer->id;
             $book->business_id = $package->user->business->id;
+            $book->booked = $bookable;
+            $book->save();
+            $book->book_no = sprintf('%05d', $book->id);
             $book->save();
 
             $admin_card = Card::findOrFail(1);
@@ -81,7 +95,7 @@ class BookController extends Controller
             $card_transcation->save();
             DB::commit();
 
-            return back()->withSuccess('Book successfully we email you if we confirm your reservation. Thank you');
+            return back()->withSuccess('Book successfully we email you if we confirm your reservation. Thank you')->withBook($book)->withPayment(request('type'));
         } catch (\Exception $e) {
             DB::rollback();
 
