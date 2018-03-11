@@ -20,9 +20,9 @@
                                         <tr>
                                             <th> Book #</th>
                                             <th>Date Reserve</th>
-                                            <th>Name</th>
+                                            <th>Customer</th>
                                             <th>Email</th>
-                                            <th>Package</th>
+                                            <th>Name</th>
                                             <th>Status</th>
                                             <th>Amount</th>
                                             @if(\Auth::user()->type == 'admin')

@@ -105,6 +105,7 @@ class CheckoutOrder extends Controller
             return back()->withSuccess('Book successfully we email you if we confirm your reservation. Thank you')->withBook($book)->withPayment(request('type'));
         } catch (\Exception $e) {
             DB::rollback();
+            dd($e->getMessage());
 
             return back()->withInput()->withErrors(['Transaction Fail Please Contact your card issuer dsadsadsa']);
         }
