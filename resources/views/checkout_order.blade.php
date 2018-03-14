@@ -180,10 +180,8 @@
     @else
       <div class="container" style="padding: 20px">
         @if(session('success'))
-        @php
-          $book = session('book');
-        @endphp
-      @if($book->booked)
+
+      @if(session('bookable'))
         <div class="alert alert-success">
         <strong> {{ session('success')}} </strong> <br>
         </div>
@@ -194,7 +192,7 @@
                 <div class="container">
                     <h4>How to pay in {{ session('payment')}}</h4>
                     <p style="text-align: justify;">
-                      <strong>Your Book #: {{$book->book_no }}
+                      <strong>Your Book #: {{session('bookno') }}
                         </strong>
                     </p>
                     <br/>
@@ -246,7 +244,7 @@
 <p>
            <p>Sender Name: EX. Jane Doe</p>
            <p>Transaction ID: EX. (ANC-XX0-1DSS-1SS)</p>
-           <p>Book #: EX. ({{$book->book_no }})</p>
+           <p>Book #: EX. ({{ session('bookno') }})</p>
            <p>Via: {{ session('payment')}}</p>
 
 </li>

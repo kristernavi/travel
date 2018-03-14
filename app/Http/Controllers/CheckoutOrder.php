@@ -82,6 +82,7 @@ class CheckoutOrder extends Controller
                     $book->book_no = sprintf('%05d', $book->id);
                     $book->save();
                     $bookable = $book->booked;
+                    $book_no = sprintf('%05d', $book->id);
                     $first = false;
                 }
 
@@ -102,10 +103,11 @@ class CheckoutOrder extends Controller
             \Cart::clear();
             DB::commit();
 
-            return back()->withSuccess('Book successfully we email you if we confirm your reservation. Thank you')->withBook($book)->withPayment(request('type'));
+            return back()->withSuccess('Book successfully we email you if we confirm your reservation. Thank you')->withBookable($bookable)
+                ->withBookno($book_no)
+                ->withPayment(request('type'));
         } catch (\Exception $e) {
             DB::rollback();
-            dd($e->getMessage());
 
             return back()->withInput()->withErrors(['Transaction Fail Please Contact your card issuer dsadsadsa']);
         }
