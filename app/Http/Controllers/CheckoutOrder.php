@@ -77,6 +77,7 @@ class CheckoutOrder extends Controller
                 $book->service_id = $item->id;
                 $book->customer_id = $customer->id;
                 $book->business_id = $myService->user->business->id;
+                $book->book_no = $book_no;
                 $book->save();
                 if ($first) {
                     $book->book_no = sprintf('%05d', $book->id);
