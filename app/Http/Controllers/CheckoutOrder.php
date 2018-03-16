@@ -58,7 +58,6 @@ class CheckoutOrder extends Controller
                     $additional_price = $additional_price + ($item->attributes['additional_rate'] * request('additional'));
                 }
             }
-            dd($additional_price);
 
             $price = \Cart::getTotal() + $additional_price;
             if (1 != $card->id) {
