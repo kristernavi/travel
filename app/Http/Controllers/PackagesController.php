@@ -52,6 +52,7 @@ class PackagesController extends Controller
             $package->persons = $request->get('persons');
             $package->user_id = \Auth::id();
             $package->min = $request->get('min');
+            $package->additional_rate = $request->get('additional');
             $package->save();
 
             for ($i = 0; $i < sizeof($request->get('destination_id')); ++$i) {
@@ -117,6 +118,7 @@ class PackagesController extends Controller
             $package->description = $request->get('description');
             $package->min = $request->get('min');
             $package->persons = $request->get('persons');
+            $package->additional_rate = $request->get('additional');
             $package->save();
             $d = \App\PackageDetails::where('package_id', $id)->delete();
             for ($i = 0; $i < sizeof($request->get('destination_id')); ++$i) {
@@ -178,6 +180,10 @@ class PackagesController extends Controller
             ->AddColumn('name', function ($column) {
                 return $column->name;
             })
+
+             ->AddColumn('additional_rate', function ($column) {
+                 return number_format($column->additional_rate, 2);
+             })
             ->AddColumn('description', function ($column) {
                 return $column->description;
             })

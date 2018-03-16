@@ -39,7 +39,7 @@
        <strong> {{ session('success')}} </strong> <br>
     </div>
 @endif
-                <form method="POST" action="{{ url('business/signup')}}">
+                <form method="POST" action="{{ url('business/signup')}}" enctype="multipart/form-data">
                   {{ csrf_field()}}
   <div class="form-group col-md-6">
     <label >Your Name</label>
@@ -58,15 +58,16 @@
     <input type="text" class="form-control"  placeholder="e.g Panglao Bohol"  value="{{ old('base')}}" name="base">
   </div>
 
-  <div class="form-group col-md-6">
-     <label for="sel1">Type:</label>
-
-     {{ Form::select('type', array('hotel' => 'Hotel', 'tourist' => 'Tourist'),old('type'), ['class' => 'form-control'] ) }}
+ <div class="form-group col-md-6">
+    <label ">Document</label>
+    <input type="file" class="form-control"  placeholder="e.g 302-321-312"  value="{{ old('document')}}" multiple accept='image/*' name="document">
   </div>
   <div class="form-group col-md-6">
     <label ">Business License</label>
     <input type="text" class="form-control"  placeholder="e.g 000011"  value="{{ old('license')}}" name="license">
   </div>
+
+
 
   <div class="form-group col-md-6">
     <label >Do you have website?</label>
@@ -85,6 +86,8 @@
     <label ">Phone Number</label>
     <input type="text" class="form-control"  placeholder="e.g 302-321-312"  value="{{ old('phone')}}" name="phone">
   </div>
+
+
 
 
 

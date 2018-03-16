@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Destination;
-use App\PackageDetails;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -19,7 +18,11 @@ class CartController extends Controller
             'name' => $service->name,
             'price' => $service->price,
             'quantity' => 1,
-            'attributes' => ['persons' => $service->persons, 'owner' => optional($service->user->business)->name],
+            'attributes' => [
+                'persons' => $service->persons,
+                'owner' => optional($service->user->business)->name,
+                'additional_rate' => $service->additional_rate,
+                ],
         ]);
         }
 

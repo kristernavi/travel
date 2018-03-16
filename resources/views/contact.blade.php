@@ -16,9 +16,9 @@
         </div>
     </div>
 </div>
-<div class="row" style="padding: 16px !important">
     @if (count($errors) > 0)
-    <div class="alert alert-danger" style="padding: 2px>
+<div class="row" style="padding: 16px !important">
+    <div class="alert alert-danger" style="padding: 2px"S>
         <strong>Whoops!</strong> There were some problems with your input.<br><br>
         <ul class="list-unstyled">
             @foreach ($errors->all() as $error)

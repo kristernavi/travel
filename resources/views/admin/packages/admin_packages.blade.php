@@ -20,6 +20,7 @@
                                             <th>Name</th>
                                             <th>Description</th>
                                             <th>Persons</th>
+                                            <th>Additional R/P</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -61,6 +62,7 @@
         {data: 'name',  name: 'name', className: 'col-md-3  text-left',   searchable: true, sortable: true},
         {data: 'description',  name: 'description', className: 'col-md-5  text-left',   searchable: true, sortable: true},
         {data: 'persons',  name: 'persons', className: 'col-md-1  text-right',   searchable: true, sortable: true},
+        {data: 'additional_rate',  name: 'additional_rate', className: 'col-md-1  text-right',   searchable: true, sortable: true},
         {data: 'actions',   name: 'actions', className: 'col-md-1 text-center',  searchable: false,  sortable: false},
       ],
       'order': [[0, 'asc']]

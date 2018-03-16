@@ -25,6 +25,12 @@
             <input type="hidden" name="description" id="description">
           <span class="help-text text-danger"></span>
         </div>
+
+        <div class="form-group">
+            <label for="link">Additional Rate/Person</label>
+            <input type="number" name="additional" class="form-control" value="{{ $package->additional_rate}}" placeholder="0" />
+          <span class="help-text text-danger"></span>
+        </div>
       <div class="select_hoder">
         <label>Destinations</label>
         @foreach($package->details as $detail)

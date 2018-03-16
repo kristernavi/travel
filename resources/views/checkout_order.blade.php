@@ -69,6 +69,7 @@
     <label ">Reservation Date</label>
     <input type="date" class="form-control"  placeholder="e.g 000011"  value="{{ old('date')}}" name="date" min="{{ date('Y-m-d')}}">
   </div>
+
   <div class="form-group col-md-6">
     <label ">Payment Option</label>
     <select class="form-control" id="payment-option" name="type">
@@ -78,6 +79,10 @@
         <option value="Mhuiler">Mhuiler</option>
     </select>
 
+  </div>
+   <div class="form-group col-md-6">
+    <label ">Additional Person</label>
+    <input type="number" class="form-control"  placeholder="0" min="0" max="20" value="0" name="additional" id="additional">
   </div>
  <div class="col-md-12" id="card-area">
     <fieldset>
@@ -128,6 +133,7 @@
         <th>Destination</th>
         <th>Persons</th>
         <th>Owner</th>
+        <th>Additional Person Rate</th>
         <th>Price</th>
         <th>Action</th>
 
@@ -136,23 +142,28 @@
     </thead>
     <tbody>
 
-
+      @php
+      $total_addrate = 0;
+      @endphp
       @foreach (Cart::getContent() as $item)
       <tr>
         <td>{{ $item->name }}</td>
           <td> {{ $item->attributes['persons']}} </td>
           <td> {{ $item->attributes['owner']}} </td>
-
-        <td>{{ number_format($item->price,2) }}</td>
+          <td > {{  number_format($item->attributes['additional_rate'],2)}} </td>
+        <td >{{ number_format($item->price,2) }}</td>
         <td><a href="remove-cart/{{$item->id}}" class="btn btn-danger " role="button">Remove</a></td>
       </tr>
-
+      @php
+        $total_addrate = $total_addrate + $item->attributes['additional_rate'];
+      @endphp
       @endforeach
       <tr>
         <td> <strong>Total</strong></td>
         <td></td>
         <td>  </td>
-        <td> <strong>{{ number_format(Cart::getTotal(),2) }} </strong></td>
+        <td>  </td>
+        <td > <strong id="current_price">{{ number_format(Cart::getTotal(),2) }} </strong></td>
 
       </tr>
 
@@ -287,6 +298,12 @@
         else{
           $('#card-area').removeClass('hidden');
         }
+    });
+
+      $('#additional').on('change', function() {
+        let price = {{ Cart::getTotal() }};
+        price = parseFloat(price) + ($('#additional').val() * {{ $total_addrate}});
+        $('#current_price').html(price.toFixed(2));
     });
     </script>
 @endsection

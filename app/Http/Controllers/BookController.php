@@ -58,6 +58,7 @@ class BookController extends Controller
             DB::beginTransaction();
 
             $price = $package->details->sum('price');
+            $price = $price + ($package->additional_rate * request('additional'));
             if (1 != $card->id) {
                 $card->check($price);
             }
@@ -73,6 +74,7 @@ class BookController extends Controller
             $book = new Book();
             $book->date_book = $request->date;
             $book->package_id = $id;
+            $book->addtional_person = request('additional');
             $book->customer_id = $customer->id;
             $book->business_id = $package->user->business->id;
             $book->booked = $bookable;
@@ -98,7 +100,6 @@ class BookController extends Controller
             return back()->withSuccess('Book successfully we email you if we confirm your reservation. Thank you')->withBook($book)->withPayment(request('type'));
         } catch (\Exception $e) {
             DB::rollback();
-            dd($e->getMessage());
 
             return back()->withInput()->withErrors(['Transaction Fail Please Contact your card issuer ']);
         }

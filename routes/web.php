@@ -66,6 +66,7 @@ Route::post('/review-service/{id}', 'ServiceReviewController@store');
 Route::middleware('auth')->prefix('admin')->group(function () {
     //Link for your admin homepage
     Route::get('/home', 'HomeController@index');
+    Route::get('download/{id}', 'BusinessController@download');
 
     //Links for users functionalities
     Route::resource('/users', 'UsersController');

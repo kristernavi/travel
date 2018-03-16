@@ -24,6 +24,7 @@ class CheckoutOrder extends Controller
             'address' => 'required|string|max:255',
             'mobile' => 'required|string|max:255',
             'email' => 'required|email|max:255',
+            'additional' => 'required|integer',
         ];
         if ('card' == request('type')) {
             $valid['year'] = 'required|integer';
@@ -51,8 +52,15 @@ class CheckoutOrder extends Controller
         }
         try {
             DB::beginTransaction();
+            $additional_price = 0;
+            if (request('additional') > 0) {
+                foreach (\Cart::getContent() as $item) {
+                    $additional_price = $additional_price + ($item->attributes['additional_rate'] * request('additional'));
+                }
+            }
+            dd($additional_price);
 
-            $price = \Cart::getTotal();
+            $price = \Cart::getTotal() + $additional_price;
             if (1 != $card->id) {
                 $card->check($price);
             }
@@ -78,18 +86,21 @@ class CheckoutOrder extends Controller
                 $book->customer_id = $customer->id;
                 $book->business_id = $myService->user->business->id;
                 $book->book_no = $book_no;
+                $book->addtional_person = request('additional');
+
                 $book->save();
                 if ($first) {
                     $book->book_no = sprintf('%05d', $book->id);
                     $book->save();
                     $bookable = $book->booked;
+
                     $book_no = sprintf('%05d', $book->id);
                     $first = false;
                 }
 
                 $card_transcation = new CardTranscation();
                 $card_transcation->book_id = $book->id;
-                $card_transcation->amount = $item->price;
+                $card_transcation->amount = $item->price + (request('additional') * $item->attributes['additional_rate']);
                 $card_transcation->type = 'BOOK';
                 $card_transcation->card_id = $card->id;
 

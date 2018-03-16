@@ -178,6 +178,10 @@
     </select>
 
   </div>
+   <div class="form-group col-md-6">
+    <label ">Additional Person / Fee &#8369;{{ number_format($package->additional_rate,2) }}</label>
+    <input type="number" class="form-control"  placeholder="0" min="0" max="20" value="0" name="additional" id="additional">
+  </div>
  <div class="col-md-12" id="card-area">
     <fieldset>
       <legend>Payment</legend>
@@ -248,7 +252,7 @@
       <tr>
         <td> <strong>Total</strong></td>
         <td>  </td>
-        <td> <strong>{{ number_format($details->sum('price'),2) }} </strong></td>
+        <td> <strong id="current_price">{{ number_format($details->sum('price'),2) }} </strong></td>
 
       </tr>
 
@@ -286,6 +290,11 @@
         else{
           $('#card-area').removeClass('hidden');
         }
+    });
+      $('#additional').on('change', function() {
+        let price = {{ $package->details->sum('price') }};
+        price = parseFloat(price) + ($('#additional').val() * {{ $package->additional_rate}});
+        $('#current_price').html(price.toFixed(2));
     });
     </script>
 @endsection

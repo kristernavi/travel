@@ -7,6 +7,8 @@ use App\Mail\UserActive;
 use App\User;
 use DB;
 use DataTables;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BusinessController extends Controller
 {
@@ -35,9 +37,21 @@ class BusinessController extends Controller
             ->AddColumn('name', function ($column) {
                 return $column->name;
             })
+            ->AddColumn('name', function ($column) {
+                return $column->name;
+            })
             ->AddColumn('business', function ($column) {
                 return optional($column->business)->name;
             })
+              ->AddColumn('document', function ($column) {
+                  if (null != $column->business) {
+                      if (null != $column->business->document) {
+                          return    '<a  href="'.url('admin/download/'.$column->business->id).'" class="btn-xs btn btn-success" role="button" >
+                                <i class="fa fa-download"></i> Download
+                            </a>';
+                      }
+                  }
+              })
             ->AddColumn('email', function ($column) {
                 return $column->email;
             })
@@ -62,7 +76,7 @@ class BusinessController extends Controller
                             </button>
                         </div>';
             })
-            ->rawColumns(['actions'])
+            ->rawColumns(['actions', 'document'])
             ->make(true);
     }
 
@@ -76,32 +90,34 @@ class BusinessController extends Controller
         return view('business.register')->with('message', 'Thank you for sign up We verify your account as soon as possible');
     }
 
-    public function store()
+    public function store(Request $request)
     {
         request()->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
             'business' => 'required',
             'base' => 'required',
-            'type' => 'required|in:hotel,tourist',
-            'license' => 'nullable|min:3',
+            'license' => 'nullable|min:3|unique:businesses,license',
+            'document' => 'required|image|mimes:jpg,jpeg,png,svg',
             'webiste' => 'nullable|regex:/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/',
             'address' => 'required',
             'mobile' => 'required|numeric',
             'phone' => 'nullable',
             'password' => 'required|string|min:6|confirmed',
         ]);
+        $image = $request->file('document')->store('public/documents');
         $user = new User();
         $user->name = request('name');
         $user->email = request('email');
         $user->password = bcrypt(request('password'));
-        $user->type = request('type');
+        $user->type = 'hotel';
         $user->address = request('address');
         $user->save();
         $business = new Business();
         $business->user_id = $user->id;
         $business->name = request('business');
         $business->base = request('base');
+        $business->document = $image;
         $business->license = request('license');
         $business->website = request('website');
         $business->address = request('address');
@@ -110,5 +126,18 @@ class BusinessController extends Controller
         $business->save();
 
         return back()->withSuccess('Thank you for sign up We verify your account as soon as possible');
+    }
+
+    public function download($id)
+    {
+        $business = Business::findOrFail($id);
+
+        $storagePath = Storage::getDriver()->getAdapter()->getPathPrefix();
+        $pathToFile = $storagePath.$business->document;
+        $headers = [
+              'Content-Type: application/jpg',
+            ];
+
+        return response()->download($pathToFile, "Business of {$business->name}.jpg", $headers);
     }
 }
