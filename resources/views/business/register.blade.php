@@ -59,7 +59,7 @@
   </div>
 
  <div class="form-group col-md-6">
-    <label ">Document</label>
+    <label ">Business Licsense Document (in image)</label>
     <input type="file" class="form-control"  placeholder="e.g 302-321-312"  value="{{ old('document')}}" multiple accept='image/*' name="document">
   </div>
   <div class="form-group col-md-6">
