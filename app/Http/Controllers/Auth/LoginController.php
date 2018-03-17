@@ -43,7 +43,7 @@ class LoginController extends Controller
             if (!$user->actived) {
                 \Auth::logout();
 
-                return redirect()->back()->withInput()->withErrors(['Please wait until we verify your account. We active it as soon as possible. Thank']);
+                return redirect()->back()->withInput()->withInactive('Please wait until we verify your account. We active it as soon as possible. Thank');
             }
 
             return redirect('/business/home');

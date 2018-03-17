@@ -22,9 +22,9 @@
     </div>
     @endif
 
-      @if ($errors->has('not_verify'))
-     <div class="alert alert-success">
-       <strong> {{  $errors->first('not_verify') }} </strong> <br>
+      @if (session('inactive'))
+     <div class="alert alert-danger">
+       <strong> {{  session('inactive') }} </strong> <br>
     </div>
     @endif
 
