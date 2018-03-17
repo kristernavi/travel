@@ -218,6 +218,9 @@
 <p>
             Fill up the neccesary information that given by the form in sender area
         </p>
+        <p>
+            Send with the amount of <strong>Pesos {{ number_format(session('amount'),2)}}</strong>
+        </p>
 </li>
 <li>
 <p>
@@ -256,6 +259,7 @@
            <p>Sender Name: EX. Jane Doe</p>
            <p>Transaction ID: EX. (ANC-XX0-1DSS-1SS)</p>
            <p>Book #: EX. ({{ session('bookno') }})</p>
+           <p>Amount : EX. (Pesos {{ number_format(session('amount'),2) }})</p>
            <p>Via: {{ session('payment')}}</p>
 
 </li>
@@ -299,11 +303,12 @@
           $('#card-area').removeClass('hidden');
         }
     });
-
+    @if(!Cart::isEmpty())
       $('#additional').on('change', function() {
         let price = {{ Cart::getTotal() }};
         price = parseFloat(price) + ($('#additional').val() * {{ $total_addrate}});
         $('#current_price').html(price.toFixed(2));
     });
+      @endif
     </script>
 @endsection

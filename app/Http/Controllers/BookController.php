@@ -97,7 +97,9 @@ class BookController extends Controller
             $card_transcation->save();
             DB::commit();
 
-            return back()->withSuccess('Book successfully we email you if we confirm your reservation. Thank you')->withBook($book)->withPayment(request('type'));
+            return back()->withSuccess('Book successfully we email you if we confirm your reservation. Thank you')->withBook($book)
+                ->withAmount($price)
+                ->withPayment(request('type'));
         } catch (\Exception $e) {
             DB::rollback();
 
