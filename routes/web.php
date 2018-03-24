@@ -11,7 +11,17 @@
 |
 */
 
+Route::get('success/new-book/{id}', 'BookController@excute');
+Route::get('cancel/new-book/{id}', 'BookController@paypal_cancel');
+Route::get('success/checkout/{book_no}', 'CheckoutOrder@excute');
+Route::get('cancel/checkout/{book_no}', 'CheckoutOrder@paypal_cancel');
+
 //URL Used for authentication users
+Route::get('pay/{id}', 'BookController@paypal');
+Route::get('refund', 'PaypalController@refund');
+
+Route::get('payshow', 'PaypalController@show');
+
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 Route::post('login', 'Auth\LoginController@login');
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');

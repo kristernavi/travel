@@ -5,7 +5,12 @@ namespace App\Http\Controllers;
 use App\CardTranscation;
 use App\Mail\ReservationConfirm;
 use App\Mail\ReservationReject;
+use App\PaypalPayment\PaypalRepository;
+use PayPal\Api\Amount;
+use PayPal\Api\RefundRequest;
+use PayPal\Api\Sale;
 use Yajra\DataTables\DataTables;
+use PayPal\Api\Payment;
 
 class AdminBookController extends Controller
 {
@@ -135,8 +140,25 @@ class AdminBookController extends Controller
         $book->confirmed = false;
         $book->actioned = true;
         $book->save();
+        $paypalContext = new PaypalRepository();
 
         $amount = $book->transactions()->where('type', 'BOOK')->sum('amount');
+        if ('paypal' == $book->payment_type) {
+            $paypalContext = new PaypalRepository();
+            $payments = Payment::get($book->paypal_id, $paypalContext->getApiContext());
+            $obj = $payments->toJSON();
+            $paypal_obj = json_decode($obj);
+            $transaction_id = $paypal_obj->transactions[0]->related_resources[0]->sale->id;
+
+            $amt = new Amount();
+            $amt->setCurrency('PHP')
+            ->setTotal($amount);
+            $refundRequest = new RefundRequest();
+            $refundRequest->setAmount($amt);
+            $sale = new Sale();
+            $sale->setId($transaction_id);
+            $refundedSale = $sale->refundSale($refundRequest, $paypalContext->getApiContext());
+        }
         $admin_card = \App\Card::find(1);
         $admin_balance = $admin_card->balance - $amount;
         $admin_card->balance = $admin_balance;

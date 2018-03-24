@@ -176,6 +176,7 @@
     <label ">Payment Option</label>
     <select class="form-control" id="payment-option" name="type">
         <option value="card">Credit / Debit Card</option>
+        <option value="paypal">Paypal</option>
         <option value="Bayad Center">Bayad Center</option>
         <option value="Palawan">Palawan</option>
         <option value="Mhuiler">Mhuiler</option>
